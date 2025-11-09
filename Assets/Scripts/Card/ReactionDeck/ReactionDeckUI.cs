@@ -12,6 +12,10 @@ public class ReactionDeckUI : MonoBehaviour
     public Transform reactionSlotsContainer;
     public GameObject reactionSlotPrefab;
 
+    [Header("Animation")]
+    public Transform reactionDeckPileSlot; // Posisi "deck" tempat card keluar (seperti pile di hand deck)
+    public float drawAnimationDuration = 0.8f;
+
     [Header("Replace Card Panel")]
     public GameObject replaceCardPanel;
     public Text replaceCardText;
@@ -24,12 +28,13 @@ public class ReactionDeckUI : MonoBehaviour
     {
         if (reactionDeck != null)
         {
-            reactionDeck.OnReactionCardAdded += HandleReactionCardAdded;
+            reactionDeck.OnReactionCardDrawing += HandleReactionCardDrawing;
             reactionDeck.OnReactionCardReplaced += HandleReactionCardReplaced;
             reactionDeck.OnReactionTriggered += HandleReactionTriggered;
         }
 
-        InitializeReactionSlots();
+        // Jangan initialize slots di sini, biarkan spawn via animasi
+        // InitializeReactionSlots();
 
         if (replaceCardPanel != null)
             replaceCardPanel.SetActive(false);
@@ -48,23 +53,171 @@ public class ReactionDeckUI : MonoBehaviour
         {
             CreateReactionSlotVisual(i);
         }
+
+        // Force rebuild layout immediately
+        StartCoroutine(RebuildLayoutNextFrame());
     }
 
     void CreateReactionSlotVisual(int index)
     {
+        if (reactionSlotPrefab == null)
+        {
+            Debug.LogError("[ReactionDeckUI] ReactionSlotPrefab is not assigned!");
+            return;
+        }
+
         GameObject slotObj = Instantiate(reactionSlotPrefab, reactionSlotsContainer);
         slotObj.name = $"ReactionSlot_{index}";
 
-        // Setup slot visual
-        Image cardImage = slotObj.transform.Find("CardImage")?.GetComponent<Image>();
-        Image cooldownOverlay = slotObj.transform.Find("CooldownOverlay")?.GetComponent<Image>();
-        Text cooldownText = slotObj.transform.Find("CooldownText")?.GetComponent<Text>();
+        // Setup RectTransform untuk proper layout
+        RectTransform rect = slotObj.GetComponent<RectTransform>();
+        if (rect != null)
+        {
+            rect.localScale = Vector3.one;
+            rect.localPosition = Vector3.zero;
+        }
 
-        if (cardImage != null) cardImage.enabled = false;
-        if (cooldownOverlay != null) cooldownOverlay.fillAmount = 0;
-        if (cooldownText != null) cooldownText.text = "";
+        // Setup slot visual - Improved path finding
+        Image cardImage = FindChildImage(slotObj, "CardImage");
+        Image cooldownOverlay = FindChildImage(slotObj, "CooldownOverlay");
+        Text cooldownText = FindChildText(slotObj, "CooldownText");
+
+        if (cardImage != null)
+        {
+            cardImage.enabled = false;
+            cardImage.color = Color.white;
+        }
+        if (cooldownOverlay != null)
+        {
+            cooldownOverlay.fillAmount = 0;
+            cooldownOverlay.enabled = true;
+        }
+        if (cooldownText != null)
+        {
+            cooldownText.text = "";
+        }
 
         reactionSlotVisuals.Add(slotObj);
+        Debug.Log($"[ReactionDeckUI] Created slot {index} at position {slotObj.transform.position}");
+    }
+
+    // Helper methods untuk find components
+    Image FindChildImage(GameObject parent, string childName)
+    {
+        Transform child = parent.transform.Find(childName);
+        if (child == null)
+        {
+            // Try recursive search
+            child = FindChildRecursive(parent.transform, childName);
+        }
+        return child?.GetComponent<Image>();
+    }
+
+    Text FindChildText(GameObject parent, string childName)
+    {
+        Transform child = parent.transform.Find(childName);
+        if (child == null)
+        {
+            child = FindChildRecursive(parent.transform, childName);
+        }
+        return child?.GetComponent<Text>();
+    }
+
+    Transform FindChildRecursive(Transform parent, string childName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == childName)
+                return child;
+
+            Transform result = FindChildRecursive(child, childName);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+    IEnumerator RebuildLayoutNextFrame()
+    {
+        yield return null; // Wait 1 frame
+        UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(reactionSlotsContainer.GetComponent<RectTransform>());
+    }
+
+    // Handle reaction card drawing dengan animasi (mirip hand deck)
+    void HandleReactionCardDrawing(CardData card, int slotIndex)
+    {
+        Debug.Log($"[ReactionDeckUI] Drawing reaction card {card.cardName} to slot {slotIndex}");
+
+        // Create slot visual dulu jika belum ada
+        while (reactionSlotVisuals.Count <= slotIndex)
+        {
+            CreateReactionSlotVisual(reactionSlotVisuals.Count);
+        }
+
+        // Get target slot position
+        GameObject targetSlot = reactionSlotVisuals[slotIndex];
+
+        // Create temporary card visual untuk animasi
+        GameObject animCard = Instantiate(reactionSlotPrefab, transform);
+        animCard.name = $"AnimCard_{card.cardName}";
+
+        // Set card image
+        Image cardImage = FindChildImage(animCard, "CardImage");
+        if (cardImage != null)
+        {
+            cardImage.sprite = card.icon;
+            cardImage.enabled = true;
+        }
+
+        // Hide cooldown elements during draw
+        Image cooldownOverlay = FindChildImage(animCard, "CooldownOverlay");
+        Text cooldownText = FindChildText(animCard, "CooldownText");
+        if (cooldownOverlay != null) cooldownOverlay.enabled = false;
+        if (cooldownText != null) cooldownText.enabled = false;
+
+        // Start draw animation
+        Transform startPos = reactionDeckPileSlot != null ? reactionDeckPileSlot : transform;
+        StartCoroutine(AnimateReactionCardDraw(animCard, startPos, targetSlot.transform, card, slotIndex));
+    }
+
+    IEnumerator AnimateReactionCardDraw(GameObject animCard, Transform startPos, Transform endPos, CardData card, int slotIndex)
+    {
+        if (animCard == null || startPos == null || endPos == null) yield break;
+
+        RectTransform rect = animCard.GetComponent<RectTransform>();
+        if (rect == null) yield break;
+
+        // Setup fade in
+        CanvasGroup cg = animCard.GetComponent<CanvasGroup>();
+        if (cg == null) cg = animCard.AddComponent<CanvasGroup>();
+        cg.alpha = 0f;
+
+        // Set start position
+        rect.position = startPos.position;
+
+        // Animate to end position
+        float t = 0f;
+        Vector3 startPosVec = startPos.position;
+        Vector3 endPosVec = endPos.position;
+
+        while (t < 1f)
+        {
+            if (rect == null || endPos == null) yield break;
+
+            t += Time.deltaTime / drawAnimationDuration;
+            rect.position = Vector3.Lerp(startPosVec, endPosVec, t);
+            cg.alpha = Mathf.SmoothStep(0f, 1f, t);
+
+            yield return null;
+        }
+
+        // Animation complete, destroy temp card
+        if (animCard != null) Destroy(animCard);
+
+        // Update actual slot visual
+        UpdateSlotVisual(slotIndex);
+
+        Debug.Log($"[ReactionDeckUI] Draw animation complete for {card.cardName}");
     }
 
     void HandleReactionCardAdded(CardData card, int slotIndex)

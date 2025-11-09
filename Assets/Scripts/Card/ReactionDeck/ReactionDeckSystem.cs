@@ -11,12 +11,25 @@ public class ReactionDeckSystem : MonoBehaviour
     [Header("Reaction Deck Settings")]
     public int maxReactionSlots = 3;
 
+    [Header("Starting Reaction Cards")]
+    [Tooltip("Reaction cards yang otomatis didapat saat game start")]
+    public List<CardData> startingReactionCards = new List<CardData>();
+
+    [Tooltip("Delay sebelum reaction cards muncul (detik)")]
+    public float reactionCardSpawnDelay = 2f;
+
+    [Tooltip("Delay antar spawn reaction card (detik)")]
+    public float delayBetweenReactionSpawns = 0.8f;
+
     // Reaction slots (persisten, tidak rotate)
     private List<ReactionCardSlot> reactionSlots = new List<ReactionCardSlot>();
 
     // Events
     public delegate void ReactionCardAddedHandler(CardData card, int slotIndex);
     public event ReactionCardAddedHandler OnReactionCardAdded;
+
+    public delegate void ReactionCardDrawingHandler(CardData card, int slotIndex);
+    public event ReactionCardDrawingHandler OnReactionCardDrawing; // Event untuk animasi draw
 
     public delegate void ReactionCardReplacedHandler(CardData oldCard, CardData newCard, int slotIndex);
     public event ReactionCardReplacedHandler OnReactionCardReplaced;
@@ -36,8 +49,52 @@ public class ReactionDeckSystem : MonoBehaviour
             playerHealth.OnDamaged += CheckDamageTriggers;
         }
 
-        // Initialize dengan 1 slot kosong
-        AddEmptySlot();
+        // Initialize dengan 1 slot kosong (akan diisi oleh starting cards)
+        // Tidak perlu AddEmptySlot() karena akan otomatis terisi
+
+        // Spawn starting reaction cards dengan delay
+        StartCoroutine(SpawnStartingReactionCards());
+    }
+
+    IEnumerator SpawnStartingReactionCards()
+    {
+        // Tunggu beberapa detik setelah game start
+        Debug.Log($"[ReactionDeck] Waiting {reactionCardSpawnDelay}s before spawning starting reaction cards...");
+        yield return new WaitForSeconds(reactionCardSpawnDelay);
+
+        // Spawn setiap starting reaction card dengan delay
+        for (int i = 0; i < startingReactionCards.Count && i < maxReactionSlots; i++)
+        {
+            CardData card = startingReactionCards[i];
+
+            if (card == null)
+            {
+                Debug.LogWarning($"[ReactionDeck] Starting reaction card at index {i} is null!");
+                continue;
+            }
+
+            if (!card.isReactionCard)
+            {
+                Debug.LogWarning($"[ReactionDeck] {card.cardName} is not marked as reaction card!");
+                continue;
+            }
+
+            Debug.Log($"[ReactionDeck] Spawning starting reaction card: {card.cardName}");
+
+            // Add slot baru
+            var newSlot = new ReactionCardSlot { cardData = card };
+            reactionSlots.Add(newSlot);
+
+            int slotIndex = reactionSlots.Count - 1;
+
+            // Trigger event untuk animasi draw
+            OnReactionCardDrawing?.Invoke(card, slotIndex);
+
+            // Tunggu sebelum spawn card berikutnya
+            yield return new WaitForSeconds(delayBetweenReactionSpawns);
+        }
+
+        Debug.Log($"[ReactionDeck] Finished spawning {reactionSlots.Count} starting reaction cards");
     }
 
     void Update()
@@ -61,7 +118,7 @@ public class ReactionDeckSystem : MonoBehaviour
         CheckTimeIntervalTriggers();
     }
 
-    // Add reaction card (dipanggil saat player mendapat reaction card baru)
+    // Add reaction card (dipanggil saat player mendapat reaction card baru in-game)
     public void AddReactionCard(CardData card)
     {
         if (!card.isReactionCard)
@@ -80,7 +137,9 @@ public class ReactionDeckSystem : MonoBehaviour
                 reactionSlots[i].isOnCooldown = false;
 
                 Debug.Log($"[ReactionDeck] Added {card.cardName} to slot {i}");
-                OnReactionCardAdded?.Invoke(card, i);
+
+                // Trigger animasi draw
+                OnReactionCardDrawing?.Invoke(card, i);
                 return;
             }
         }
@@ -91,8 +150,12 @@ public class ReactionDeckSystem : MonoBehaviour
             // Tambah slot baru
             var newSlot = new ReactionCardSlot { cardData = card };
             reactionSlots.Add(newSlot);
-            Debug.Log($"[ReactionDeck] Added {card.cardName} to new slot {reactionSlots.Count - 1}");
-            OnReactionCardAdded?.Invoke(card, reactionSlots.Count - 1);
+            int slotIndex = reactionSlots.Count - 1;
+
+            Debug.Log($"[ReactionDeck] Added {card.cardName} to new slot {slotIndex}");
+
+            // Trigger animasi draw
+            OnReactionCardDrawing?.Invoke(card, slotIndex);
         }
         else
         {

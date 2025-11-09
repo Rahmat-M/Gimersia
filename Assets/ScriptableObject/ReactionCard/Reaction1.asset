@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4529012bb32d59c418d889fc19ffdeeb, type: 3}
   m_Name: Reaction1
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: Emergency Heal
-  cardType: 4
+  cardName: Shield
+  cardType: 5
   damage: 0
   cooldown: 30
   icon: {fileID: 6326098828889282465, guid: 4309591e4c8c8f54ea35d37c3f3eb708, type: 3}
@@ -22,6 +22,6 @@ MonoBehaviour:
   isReactionCard: 1
   triggerType: 0
   triggerThreshold: 75
-  healAmount: 30
-  defenseAmount: 0
-  effectDuration: 5
+  healAmount: 0
+  defenseAmount: 50
+  effectDuration: 10

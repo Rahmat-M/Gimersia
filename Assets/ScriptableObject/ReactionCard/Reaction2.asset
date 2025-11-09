@@ -19,7 +19,7 @@ MonoBehaviour:
   icon: {fileID: 2464165061938375434, guid: 506b7dc61a2293c4690f5a867b49a9c2, type: 3}
   description: 
   amount: 1
-  isReactionCard: 0
+  isReactionCard: 1
   triggerType: 4
   triggerThreshold: 5.5
   healAmount: 10

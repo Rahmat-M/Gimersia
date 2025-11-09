@@ -35,6 +35,20 @@ public class DeckUI : MonoBehaviour
         uiCard.name = $"CardUI_{card.data.cardName}";
         Image img = uiCard.GetComponentInChildren<Image>();
         if (img != null) img.sprite = card.data.icon;
+
+
+        Transform textTransform = uiCard.transform.Find("CardNameText");
+        if (textTransform != null)
+        {
+            // 2. Ambil komponen Text-nya
+            Text cardNameText = textTransform.GetComponent<Text>();
+            if (cardNameText != null)
+            {
+                // 3. Atur teksnya sesuai nama kartu
+                cardNameText.text = card.data.cardName;
+            }
+        }
+
         cardVisuals[card] = uiCard;
         StartCoroutine(AnimateCardMove(uiCard, pileSlot, handSlots[handIndex], 0.6f, true));
     }
