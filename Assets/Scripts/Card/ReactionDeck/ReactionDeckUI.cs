@@ -40,6 +40,7 @@ public class ReactionDeckUI : MonoBehaviour
             replaceCardPanel.SetActive(false);
     }
 
+
     void InitializeReactionSlots()
     {
         // Clear existing slots

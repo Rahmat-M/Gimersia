@@ -63,7 +63,7 @@ public class DeckSystem : MonoBehaviour
         for (int i = 0; i < toDraw; i++)
         {
             Draw(1);
-            yield return new WaitForSeconds(0.2f); // Delay kecil antar draw anim
+            yield return new WaitForSeconds(0.02f); // Delay kecil antar draw anim
         }
     }
 
@@ -139,7 +139,7 @@ public class DeckSystem : MonoBehaviour
         {
             discard.Add(card);
             OnCardDiscarded?.Invoke(card); // Trigger anim discard
-            yield return new WaitForSeconds(0.2f); // Delay antar anim discard
+            //yield return new WaitForSeconds(0.2f); // Delay antar anim discard
         }
         lastHandSnapshot = new List<CardInstance>(hand);
     }

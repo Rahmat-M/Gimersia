@@ -50,7 +50,7 @@ public class DeckUI : MonoBehaviour
         }
 
         cardVisuals[card] = uiCard;
-        StartCoroutine(AnimateCardMove(uiCard, pileSlot, handSlots[handIndex], 0.6f, true));
+        StartCoroutine(AnimateCardMove(uiCard, pileSlot, handSlots[handIndex], 0.06f, true));
     }
 
     // Diubah: Hanya highlight, tanpa move/destroy
@@ -81,7 +81,7 @@ public class DeckUI : MonoBehaviour
         }
     }
 
-    // Fixed: Gunakan anchoredPosition untuk UI stability
+    
     public IEnumerator AnimateCardMove(GameObject cardObj, Transform start, Transform end, float duration, bool fadeIn = true)
     {
         if (cardObj == null || start == null || end == null) yield break;

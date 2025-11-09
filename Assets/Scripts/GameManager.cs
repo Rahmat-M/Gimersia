@@ -7,8 +7,9 @@ public class GameManager : MonoBehaviour
     public PlayerCombat playerCombat;
     public PlayerHealth playerHealth;
     public ReactionDeckSystem reactionDeck;
+    public ActiveDeckSystem activeDeck;
 
-    // TAMBAHKAN BARIS INI:
+    //debug
     public CardData testReactionCard;
 
     void Start()
@@ -16,6 +17,14 @@ public class GameManager : MonoBehaviour
         deck.OnCardPlayed += HandleCardPlayed;
     }
 
+    void HandleCardPlayed(CardInstance card)
+    {
+        Debug.Log("[GameManager] Card played: " + card.data.cardName);
+        // delegasikan ke PlayerCombat untuk mengeksekusi efek kartu
+        playerCombat.PlayCard(card);
+    }
+
+    //debugging only
     void Update()
     {
         // Press 'H' untuk test add reaction card
@@ -37,13 +46,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void HandleCardPlayed(CardInstance card)
-    {
-        Debug.Log("[GameManager] Card played: " + card.data.cardName);
-        // delegasikan ke PlayerCombat untuk mengeksekusi efek kartu
-        playerCombat.PlayCard(card);
-    }
-
     // Method untuk testing: Add reaction card (bisa dipanggil dari UI button atau event)
     public void TestAddReactionCard(CardData reactionCard)
     {
@@ -62,6 +64,15 @@ public class GameManager : MonoBehaviour
             {
                 reactionDeck.AddReactionCard(reactionCard);
             }
+        }
+    }
+
+    // Method untuk testing: Replace active card (untuk upgrade system)
+    public void TestReplaceActiveCard(CardData newActiveCard)
+    {
+        if (activeDeck != null)
+        {
+            activeDeck.ReplaceActiveCard(newActiveCard);
         }
     }
 
