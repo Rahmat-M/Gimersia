@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class CardInstance {
-    public CardData data;
-    public CardInstance(CardData d) { data = d; }
+namespace Littale {
+    public class CardInstance {
+        public CardDataSO data;
+        public CardInstance(CardDataSO d) { data = d; }
+    }
 }

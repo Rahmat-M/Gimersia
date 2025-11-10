@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class EnemyHealth
-{
-    
+namespace Littale {
+    public class EnemyHealth {
+
+    }
 }
