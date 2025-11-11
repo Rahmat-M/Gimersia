@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Littale {
-    [CreateAssetMenu(fileName = "New Enemy", menuName = "LittaleData/Enemy")]
+    [CreateAssetMenu(fileName = "New Enemy", menuName = "Littale Data/Enemy")]
     public class EnemySO : ScriptableObject {
 
         //Base stats for the enemy

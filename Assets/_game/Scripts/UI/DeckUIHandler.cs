@@ -1,0 +1,154 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Littale {
+    public class DeckUIHandler : MonoBehaviour {
+
+        DeckManager deckManager;
+        CharacterStats characterStats;
+
+        [Header("Card References")]
+        [SerializeField] GameObject cardUIPrefab;
+        [SerializeField] Transform mainDeck;
+
+        List<Transform> mainDeckSlots = new List<Transform>();
+        Dictionary<CardController, GameObject> cardVisuals = new Dictionary<CardController, GameObject>();
+
+        void Start() {
+            deckManager = FindFirstObjectByType<DeckManager>();
+            characterStats = FindFirstObjectByType<CharacterStats>();
+
+            InitializeCardVisuals();
+            deckManager.OnCardDrawn += HandleCardDrawn;
+            deckManager.OnCardDiscarded += HandleCardDiscarded;
+            deckManager.OnCardPlayed += HandleCardPlayed;
+        }
+
+        void InitializeCardVisuals() {
+            if (mainDeck == null || cardUIPrefab == null) {
+                Debug.LogWarning("[DeckUIHandler] mainDeck or cardUIPrefab is not assigned.");
+                return;
+            }
+
+            foreach (Transform child in mainDeck) { // Clear existing visuals
+                Destroy(child.gameObject);
+            }
+
+            for (int i = 0; i < characterStats.Actual.handSize; i++) {
+                GameObject uiCard = Instantiate(cardUIPrefab, mainDeck);
+                uiCard.name = $"CardUI_Slot_{i}";
+                uiCard.SetActive(false); // Initially inactive
+                mainDeckSlots.Add(uiCard.transform);
+            }
+        }
+
+        void HandleCardDrawn(CardController card, int handIndex) {
+            if (handIndex < 0 || handIndex >= mainDeckSlots.Count) {
+                Debug.LogError($"[DeckUIHandler] Invalid handIndex: {handIndex}");
+                return;
+            }
+
+            Transform cardSlot = mainDeckSlots[handIndex];
+            Image img = cardSlot.GetComponent<Image>();
+            img.sprite = card.cardData.icon;
+            img.color = Color.white; // Ensure to reset color in case it was changed
+
+            cardVisuals[card] = cardSlot.gameObject;
+
+            StartCoroutine(AnimateCardAppearance(cardSlot.gameObject, 0.2f));
+        }
+
+        void HandleCardDiscarded(CardController card) {
+            if (cardVisuals.TryGetValue(card, out GameObject uiCard)) {
+                StartCoroutine(AnimateCardDisappearance(uiCard, 0.15f));
+
+                cardVisuals.Remove(card);
+            }
+        }
+
+        void HandleCardPlayed(CardController card) {
+            if (cardVisuals.TryGetValue(card, out GameObject uiCard)) {
+                StartCoroutine(PlayAndDiscardAnimation(uiCard));
+
+                cardVisuals.Remove(card);
+            }
+        }
+
+        IEnumerator AnimateCardAppearance(GameObject cardObj, float duration = 0.2f) {
+            if (cardObj == null) yield break;
+
+            RectTransform rect = cardObj.GetComponent<RectTransform>();
+            CanvasGroup cg = cardObj.GetComponent<CanvasGroup>() ?? cardObj.AddComponent<CanvasGroup>();
+
+            rect.localScale = Vector3.one * 0.7f;
+            cg.alpha = 0f;
+            cardObj.SetActive(true);
+
+            float t = 0f;
+            while (t < 1f) {
+                if (cardObj == null) yield break;
+                t += Time.deltaTime / duration;
+
+                float smoothT = Mathf.SmoothStep(0f, 1f, t);
+
+                rect.localScale = Vector3.Lerp(Vector3.one * 0.7f, Vector3.one, smoothT);
+                cg.alpha = smoothT;
+
+                yield return null;
+            }
+
+            // Pastikan berakhir di state yang benar
+            if (rect != null) rect.localScale = Vector3.one;
+            if (cg != null) cg.alpha = 1f;
+        }
+
+        IEnumerator AnimateCardDisappearance(GameObject cardObj, float duration = 0.15f) {
+            if (cardObj == null) yield break;
+
+            RectTransform rect = cardObj.GetComponent<RectTransform>();
+            CanvasGroup cg = cardObj.GetComponent<CanvasGroup>() ?? cardObj.AddComponent<CanvasGroup>();
+
+            Vector3 startScale = rect.localScale;
+            Vector3 endScale = Vector3.one * 0.7f;
+
+            float t = 0f;
+            while (t < 1f) {
+                if (cardObj == null) yield break;
+                t += Time.deltaTime / duration;
+
+                float smoothT = Mathf.SmoothStep(0f, 1f, t);
+
+                rect.localScale = Vector3.Lerp(startScale, endScale, smoothT);
+                cg.alpha = 1f - smoothT;
+
+                yield return null;
+            }
+
+            if (cardObj != null) cardObj.SetActive(false);
+        }
+
+        IEnumerator PlayAndDiscardAnimation(GameObject uiCard) {
+            yield return StartCoroutine(Highlight(uiCard));
+
+            yield return StartCoroutine(AnimateCardDisappearance(uiCard, 0.15f));
+        }
+
+        IEnumerator Highlight(GameObject uiCard) {
+            Image img = uiCard.GetComponent<Image>();
+            if (img != null) img.color = Color.yellow;
+            yield return new WaitForSeconds(0.3f);
+            if (img != null) img.color = Color.white;
+        }
+
+        void OnDestroy() {
+            if (deckManager != null) {
+                deckManager.OnCardDrawn -= HandleCardDrawn;
+                deckManager.OnCardDiscarded -= HandleCardDiscarded;
+                deckManager.OnCardPlayed -= HandleCardPlayed;
+            }
+        }
+
+    }
+}
