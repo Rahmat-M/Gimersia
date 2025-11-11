@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: Assembly-CSharp::Littale.ReactiveCardSO
   prefab: {fileID: 5350574445056305374, guid: 76ab2e78319a7b949b1a8de9cd5affc5, type: 3}
-  icon: {fileID: 6326098828889282465, guid: 4309591e4c8c8f54ea35d37c3f3eb708, type: 3}
+  icon: {fileID: -7544203201812436661, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
   cardName: Heal
-  description: Heal
+  description: Heal +10 every 15s
   type: 2
-  reactiveType: 0
-  cooldown: 30
-  triggerThreshold: 50
-  effectAmount: 30
+  reactiveType: 4
+  noCooldown: 1
+  cooldown: 0
+  triggerThreshold: 15
+  effectAmount: 10
   effectDuration: 0

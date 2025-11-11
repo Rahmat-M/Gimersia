@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5082486705599332644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4250558496959794642}
+  - component: {fileID: 4481540841214360229}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4250558496959794642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5082486705599332644}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1389.5118, y: 501.6224, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4481540841214360229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5082486705599332644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4d5436d876ad04abddcc4341572954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Littale.AudioManager
+  musicMixerGroup: {fileID: -3611999227702210463, guid: 90739abc81ee9af4f8176e9ae33d01ad, type: 2}
+  sfxMixerGroup: {fileID: -2237894061872032674, guid: 90739abc81ee9af4f8176e9ae33d01ad, type: 2}
+  musicSounds: []
+  sfxSounds:
+  - name: cancel
+    clip: {fileID: 8300000, guid: 083cdb3a7db3be74b82031195ce69a63, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: cursor
+    clip: {fileID: 8300000, guid: 91159b0354b7350409cadaae36a253fa, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: popup_close
+    clip: {fileID: 8300000, guid: 63e917ebf7f416b49b47b3078ed83076, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: popup_open
+    clip: {fileID: 8300000, guid: 06d2c0c584714414690a24c321dfca96, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: select
+    clip: {fileID: 8300000, guid: c252b6c43d7f6b740920458574d47f38, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: swipe
+    clip: {fileID: 8300000, guid: 61c6d1cf952f48e4a83b89efdba5adf1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: card_drawn
+    clip: {fileID: 8300000, guid: 2e375c1064585da4aa0a7fd1abaff178, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: card_played
+    clip: {fileID: 8300000, guid: 10eb0b4f3b8d84a488a067a8e80db70a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: card_discarded
+    clip: {fileID: 8300000, guid: 91d745f1ff85da04fa7de79b39f484d3, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: card_shuffled
+    clip: {fileID: 8300000, guid: 97cbb911ddcaac144a840430ea910e6d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: card_go_cooldown
+    clip: {fileID: 8300000, guid: b803074cafd5d1647b8ad1eb12420d1d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: card_done_cooldown
+    clip: {fileID: 8300000, guid: 4c281536c8fcd9943b5b675f8e04462a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

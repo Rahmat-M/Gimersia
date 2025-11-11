@@ -24,7 +24,7 @@ namespace Littale {
 
             animator.SetBool(ANIM_PARAM_ISMOVING, isMoving);
 
-            if (isMoving) spriteRenderer.flipX = horizontal < 0;
+            if (isMoving) spriteRenderer.flipX = horizontal > 0;
         }
 
     }

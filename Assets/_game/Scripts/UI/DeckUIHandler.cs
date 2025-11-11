@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,6 @@ namespace Littale {
 
             InitializeCardVisuals();
             deckManager.OnCardDrawn += HandleCardDrawn;
-            deckManager.OnCardDiscarded += HandleCardDiscarded;
             deckManager.OnCardPlayed += HandleCardPlayed;
         }
 
@@ -55,22 +55,17 @@ namespace Littale {
             img.sprite = card.cardData.icon;
             img.color = Color.white; // Ensure to reset color in case it was changed
 
-            cardVisuals[card] = cardSlot.gameObject;
+            GameObject uiCard = cardSlot.gameObject;
+            cardVisuals[card] = uiCard;
 
+            SoundManager.Instance.Play("card_drawn");
             StartCoroutine(AnimateCardAppearance(cardSlot.gameObject, 0.2f));
         }
 
-        void HandleCardDiscarded(CardController card) {
+        void HandleCardPlayed(CardController card, float duration) {
             if (cardVisuals.TryGetValue(card, out GameObject uiCard)) {
-                StartCoroutine(AnimateCardDisappearance(uiCard, 0.15f));
-
-                cardVisuals.Remove(card);
-            }
-        }
-
-        void HandleCardPlayed(CardController card) {
-            if (cardVisuals.TryGetValue(card, out GameObject uiCard)) {
-                StartCoroutine(PlayAndDiscardAnimation(uiCard));
+                SoundManager.Instance.Play("card_played");
+                StartCoroutine(PlayAndDiscardAnimation(uiCard, duration));
 
                 cardVisuals.Remove(card);
             }
@@ -113,6 +108,8 @@ namespace Littale {
             Vector3 startScale = rect.localScale;
             Vector3 endScale = Vector3.one * 0.7f;
 
+            SoundManager.Instance.Play("card_discarded");
+
             float t = 0f;
             while (t < 1f) {
                 if (cardObj == null) yield break;
@@ -129,23 +126,27 @@ namespace Littale {
             if (cardObj != null) cardObj.SetActive(false);
         }
 
-        IEnumerator PlayAndDiscardAnimation(GameObject uiCard) {
-            yield return StartCoroutine(Highlight(uiCard));
+        IEnumerator PlayAndDiscardAnimation(GameObject uiCard, float totalDuration) {
+            float highlightTime = totalDuration * 0.7f;
+            float discardTime = totalDuration * 0.3f;
 
-            yield return StartCoroutine(AnimateCardDisappearance(uiCard, 0.15f));
+            highlightTime = Mathf.Max(highlightTime, 0.1f);
+            discardTime = Mathf.Max(discardTime, 0.05f);
+
+            yield return StartCoroutine(Highlight(uiCard, highlightTime));
+            yield return StartCoroutine(AnimateCardDisappearance(uiCard, discardTime));
         }
 
-        IEnumerator Highlight(GameObject uiCard) {
+        IEnumerator Highlight(GameObject uiCard, float duration) {
             Image img = uiCard.GetComponent<Image>();
             if (img != null) img.color = Color.yellow;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(duration);
             if (img != null) img.color = Color.white;
         }
 
         void OnDestroy() {
             if (deckManager != null) {
                 deckManager.OnCardDrawn -= HandleCardDrawn;
-                deckManager.OnCardDiscarded -= HandleCardDiscarded;
                 deckManager.OnCardPlayed -= HandleCardPlayed;
             }
         }

@@ -6,6 +6,9 @@ namespace Littale {
     public class CharacterSO : ScriptableObject {
 
         [Header("Character Info")]
+        [SerializeField] Sprite icon;
+        public Sprite Icon { get => icon; private set => icon = value; }
+
         [SerializeField] new string name;
         public string Name { get => name; private set => name = value; }
 

@@ -20,6 +20,9 @@ namespace Littale {
         [SerializeField] ReactiveType reactiveType;
         public ReactiveType ReactionType { get { return reactiveType; } }
 
+        [SerializeField] bool noCooldown;
+        public bool NoCooldown { get { return noCooldown; } }
+
         [SerializeField] float cooldown;
         public float Cooldown { get { return cooldown; } }
 

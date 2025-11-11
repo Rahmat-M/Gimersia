@@ -44,6 +44,7 @@ namespace Littale {
         protected virtual void Apply() { }
 
         protected virtual void Applied() {
+            if (cardData.NoCooldown) return;
             cooldownTimer = cardData.Cooldown;
             OnCardPutOnCooldown?.Invoke(Mathf.CeilToInt(cardData.Cooldown));
             onCooldown = true;

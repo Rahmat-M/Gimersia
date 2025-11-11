@@ -12,15 +12,16 @@ namespace Littale {
     public class DeckManager : MonoBehaviour {
 
         public UnityAction<CardController, int> OnCardDrawn;
-        public UnityAction<CardController> OnCardPlayed;
+        public UnityAction<CardController, float> OnCardPlayed;
         public UnityAction<CardController> OnCardDiscarded;
 
         [SerializeField] bool autoStart = true;
 
         [Header("Deck Settings")]
-        [SerializeField] float delayBetweenCards = 1.0f; // Delay between playing cards in hand
+        [SerializeField] float minCardDelay = 0.2f; // Minimum delay between playing cards
         [SerializeField] bool isPlaying;
 
+        float delayBetweenCards = 1f;
         CharacterStats characterStats;
         CardInventory cardInventory;
 
@@ -46,6 +47,10 @@ namespace Littale {
 
         IEnumerator DelayedStart() {
             yield return waitDelayBetweenCards; // Wait for UI to be ready
+
+            float calculatedDelay = 1f / characterStats.Actual.attackSpeed;
+            delayBetweenCards = Mathf.Max(minCardDelay, calculatedDelay);
+            waitDelayBetweenCards = new WaitForSeconds(delayBetweenCards);
 
             InitializeDeck();
             yield return DrawToFullHandCoroutine();
@@ -98,9 +103,8 @@ namespace Littale {
                 var cardToPlay = hand[0];
                 hand.RemoveAt(0);
                 cardToPlay.Attack(); // Execute card effect
-                OnCardPlayed?.Invoke(cardToPlay); // Notify UI
+                OnCardPlayed?.Invoke(cardToPlay, delayBetweenCards); // Notify UI
                 discard.Add(cardToPlay);
-                OnCardDiscarded?.Invoke(cardToPlay); // Notify UI
                 yield return waitDelayBetweenCards;
             }
         }
@@ -139,6 +143,7 @@ namespace Littale {
 
             pile.AddRange(discard);
             discard.Clear();
+            SoundManager.Instance.Play("card_shuffled");
             Shuffle(pile);
         }
 

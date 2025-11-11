@@ -6,7 +6,8 @@ namespace Littale {
 
         // References
         [SerializeField] InputActionReference moveActions;
-        public InputActionReference TriggerActions; // for other scripts access
+
+        public InputActionReference TriggerActions;
 
         CharacterStats characterStats;
 

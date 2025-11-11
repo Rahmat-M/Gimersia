@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9145548c87147843aaf3a96af2ac1d1, type: 3}
+  m_Name: BasicMeleeCard
+  m_EditorClassIdentifier: Assembly-CSharp::Littale.MainCardSO
+  prefab: {fileID: 4005822698692622144, guid: faca3a3b7e4a8f64f96aa379a2e9f8ed, type: 3}
+  icon: {fileID: 1738875753685921696, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
+  cardName: Basic Melee Card
+  description: Basic Melee Card; Damage 10
+  type: 0
+  damage: 10
+  speed: 0
+  amount: 0
+  pierce: 0

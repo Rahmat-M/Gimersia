@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c12a487b51831847804cc2e395a959e, type: 3}
   m_Name: LittleChibi
   m_EditorClassIdentifier: Assembly-CSharp::Littale.CharacterSO
+  icon: {fileID: 0}
   name: Chibi
   fullName: Chibi Ujang
   characterDescription: Ieu teh si Ujang
   startingCards:
-  - {fileID: 6533313293498206012, guid: 804cf558d44d0b44d8b37c5bb32c87a5, type: 3}
-  - {fileID: 1083805534143102494, guid: fbcdf9ba1e00de24d8463bb9fd09e3e7, type: 3}
+  - {fileID: 4547306628399383674, guid: 6362a89b6d31b1a47845694202f6f1c1, type: 3}
+  - {fileID: 5075967263416117382, guid: 63a6d25424cc56a45bb72899b3c32317, type: 3}
   - {fileID: 6533313293498206012, guid: 804cf558d44d0b44d8b37c5bb32c87a5, type: 3}
   stats:
     maxHealth: 100

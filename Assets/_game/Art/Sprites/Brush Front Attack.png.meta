@@ -1,0 +1,548 @@
+fileFormatVersion: 2
+guid: 0dbbd30f98ea1bb47af80d59828df0bf
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 806197164518503228
+    second: Brush Front Attack_0
+  - first:
+      213: -1917910533436520586
+    second: Brush Front Attack_1
+  - first:
+      213: -6261136015479514147
+    second: Brush Front Attack_2
+  - first:
+      213: 4453066523354292442
+    second: Brush Front Attack_3
+  - first:
+      213: 3006976732809448118
+    second: Brush Front Attack_4
+  - first:
+      213: -3815928580122352858
+    second: Brush Front Attack_5
+  - first:
+      213: -5964954928731207226
+    second: Brush Front Attack_6
+  - first:
+      213: -1832367357592243248
+    second: Brush Front Attack_7
+  - first:
+      213: -5607276114274785314
+    second: Brush Front Attack_8
+  - first:
+      213: 1500120725893365867
+    second: Brush Front Attack_9
+  - first:
+      213: -5478493471529912765
+    second: Brush Front Attack_10
+  - first:
+      213: -585232413281000862
+    second: Brush Front Attack_11
+  - first:
+      213: -140679653373376956
+    second: Brush Front Attack_12
+  - first:
+      213: 8520317017829241699
+    second: Brush Front Attack_13
+  - first:
+      213: -3133845540649564237
+    second: Brush Front Attack_14
+  - first:
+      213: -8135462960394766084
+    second: Brush Front Attack_15
+  - first:
+      213: -8983752838299820802
+    second: Brush Front Attack_16
+  - first:
+      213: 2024763893417349333
+    second: Brush Front Attack_17
+  - first:
+      213: 3145702084846377417
+    second: Brush Front Attack_18
+  - first:
+      213: 2015785190092871361
+    second: Brush Front Attack_19
+  - first:
+      213: 2099471044502233510
+    second: Brush Front Attack_20
+  - first:
+      213: 4171610199543783125
+    second: Brush Front Attack_21
+  - first:
+      213: 790844549951476387
+    second: Brush Front Attack_22
+  - first:
+      213: 4445333164669441859
+    second: Brush Front Attack_23
+  - first:
+      213: -2458059608664966185
+    second: Brush Front Attack_24
+  - first:
+      213: 6441361483033242069
+    second: Brush Front Attack_25
+  - first:
+      213: 4050695525887929543
+    second: Brush Front Attack_26
+  - first:
+      213: -8958410846277725836
+    second: Brush Front Attack_27
+  - first:
+      213: -5793290912313532357
+    second: Brush Front Attack_28
+  - first:
+      213: -7630066563814853699
+    second: Brush Front Attack_29
+  - first:
+      213: 720424386006201761
+    second: Brush Front Attack_30
+  - first:
+      213: 2317688628217332243
+    second: Brush Front Attack_31
+  - first:
+      213: 3494454772555902245
+    second: Brush Front Attack_32
+  - first:
+      213: -6275548462271304425
+    second: Brush Front Attack_33
+  - first:
+      213: 4888969675697393408
+    second: Brush Front Attack_34
+  - first:
+      213: -5437721442169532156
+    second: Brush Front Attack_35
+  - first:
+      213: 8998604314150938469
+    second: Brush Front Attack_36
+  - first:
+      213: 4898647885199092089
+    second: Brush Front Attack_37
+  - first:
+      213: 3777156219283663896
+    second: Brush Front Attack_38
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 2048
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Brush Front Attack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c337d0abc00303b00800000000000000
+      internalID: 806197164518503228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_1
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 677498708863265e0800000000000000
+      internalID: -1917910533436520586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_2
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddb50f287f9fb19a0800000000000000
+      internalID: -6261136015479514147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_3
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad067bdd8687ccd30800000000000000
+      internalID: 4453066523354292442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bac8f6286deab920800000000000000
+      internalID: 3006976732809448118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_5
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 623eb8d8c291b0bc0800000000000000
+      internalID: -3815928580122352858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_6
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c9c2c39819383da0800000000000000
+      internalID: -5964954928731207226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_7
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d371b8b89f1296e0800000000000000
+      internalID: -1832367357592243248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed76e1b2514fe22b0800000000000000
+      internalID: -5607276114274785314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_9
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b60431b2adf71d410800000000000000
+      internalID: 1500120725893365867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_10
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 346b925c63b78f3b0800000000000000
+      internalID: -5478493471529912765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_11
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26267578836d0e7f0800000000000000
+      internalID: -585232413281000862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brush Front Attack_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4460e81c9943c0ef0800000000000000
+      internalID: -140679653373376956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 23316fd31a305a24da24f94990d22bfb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":4.0},"gridSpriteSize":{"x":2048.0,"y":2048.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Brush Front Attack_0: 806197164518503228
+      Brush Front Attack_1: -1917910533436520586
+      Brush Front Attack_10: -5478493471529912765
+      Brush Front Attack_11: -585232413281000862
+      Brush Front Attack_12: -140679653373376956
+      Brush Front Attack_2: -6261136015479514147
+      Brush Front Attack_3: 4453066523354292442
+      Brush Front Attack_4: 3006976732809448118
+      Brush Front Attack_5: -3815928580122352858
+      Brush Front Attack_6: -5964954928731207226
+      Brush Front Attack_7: -1832367357592243248
+      Brush Front Attack_8: -5607276114274785314
+      Brush Front Attack_9: 1500120725893365867
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

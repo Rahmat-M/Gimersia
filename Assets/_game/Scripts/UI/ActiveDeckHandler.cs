@@ -48,6 +48,7 @@ namespace Littale {
         }
 
         void HandleCardCooldownStart(int duration) {
+            SoundManager.Instance.Play("card_go_cooldown");
             StartCoroutine(AnimateCooldownStart(uiCardRefs, duration));
         }
 
@@ -64,6 +65,7 @@ namespace Littale {
 
         void HandleCardReady() {
             var refs = uiCardRefs;
+            SoundManager.Instance.Play("card_done_cooldown");
             StartCoroutine(AnimateCardReady(refs));
         }
 
