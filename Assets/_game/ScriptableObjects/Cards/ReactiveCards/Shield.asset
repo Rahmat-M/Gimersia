@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: Assembly-CSharp::Littale.ReactiveCardSO
   prefab: {fileID: 4378255276251811177, guid: 71b8db85f2cccf74cb536e5c5d335150, type: 3}
+  cardType: 2
   icon: {fileID: -6915069790762444613, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
   cardName: Shield
   description: Shield +50 for 10s if hit by enemy when hp < 75

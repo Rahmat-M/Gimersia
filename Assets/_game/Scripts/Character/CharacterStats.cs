@@ -144,7 +144,7 @@ namespace Littale {
                 }
                 experienceCap += experienceCapIncrease;
 
-                // TODO: Level up UI
+                GameManager.Instance.StartLevelUp();
             }
         }
 
@@ -242,6 +242,16 @@ namespace Littale {
         [ContextMenu("Damage Player To Quarter Health")]
         void DamagePlayerToQuarterHealth() {
             TakeDamage(CurrentHealth - (actualStats.maxHealth / 4f));
+        }
+
+        [ContextMenu("Increase Experience By 100")]
+        void IncreaseExperienceBy100() {
+            IncreaseExperience(100);
+        }
+
+        [ContextMenu("Increase Experience By 500")]
+        void IncreaseExperienceBy500() {
+            IncreaseExperience(500);
         }
 #endif
 

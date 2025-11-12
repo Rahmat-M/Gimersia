@@ -8,6 +8,8 @@ namespace Littale {
 
         [SerializeField] CharacterSO.Stats currentBoosts;
 
+        public PassiveCardSO cardData;
+
         public virtual void Init(PassiveCardSO data) {
             currentBoosts = data.baseStats.boosts;
         }

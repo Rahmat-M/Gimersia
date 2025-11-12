@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: Assembly-CSharp::Littale.ReactiveCardSO
   prefab: {fileID: 5350574445056305374, guid: 76ab2e78319a7b949b1a8de9cd5affc5, type: 3}
+  cardType: 2
   icon: {fileID: -7544203201812436661, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
   cardName: Heal
   description: Heal +10 every 15s

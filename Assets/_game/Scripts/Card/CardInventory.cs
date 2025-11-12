@@ -5,8 +5,6 @@ using UnityEngine.Events;
 namespace Littale {
     public class CardInventory : MonoBehaviour {
 
-        // TODO: Add for Handling UI
-
         public UnityAction<ReactiveCardController> OnReactiveCardAcquired;
         public UnityAction<ActiveCardController> OnActiveCardAdded;
 

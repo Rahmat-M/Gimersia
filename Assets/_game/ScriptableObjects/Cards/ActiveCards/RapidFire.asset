@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RapidFire
   m_EditorClassIdentifier: Assembly-CSharp::Littale.ActiveCardSO
   prefab: {fileID: 5854246937172581989, guid: f865f5d513774f243aa38ca89fd4ef23, type: 3}
+  cardType: 3
   icon: {fileID: -5493508554759021246, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
   cardName: Rapid Fire
   description: Shoot multiple projectile for 10s

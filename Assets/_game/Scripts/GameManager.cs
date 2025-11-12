@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace Littale {
     public class GameManager : MonoBehaviour {
-        public static GameManager instance;
+        public static GameManager Instance;
 
         // Define the different states of the game
         public enum GameState {
@@ -67,10 +67,10 @@ namespace Littale {
 
         // Sums up the curse stat of all players and returns the value.
         public static float GetCumulativeCurse() {
-            if (!instance) return 1;
+            if (!Instance) return 1;
 
             float totalCurse = 0;
-            foreach (CharacterStats p in instance.players) {
+            foreach (CharacterStats p in Instance.players) {
                 // totalCurse += p.Actual.curse; // TODO: Fix when Actual is back
             }
             return Mathf.Max(1, totalCurse);
@@ -78,10 +78,10 @@ namespace Littale {
 
         // Sum up the levels of all players and returns the value.
         public static int GetCumulativeLevels() {
-            if (!instance) return 1;
+            if (!Instance) return 1;
 
             int totalLevel = 0;
-            foreach (CharacterStats p in instance.players) {
+            foreach (CharacterStats p in Instance.players) {
                 totalLevel += p.level;
             }
             return Mathf.Max(1, totalLevel);
@@ -94,8 +94,8 @@ namespace Littale {
             // timeLimit = TimeLimit; // TODO: Fix when UILevelSelector is back
 
             //Warning check to see if there is another singleton of this kind already in the game
-            if (instance == null) {
-                instance = this;
+            if (Instance == null) {
+                Instance = this;
             } else {
                 Debug.LogWarning("EXTRA " + this + " DELETED");
                 Destroy(gameObject);
@@ -144,7 +144,7 @@ namespace Littale {
             Destroy(textObj, duration);
 
             // Parent the generated text object to the canvas.
-            textObj.transform.SetParent(instance.damageTextCanvas.transform);
+            textObj.transform.SetParent(Instance.damageTextCanvas.transform);
             textObj.transform.SetSiblingIndex(0);
 
             // Pan the text upwards and fade it away over time.
@@ -175,13 +175,13 @@ namespace Littale {
         public static void GenerateFloatingText(string text, Transform target, float duration = 1f, float speed = 1f) {
             // If the canvas is not set, end the function so we don't
             // generate any floating text.
-            if (!instance.damageTextCanvas) return;
+            if (!Instance.damageTextCanvas) return;
 
             // Find a relevant camera that we can use to convert the world
             // position to a screen position.
-            if (!instance.referenceCamera) instance.referenceCamera = Camera.main;
+            if (!Instance.referenceCamera) Instance.referenceCamera = Camera.main;
 
-            instance.StartCoroutine(instance.GenerateFloatingTextCoroutine(
+            Instance.StartCoroutine(Instance.GenerateFloatingTextCoroutine(
                 text, target, duration, speed
             ));
         }
