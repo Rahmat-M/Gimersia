@@ -1,12 +1,20 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Littale {
+    [System.Serializable]
+    public struct LevelGrowth {
+        public float damageMultiplierPerLevel;
+        public float hpPerLevel;
+    }
+
     public class CharacterStats : EntityStats {
 
-        public UnityAction<float> OnHealthChanged;
-        public UnityAction OnKilled;
+        public UnityEvent<float> OnHealthChanged;
+        public UnityEvent<float> OnExperienceChanged;
+        public UnityEvent OnKilled;
 
         [SerializeField] CharacterSO characterData;
         public CharacterSO.Stats baseStats;
@@ -15,16 +23,36 @@ namespace Littale {
         public CharacterSO.Stats Stats { get { return actualStats; } set { actualStats = value; } }
         public CharacterSO.Stats Actual { get { return actualStats; } }
 
+        [Header("Growth")]
+        [SerializeField] LevelGrowth growthPerLevel = new LevelGrowth { damageMultiplierPerLevel = 0.1f, hpPerLevel = 5f };
+
         #region Current Stats Properties
-        public float CurrentHealth { get { return health; } set { health = value; } } // TODO: UI update
+        public float CurrentHealth {
+            get { return health; }
+            set {
+                health = value;
+                OnHealthChanged?.Invoke(CurrentHealth); // Invoke health changed event whenever health is set
+            }
+        }
+        public float CurrentArmor {
+            get { return actualStats.armor; }
+            set { actualStats.armor = value; }
+        }
 
         [Header("Visuals")]
-        public ParticleSystem damageEffect; // If damage is dealt.
+        public ParticleSystem healEffect; // Effect to play when healing.
         public ParticleSystem blockedEffect; // If armor completely blocks damage.
 
         //Experience and level of the player
         [Header("Experience/Level")]
-        public int experience = 0;
+        int experience = 0;
+        public int Experience {
+            get { return experience; }
+            set {
+                experience = value;
+                OnExperienceChanged?.Invoke(experience); // Invoke experience changed event whenever experience is set
+            }
+        }
         public int level = 1;
         public int experienceCap;
 
@@ -40,12 +68,18 @@ namespace Littale {
         [Header("Testing Prefabs")]
         [SerializeField] ReactiveCardController reactiveCardPrefab;
         [SerializeField] ActiveCardController activeCardPrefab;
+        [SerializeField] List<PassiveCardController> startingPassiveCards = new List<PassiveCardController>();
 
         //I-Frames
         [Header("I-Frames")]
         public float invincibilityDuration;
         float invincibilityTimer;
         bool isInvincible;
+
+        [Header("Damage Feedback")]
+        public Color damageColor = new Color(1, 0, 0, 1);
+        public float damageFlashDuration = 0.2f;
+        public float deathFadeTime = 0.6f;
 
         CardInventory inventory;
         public CardInventory Inventory { get { return inventory; } }
@@ -63,6 +97,8 @@ namespace Littale {
             baseStats = actualStats = characterData.stats;
             collector.SetRadius(actualStats.magnet);
             health = actualStats.maxHealth;
+
+            inventory.OnPassiveCardAcquired += (_) => RecalculateStats();
         }
 
         protected override void Start() {
@@ -72,9 +108,16 @@ namespace Littale {
             experienceCap = levelRanges[0].experienceCapIncrease;
 
             //Spawn the starting card
-            SpawnCards(characterData.StartingCards);
-            if (reactiveCardPrefab != null) SpawnReactiveCard(reactiveCardPrefab);
-            if (activeCardPrefab != null) SpawnActiveCard(activeCardPrefab);
+            foreach (var card in characterData.StartingCards) {
+                inventory.Add(card);
+            }
+            if (reactiveCardPrefab != null) inventory.Add(reactiveCardPrefab);
+            if (activeCardPrefab != null) inventory.Add(activeCardPrefab);
+            if (startingPassiveCards.Count > 0) {
+                foreach (var pCard in startingPassiveCards) {
+                    inventory.Add(pCard);
+                }
+            }
         }
 
         protected override void Update() {
@@ -94,6 +137,9 @@ namespace Littale {
             foreach (var s in inventory.GetPassiveCardSlots()) {
                 actualStats += s.GetBoosts();
             }
+
+            float levelDamageMultiplier = 1f + ((level - 1) * growthPerLevel.damageMultiplierPerLevel);
+            actualStats.might *= levelDamageMultiplier;
 
             // Create a variable to store all the cumulative multiplier values.
             CharacterSO.Stats multiplier = new CharacterSO.Stats {
@@ -124,15 +170,15 @@ namespace Littale {
         }
 
         public void IncreaseExperience(int amount) {
-            experience += amount;
+            Experience += amount;
             LevelUpChecker();
         }
 
         void LevelUpChecker() {
-            if (experience >= experienceCap) {
+            if (Experience >= experienceCap) {
                 //Level up the player and reduce their experience by the experience cap
                 level++;
-                experience -= experienceCap;
+                Experience -= experienceCap;
 
                 //Find the experience cap increase for the current level range
                 int experienceCapIncrease = 0;
@@ -151,22 +197,27 @@ namespace Littale {
         public override void TakeDamage(float dmg) {
             //If the player is not currently invincible, reduce health and start invincibility
             if (!isInvincible) {
-                dmg -= actualStats.armor;
+                dmg -= CurrentArmor;
 
                 if (dmg > 0) {
                     CurrentHealth -= dmg;
-                    OnHealthChanged?.Invoke(CurrentHealth);
-
-                    if (damageEffect) Destroy(Instantiate(damageEffect.gameObject, transform.position, Quaternion.identity), damageEffect.main.duration);
+                    StartCoroutine(DamageFlash());
 
                     if (CurrentHealth <= 0) Kill();
                 } else {
+                    CurrentArmor -= dmg; //Reduce armor by the blocked damage amount (negative dmg)
                     if (blockedEffect) Destroy(Instantiate(blockedEffect.gameObject, transform.position, Quaternion.identity), blockedEffect.main.duration);
                 }
 
                 invincibilityTimer = invincibilityDuration;
                 isInvincible = true;
             }
+        }
+
+        IEnumerator DamageFlash() {
+            ApplyTint(damageColor);
+            yield return new WaitForSeconds(damageFlashDuration);
+            RemoveTint(damageColor);
         }
 
         public override void Kill() {
@@ -178,12 +229,17 @@ namespace Littale {
             // Only heal the player if their current health is less than their maximum health
             if (CurrentHealth < actualStats.maxHealth) {
                 CurrentHealth += amount;
+                if (healEffect) Destroy(Instantiate(healEffect.gameObject, transform.position, Quaternion.identity), healEffect.main.duration);
 
                 // Make sure the player's health doesn't exceed their maximum health
                 if (CurrentHealth > actualStats.maxHealth) {
                     CurrentHealth = actualStats.maxHealth;
                 }
             }
+        }
+
+        public void RestoreArmor(float amount) {
+            CurrentArmor += amount;
         }
 
         void Recover() {
@@ -197,45 +253,10 @@ namespace Littale {
             }
         }
 
-        public void SpawnCard(CardController card) {
-            //Spawn the starting card
-            GameObject spawnedCard = Instantiate(card.gameObject, transform.position, Quaternion.identity);
-            spawnedCard.transform.SetParent(transform);    //Set the card to be a child of the player
-
-            inventory.Add(spawnedCard.GetComponent<CardController>());   //Add the card to it's inventory slot
-        }
-
-        public void SpawnCards(List<CardController> cards) {
-            if (cards == null || cards.Count <= 0) return;
-            foreach (var card in cards) {
-                SpawnCard(card);
+        void OnDestroy() {
+            if (inventory != null) {
+                inventory.OnPassiveCardAcquired = null;
             }
-        }
-
-        public void SpawnReactiveCard(ReactiveCardController reactiveCard) {
-            //Spawn the reactive card
-            GameObject spawnedReactiveItem = Instantiate(reactiveCard.gameObject, transform.position, Quaternion.identity);
-            spawnedReactiveItem.transform.SetParent(transform);    //Set the reactive card to be a child of the player
-
-            ReactiveCardController card = spawnedReactiveItem.GetComponent<ReactiveCardController>();
-            inventory.Add(card); //Add the reactive card to it's 
-        }
-
-        public void SpawnActiveCard(ActiveCardController activeCard) {
-            //Spawn the active card
-            GameObject spawnedActiveItem = Instantiate(activeCard.gameObject, transform.position, Quaternion.identity);
-            spawnedActiveItem.transform.SetParent(transform);    //Set the active card to be a child of the player
-
-            ActiveCardController card = spawnedActiveItem.GetComponent<ActiveCardController>();
-            inventory.Add(card); //Add the active card to it's slot
-        }
-
-        public void SpawnPassiveCard(PassiveCardController passiveCard) {
-            //Spawn the passive card
-            GameObject spawnedPassiveItem = Instantiate(passiveCard.gameObject, transform.position, Quaternion.identity);
-            spawnedPassiveItem.transform.SetParent(transform);    //Set the passive card to be a child of the player
-
-            inventory.Add(spawnedPassiveItem.GetComponent<PassiveCardController>()); //Add the passive card to it's slot
         }
 
 #if UNITY_EDITOR

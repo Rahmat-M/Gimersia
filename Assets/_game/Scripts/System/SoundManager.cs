@@ -56,6 +56,11 @@ namespace Littale {
             }
         }
 
+        public void PlayUnique(string name) {
+            StopAllMusic();
+            Play(name);
+        }
+
         public void Stop(string name) {
             Sound s = FindSound(name);
             if (s == null) {
@@ -63,6 +68,12 @@ namespace Littale {
                 return;
             }
             s.source.Stop();
+        }
+
+        public void StopAllMusic() {
+            foreach (Sound s in musicSounds) {
+                s.source.Stop();
+            }
         }
 
         private Sound FindSound(string name) {

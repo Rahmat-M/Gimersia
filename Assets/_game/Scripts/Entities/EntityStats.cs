@@ -9,6 +9,7 @@ namespace Littale {
     /// </summary>
     public abstract class EntityStats : MonoBehaviour {
         protected float health;
+        protected float armor;
 
         // Tinting system.
         protected SpriteRenderer sprite;

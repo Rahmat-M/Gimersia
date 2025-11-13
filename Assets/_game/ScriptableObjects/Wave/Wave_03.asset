@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce697994fed5ad4995577065ab781dc, type: 3}
+  m_Name: Wave_03
+  m_EditorClassIdentifier: Assembly-CSharp::Littale.WaveData
+  possibleSpawnPrefabs:
+  - {fileID: 4361609688999816806, guid: 094c63bbbdf61e147b30b346361a2657, type: 3}
+  - {fileID: 4361609688999816806, guid: 779245f711c345b46a0b70947e3a9ed1, type: 3}
+  - {fileID: 4361609688999816806, guid: eb63abc35278ee24595eeedcf0ad6066, type: 3}
+  spawnInterval: {x: 1.5, y: 1.5}
+  spawnsPerTick: {x: 1, y: 2}
+  duration: 60
+  startingCount: 10
+  totalSpawns: 45
+  exitConditions: 2
+  mustKillAll: 1
+  spawnCount: 0

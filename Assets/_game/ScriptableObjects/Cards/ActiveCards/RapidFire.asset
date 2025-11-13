@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: RapidFire
   m_EditorClassIdentifier: Assembly-CSharp::Littale.ActiveCardSO
   prefab: {fileID: 5854246937172581989, guid: f865f5d513774f243aa38ca89fd4ef23, type: 3}
+  behaviourPrefab: {fileID: 0}
   cardType: 3
   icon: {fileID: -5493508554759021246, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
   cardName: Rapid Fire
   description: Shoot multiple projectile for 10s
-  cooldown: 60
+  cooldown: 45
   isContinuousSkill: 0
   effectRadius: 0
   effectAmount: 0
   effectDuration: 10
   skillEffectPrefab: {fileID: 0}
-  skillProjectilePrefab: {fileID: 4739637705610113016, guid: 892b51425577cd948b800440a4d21c57, type: 3}
+  skillProjectilePrefab: {fileID: 4739637705610113016, guid: a72f96f24431c12468128a2b8edbe1f5, type: 3}
   multiShotCount: 0

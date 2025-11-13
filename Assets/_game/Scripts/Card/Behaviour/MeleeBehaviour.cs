@@ -47,7 +47,7 @@ namespace Littale {
         protected virtual void OnTriggerEnter2D(Collider2D col) {
             if (col.gameObject.CompareTag("Enemy") && !markedEnemies.Contains(col.gameObject)) {
                 if (col.gameObject.TryGetComponent<EnemyStats>(out EnemyStats enemyStats)) {
-                    enemyStats.TakeDamage(GetCurrentDamage());
+                    enemyStats.TakeDamage(GetCurrentDamage(), transform.position);
                     markedEnemies.Add(col.gameObject);
                 }
             }

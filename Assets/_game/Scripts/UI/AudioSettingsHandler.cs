@@ -28,9 +28,9 @@ namespace Littale {
         private float lastSfxPlayTime;
 
         void Start() {
-            float masterVol = PlayerPrefs.GetFloat(MASTER_KEY, 1f);
-            float musicVol = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
-            float sfxVol = PlayerPrefs.GetFloat(SFX_KEY, 1f);
+            float masterVol = PlayerPrefs.GetFloat(MASTER_KEY, 0.5f);
+            float musicVol = PlayerPrefs.GetFloat(MUSIC_KEY, 0.5f);
+            float sfxVol = PlayerPrefs.GetFloat(SFX_KEY, 0.5f);
 
             masterSlider.SetValueWithoutNotify(masterVol);
             musicSlider.SetValueWithoutNotify(musicVol);

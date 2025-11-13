@@ -156,6 +156,10 @@ namespace Littale {
             }
         }
 
+        public void AddCardToPile(CardController card) {
+            pile.Add(card);
+        }
+
         public List<CardController> GetHand() => hand;
         public List<CardController> GetPile() => pile;
         public List<CardController> GetDiscard() => discard;

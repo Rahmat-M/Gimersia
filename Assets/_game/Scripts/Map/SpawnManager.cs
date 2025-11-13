@@ -1,70 +1,154 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
+using TMPro;
 
 namespace Littale {
     public class SpawnManager : MonoBehaviour {
 
-        int currentWaveIndex; //The index of the current wave [Remember, a list starts from 0]
-        int currentWaveSpawnCount = 0; // Tracks how many enemies current wave has spawned.
-        List<GameObject> existingSpawns = new List<GameObject>();
+        public UnityEvent<float> OnTimerTick;
+        public UnityEvent<int> OnWaveUpdated;
+        public UnityEvent OnIntermezzoStart;
+        public UnityEvent OnIntermezzoEnd;
 
+        public enum WaveState { Spawning, Intermezzo, Finished }
+
+        [Header("Game State")]
+        public WaveState state = WaveState.Spawning;
+        public int currentWaveIndex; //The index of the current wave [Remember, a list starts from 0]
+
+        [Header("Intermezzo Settings")]
+        public float intermezzoDuration = 30f; // Durasi istirahat (30 detik)
+        [HideInInspector] public float currentIntermezzoTimer;
+
+        [Header("Wave Data")]
         public WaveData[] data;
         public Camera referenceCamera;
 
         [Tooltip("If there are more than this number of enemies, stop spawning any more. For performance.")]
         public int maximumEnemyCount = 300;
+
+        [Header("Results UI")]
+        [SerializeField] PopupPanel resultsPanel;
+        [SerializeField] TMP_Text headerText;
+        [SerializeField] TMP_Text waveText;
+        [SerializeField] TMP_Text coinsText;
+
+        int currentWaveSpawnCount = 0; // Tracks how many enemies current wave has spawned.
+        List<GameObject> existingSpawns = new List<GameObject>();
         float spawnTimer; // Timer used to determine when to spawn the next group of enemy.
         float currentWaveDuration = 0f;
         public bool boostedByCurse = true;
 
         public static SpawnManager instance;
+        bool waveEnded = false;
 
         void Start() {
             if (instance) Debug.LogWarning("There is more than 1 Spawn Manager in the Scene! Please remove the extras.");
             instance = this;
+            state = WaveState.Spawning;
         }
 
         void Update() {
-            // Updates the spawn timer at every frame.
+            if (waveEnded) return;
+
+            switch (state) {
+                case WaveState.Spawning:
+                    HandleSpawningState();
+                    OnTimerTick?.Invoke(currentWaveDuration);
+                    break;
+                case WaveState.Intermezzo:
+                    HandleIntermezzoState();
+                    OnTimerTick?.Invoke(currentIntermezzoTimer);
+                    break;
+                case WaveState.Finished:
+                    resultsPanel.Open();
+                    Time.timeScale = 0f;
+                    if (currentWaveIndex >= data.Length - 1) {
+                        waveText.text = "10";
+                        headerText.text = "Victory!";
+                        coinsText.text = "Total Coins: " + GameManager.Instance.characterCollector.GetCoins();
+                    } else {
+                        waveText.text = (currentWaveIndex + 1).ToString();
+                        headerText.text = "Defeat!";
+                        coinsText.text = "Total Coins: " + GameManager.Instance.characterCollector.GetCoins();
+                    }
+                    waveEnded = true;
+                    break;
+            }
+        }
+
+        void HandleSpawningState() {
             spawnTimer -= Time.deltaTime;
             currentWaveDuration += Time.deltaTime;
 
             if (spawnTimer <= 0) {
-                // Check if we are ready to move on to the new wave.
                 if (HasWaveEnded()) {
-                    currentWaveIndex++;
-                    currentWaveDuration = currentWaveSpawnCount = 0;
-
-                    // If we have gone through all the waves, disable this component.
-                    if (currentWaveIndex >= data.Length) {
-                        Debug.Log("All waves have been spawned! Shutting down.", this);
-                        enabled = false;
-                    }
-
+                    EndCurrentWave();
                     return;
                 }
 
-                // Do not spawn enemies if we do not meet the conditions to do so.
                 if (!CanSpawn()) {
                     ActivateCooldown();
                     return;
                 }
 
-                // Get the array of enemies that we are spawning for this tick.
-                GameObject[] spawns = data[currentWaveIndex].GetSpawns(EnemyStats.count);
-
-                // Loop through and spawn all the prefabs.
-                foreach (GameObject prefab in spawns) {
-                    // Stop spawning enemies if we exceed the limit.
-                    if (!CanSpawn()) continue;
-
-                    // Spawn the enemy.
-                    existingSpawns.Add(Instantiate(prefab, GeneratePosition(), Quaternion.identity));
-                    currentWaveSpawnCount++;
-                }
-
+                SpawnEnemies();
                 ActivateCooldown();
             }
+        }
+
+        void HandleIntermezzoState() {
+            currentIntermezzoTimer -= Time.deltaTime;
+
+            if (currentIntermezzoTimer <= 0) StartNextWave();
+        }
+
+        void EndCurrentWave() {
+            // existingSpawns.ForEach(x => { if(x) Destroy(x); });
+            // existingSpawns.Clear();
+
+            // Check if we have gone through all the waves.
+            if (currentWaveIndex >= data.Length - 1) {
+                state = WaveState.Finished;
+                enabled = false;
+                return;
+            }
+
+            state = WaveState.Intermezzo;
+            SoundManager.Instance.PlayUnique("IntermezzoTheme");
+            currentIntermezzoTimer = intermezzoDuration;
+            OnWaveUpdated?.Invoke(currentWaveIndex);
+            OnIntermezzoStart?.Invoke();
+        }
+
+        void StartNextWave() {
+            currentWaveIndex++;
+
+            currentWaveDuration = 0f;
+            currentWaveSpawnCount = 0;
+
+            state = WaveState.Spawning;
+            SoundManager.Instance.PlayUnique("GameplayTheme");
+            OnWaveUpdated?.Invoke(currentWaveIndex);
+            OnIntermezzoEnd?.Invoke();
+        }
+
+        void SpawnEnemies() {
+            // Get the array of enemies that we are spawning for this tick.
+            GameObject[] spawns = data[currentWaveIndex].GetSpawns(EnemyStats.count);
+
+            foreach (GameObject prefab in spawns) {
+                if (!CanSpawn()) continue;
+                existingSpawns.Add(Instantiate(prefab, GeneratePosition(), Quaternion.identity));
+                currentWaveSpawnCount++;
+            }
+        }
+
+        public void SkipIntermezzo() {
+            if (state != WaveState.Intermezzo) return;
+            currentIntermezzoTimer = 0f;
+            StartNextWave();
         }
 
         // Resets the spawn interval.
@@ -113,6 +197,17 @@ namespace Littale {
                 return false;
 
             return true;
+        }
+
+        public float GetTimer() {
+            switch (state) {
+                case WaveState.Spawning:
+                    return spawnTimer;
+                case WaveState.Intermezzo:
+                    return currentIntermezzoTimer;
+                default:
+                    return 0f;
+            }
         }
 
         void Reset() {

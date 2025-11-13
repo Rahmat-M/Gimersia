@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 namespace Littale {
     public class RafidFireActiveCard : ActiveCardController {
 
+        public float fireRate = 0.2f;
+
         private Coroutine shootingCoroutine;
         private bool isShooting = false;
 
@@ -30,8 +32,8 @@ namespace Littale {
             while (Time.time < endTime) {
                 FireOneProjectile();
 
-                // Tunggu sejenak sebelum tembakan berikutnya (Fire Rate)
-                yield return new WaitForSeconds(0.1f);
+                // wait for next shot (fire rate)
+                yield return new WaitForSeconds(fireRate);
             }
 
             isShooting = false;
@@ -50,6 +52,7 @@ namespace Littale {
             Vector2 finalDirection = spreadRotation * aimDirection;
 
             GameObject projObj = Instantiate(cardData.SkillProjectilePrefab, transform.position, Quaternion.identity);
+            SoundManager.Instance.Play("projectile_splash");
 
             if (projObj.TryGetComponent(out ProjectileBehaviour projScript)) {
                 projScript.DirectionChecker(finalDirection);

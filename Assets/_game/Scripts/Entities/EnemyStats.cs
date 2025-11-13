@@ -1,9 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace Littale {
-    [RequireComponent(typeof(SpriteRenderer))]
     public class EnemyStats : EntityStats {
 
         [System.Serializable]
@@ -157,6 +155,16 @@ namespace Littale {
             // actualStats = (baseStats * curse) ^ level;
             actualStats = baseStats; // TODO: Implement curse and level boosts.
 
+            if (SpawnManager.instance != null) {
+                float currentWave = SpawnManager.instance.currentWaveIndex;
+
+                float hpMultiplier = 1 + (currentWave * 0.2f);
+                float dmgMultiplier = 1 + (currentWave * 0.1f);
+
+                actualStats.maxHealth *= hpMultiplier;
+                actualStats.damage *= dmgMultiplier;
+            }
+
             // Create a variable to store all the cumulative multiplier values.
             Stats multiplier = new Stats {
                 maxHealth = 1f,
@@ -184,6 +192,7 @@ namespace Littale {
         public override void TakeDamage(float dmg) {
             health -= dmg;
 
+
             // If damage is exactly equal to maximum health, we assume it is an insta-kill and 
             // check for the kill resistance to see if we can dodge this damage.
             if (dmg == actualStats.maxHealth) {
@@ -191,13 +200,15 @@ namespace Littale {
                 // Gets a random value between 0 to 1, and if the number is 
                 // below the kill resistance, then we avoid getting killed.
                 if (Random.value < actualStats.resistances.kill) {
-                    return; // Don't take damage.
+                    health = 1; // Set health to 1 instead of 0.
+                    return;
                 }
             }
 
             // Create the text popup when enemy takes damage.
             if (dmg > 0) {
                 StartCoroutine(DamageFlash());
+                SoundManager.Instance.Play("enemy_hit");
                 // GameManager.GenerateFloatingText(Mathf.FloorToInt(dmg).ToString(), transform);
             }
 
@@ -239,8 +250,9 @@ namespace Littale {
         public override void Kill() {
             // Enable drops if the enemy is killed,
             // since drops are disabled by default.
-            // DropRateManager drops = GetComponent<DropRateManager>();
-            // if (drops) drops.active = true;
+            SoundManager.Instance.Play("enemy_die");
+            DropRateManager drops = GetComponent<DropRateManager>();
+            if (drops) drops.active = true;
 
             StartCoroutine(KillFade());
         }

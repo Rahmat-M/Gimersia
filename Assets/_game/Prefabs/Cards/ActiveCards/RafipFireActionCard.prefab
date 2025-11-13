@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Littale.HealActiveCard
   cardData: {fileID: 11400000, guid: de745d1640a4b0f4a8d5ed4c562f8a1a, type: 2}
+  fireRate: 0.3

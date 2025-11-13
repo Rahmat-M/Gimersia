@@ -25,7 +25,7 @@ namespace Littale {
             defaultScaleX = transform.localScale.x;
 
             rb = GetComponent<Rigidbody2D>();
-            // spawnedOutOfFrame = !SpawnManager.IsWithinBoundaries(transform);
+            spawnedOutOfFrame = !SpawnManager.IsWithinBoundaries(transform);
             stats = GetComponent<EnemyStats>();
 
             // Picks a random player on the screen, instead of always picking the 1st player.
@@ -48,30 +48,30 @@ namespace Littale {
             if (!player) return;
 
             Vector3 scale = transform.localScale;
-            scale.x = player.position.x < transform.position.x ? -defaultScaleX : defaultScaleX;
+            scale.x = player.position.x > transform.position.x ? -defaultScaleX : defaultScaleX;
             transform.localScale = scale;
         }
 
         // If the enemy falls outside of the frame, handle it.
         protected virtual void HandleOutOfFrameAction() {
             // Handle the enemy when it is out of frame.
-            // if (!SpawnManager.IsWithinBoundaries(transform)) {
-            //     switch (outOfFrameAction) {
-            //         case OutOfFrameAction.none:
-            //         default:
-            //             break;
-            //         case OutOfFrameAction.respawnAtEdge:
-            //             // If the enemy is outside the camera frame, teleport it back to the edge of the frame.
-            //             transform.position = SpawnManager.GeneratePosition();
-            //             break;
-            //         case OutOfFrameAction.despawn:
-            //             // Don't destroy if it is spawned outside the frame.
-            //             if (!spawnedOutOfFrame) {
-            //                 Destroy(gameObject);
-            //             }
-            //             break;
-            //     }
-            // } else spawnedOutOfFrame = false;
+            if (!SpawnManager.IsWithinBoundaries(transform)) {
+                switch (outOfFrameAction) {
+                    case OutOfFrameAction.none:
+                    default:
+                        break;
+                    case OutOfFrameAction.respawnAtEdge:
+                        // If the enemy is outside the camera frame, teleport it back to the edge of the frame.
+                        transform.position = SpawnManager.GeneratePosition();
+                        break;
+                    case OutOfFrameAction.despawn:
+                        // Don't destroy if it is spawned outside the frame.
+                        if (!spawnedOutOfFrame) {
+                            Destroy(gameObject);
+                        }
+                        break;
+                }
+            } else spawnedOutOfFrame = false;
         }
 
         // This is meant to be called from other scripts to create knockback.

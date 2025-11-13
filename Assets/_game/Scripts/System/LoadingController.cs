@@ -10,6 +10,10 @@ namespace Littale {
         public float minimumWaitTime = 3.0f;
 
         void Start() {
+            if (SoundManager.Instance != null) {
+                SoundManager.Instance.StopAllMusic();
+            }
+
             StartCoroutine(LoadSceneAsync());
         }
 

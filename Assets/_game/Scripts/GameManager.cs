@@ -33,7 +33,7 @@ namespace Littale {
         [Header("Screens")]
         public GameObject pauseScreen;
         public GameObject resultsScreen;
-        public GameObject levelUpScreen;
+        public LevelUpManager levelUpManager;
         int stackedLevelUps = 0; // If we try to StartLevelUp() multiple times.
 
         [Header("Results Screen Displays")]
@@ -87,6 +87,8 @@ namespace Littale {
             return Mathf.Max(1, totalLevel);
         }
 
+        public CharacterCollector characterCollector;
+
         void Awake() {
             players = FindObjectsByType<CharacterStats>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
@@ -104,13 +106,19 @@ namespace Littale {
             DisableScreens();
         }
 
+        void Start() {
+            if (SoundManager.Instance != null) {
+                SoundManager.Instance.Play("GameplayTheme");
+            }
+        }
+
         void Update() {
             switch (currentState) {
                 case GameState.Gameplay:
                     // Code for the gameplay state
                     Time.timeScale = 1.0f;
                     CheckForPauseAndResume();
-                    UpdateStopwatch();
+                    // UpdateStopwatch();
                     break;
                 case GameState.Paused:
                     // Code for the paused state
@@ -223,7 +231,7 @@ namespace Littale {
         void DisableScreens() {
             pauseScreen.SetActive(false);
             resultsScreen.SetActive(false);
-            levelUpScreen.SetActive(false);
+            levelUpManager.choiceWindow.gameObject.SetActive(false);
         }
 
         public void GameOver() {
@@ -298,19 +306,15 @@ namespace Littale {
             ChangeState(GameState.LevelUp);
 
             // If the level up screen is already active, record it.
-            if (levelUpScreen.activeSelf) stackedLevelUps++;
+            if (levelUpManager.choiceWindow.gameObject.activeSelf) stackedLevelUps++;
             else {
-                levelUpScreen.SetActive(true);
-                Time.timeScale = 0f; //Pause the game for now
-
-                foreach (CharacterStats p in players)
-                    p.SendMessage("RemoveAndApplyUpgrades");
+                levelUpManager.ShowLevelUpOptions();
+                Time.timeScale = 0f;    //Pause the game
             }
         }
 
         public void EndLevelUp() {
             Time.timeScale = 1f;    //Resume the game
-            levelUpScreen.SetActive(false);
             ChangeState(GameState.Gameplay);
 
             if (stackedLevelUps > 0) {

@@ -7,6 +7,7 @@ namespace Littale {
 
         public UnityAction<ReactiveCardController> OnReactiveCardAcquired;
         public UnityAction<ActiveCardController> OnActiveCardAdded;
+        public UnityAction<PassiveCardController> OnPassiveCardAcquired;
 
         [SerializeField] List<CardController> cardSlots = new List<CardController>();
         [SerializeField] List<PassiveCardController> passiveCardSlots = new List<PassiveCardController>();
@@ -15,13 +16,16 @@ namespace Littale {
 
         public bool Add(CardController card) {
             if (card == null) return false;
-            cardSlots.Add(card);
+            CardController spawnedCard = InstantiateCard(card);
+            cardSlots.Add(spawnedCard);
             return true;
         }
 
         public bool Add(PassiveCardController card) {
             if (card == null) return false;
-            passiveCardSlots.Add(card);
+            PassiveCardController spawnedCard = InstantiateCard(card);
+            passiveCardSlots.Add(spawnedCard);
+            OnPassiveCardAcquired?.Invoke(spawnedCard);
             return true;
         }
 
@@ -29,11 +33,13 @@ namespace Littale {
             if (card == null) return false;
 
             if (HasReactiveCard()) {
-                // TODO: Logic untuk menghancurkan/melempar GameObject kartu lama
+                Destroy(reactionCardSlot.gameObject);
+                reactionCardSlot = null;
             }
 
-            reactionCardSlot = card;
-            OnReactiveCardAcquired?.Invoke(card);
+            ReactiveCardController spawnedCard = InstantiateCard(card);
+            reactionCardSlot = spawnedCard;
+            OnReactiveCardAcquired?.Invoke(spawnedCard);
             return true;
         }
 
@@ -41,11 +47,13 @@ namespace Littale {
             if (card == null) return false;
 
             if (HasActiveCard()) {
-                // TODO: Logic untuk menghancurkan/melempar GameObject kartu lama
+                Destroy(activeCardSlot.gameObject);
+                activeCardSlot = null;
             }
 
-            activeCardSlot = card;
-            OnActiveCardAdded?.Invoke(card);
+            ActiveCardController spawnedCard = InstantiateCard(card);
+            activeCardSlot = spawnedCard;
+            OnActiveCardAdded?.Invoke(spawnedCard);
             return true;
         }
 
@@ -103,6 +111,11 @@ namespace Littale {
 
         public ActiveCardController GetActiveCard() {
             return activeCardSlot;
+        }
+
+        T InstantiateCard<T>(T card) where T : BaseCard {
+            GameObject spawnedCard = Instantiate(card.gameObject, transform.position, Quaternion.identity, transform);
+            return spawnedCard.GetComponent<T>();
         }
 
         void OnDestroy() {

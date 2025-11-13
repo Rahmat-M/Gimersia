@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; // Penting untuk '.Except()' dan '.OrderBy()'
+using System.Linq;
 
 namespace Littale {
     public class LevelUpManager : MonoBehaviour {
@@ -10,17 +10,16 @@ namespace Littale {
 
         CharacterStats characterStats;
         CardInventory cardInventory;
-        UICardChoiceWindow choiceWindow;
+        DeckManager deckManager;
+        public UICardChoiceWindow choiceWindow;
 
         void Awake() {
             characterStats = FindFirstObjectByType<CharacterStats>();
             cardInventory = FindFirstObjectByType<CardInventory>();
-            choiceWindow = FindFirstObjectByType<UICardChoiceWindow>();
+            deckManager = FindFirstObjectByType<DeckManager>();
         }
 
         public void ShowLevelUpOptions() {
-            Time.timeScale = 0f;
-
             List<BaseCardSO> availableOptions = GetAvailableCardOptions();
 
             List<BaseCardSO> choices = availableOptions
@@ -43,13 +42,15 @@ namespace Littale {
                 return;
             }
 
-            GameObject cardObject = Instantiate(chosenCardData.Prefab, transform.position, Quaternion.identity);
+            GameObject cardObject = Instantiate(chosenCardData.Prefab, characterStats.transform.position, Quaternion.identity);
             cardObject.transform.parent = characterStats.transform;
 
             switch (chosenCardData.cardType) {
                 case CardType.MainDeck:
-                    if (cardObject.TryGetComponent(out CardController mainCard))
+                    if (cardObject.TryGetComponent(out CardController mainCard)) {
                         cardInventory.Add(mainCard);
+                        deckManager.AddCardToPile(mainCard);
+                    }
                     break;
                 case CardType.Passive:
                     if (cardObject.TryGetComponent(out PassiveCardController passiveCard))
@@ -65,33 +66,30 @@ namespace Littale {
                     break;
             }
 
-            // 3. Tutup jendela pilihan
             CloseLevelUpWindow();
         }
 
         public void CloseLevelUpWindow() {
             choiceWindow.gameObject.SetActive(false);
-            Time.timeScale = 1f; // Lanjutkan permainan
+            GameManager.Instance.EndLevelUp();
         }
 
         private List<BaseCardSO> GetAvailableCardOptions() {
-            HashSet<BaseCardSO> ownedCards = new HashSet<BaseCardSO>();
+            HashSet<BaseCardSO> cardsToExclude = new HashSet<BaseCardSO>();
 
-            foreach (var card in cardInventory.GetCardSlots())
-                if (card.cardData != null) ownedCards.Add(card.cardData);
+            if (cardInventory.HasReactiveCard()) {
+                foreach (var card in allCardsInGame) {
+                    if (card.cardType == CardType.Reactive) cardsToExclude.Add(card);
+                }
+            }
 
-            foreach (PassiveCardController card in cardInventory.GetPassiveCardSlots())
-                if (card.cardData != null) ownedCards.Add(card.cardData);
+            if (cardInventory.HasActiveCard()) {
+                foreach (var card in allCardsInGame) {
+                    if (card.cardType == CardType.Active) cardsToExclude.Add(card);
+                }
+            }
 
-            var reactiveCard = cardInventory.GetReactiveCard();
-            if (reactiveCard != null && reactiveCard.cardData != null)
-                ownedCards.Add(reactiveCard.cardData);
-
-            var activeCard = cardInventory.GetActiveCard();
-            if (activeCard != null && activeCard.cardData != null)
-                ownedCards.Add(activeCard.cardData);
-
-            return allCardsInGame.Except(ownedCards).ToList();
+            return allCardsInGame.Except(cardsToExclude).ToList();
         }
 
     }

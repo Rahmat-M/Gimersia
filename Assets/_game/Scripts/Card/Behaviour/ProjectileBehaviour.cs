@@ -49,7 +49,7 @@ namespace Littale {
         protected virtual void OnTriggerEnter2D(Collider2D col) {
             if (col.gameObject.CompareTag("Enemy")) {
                 if (col.gameObject.TryGetComponent<EnemyStats>(out EnemyStats enemyStats)) {
-                    enemyStats.TakeDamage(GetCurrentDamage());
+                    enemyStats.TakeDamage(GetCurrentDamage(), transform.position);
                     ReducePierce();
                 }
             }

@@ -11,6 +11,7 @@ namespace Littale {
             [Range(0, 1)] public float luckScaling = 1;
         }
         public bool active = false;
+        public bool onlyDropOne = true;
         public List<Drops> drops;
 
         void OnDestroy() {
@@ -28,10 +29,17 @@ namespace Littale {
                     possibleDrops.Add(rate);
                 }
             }
-            //Check if there are possible drops
-            if (possibleDrops.Count > 0) {
-                Drops drops = possibleDrops[UnityEngine.Random.Range(0, possibleDrops.Count)];
-                Instantiate(drops.itemPrefab, transform.position, Quaternion.identity);
+
+            // Check if we should drop items one or multiple
+            if (!onlyDropOne) {
+                foreach (Drops drop in possibleDrops) {
+                    Instantiate(drop.itemPrefab, transform.position, Quaternion.identity);
+                }
+            } else {
+                if (possibleDrops.Count > 0) {
+                    Drops drops = possibleDrops[UnityEngine.Random.Range(0, possibleDrops.Count)];
+                    Instantiate(drops.itemPrefab, transform.position, Quaternion.identity);
+                }
             }
         }
     }

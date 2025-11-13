@@ -24,10 +24,7 @@ namespace Littale {
                 return;
             }
 
-            // (Opsional) Mainkan SFX, partikel, aktifkan collider di sini
-            // AudioManager.Instance.Play("PlayerSpinAttack");
-            // brushVisualTransform.GetComponent<ParticleSystem>().Play();
-            // brushVisualTransform.GetComponent<Collider2D>().enabled = true;
+            SoundManager.Instance.Play("spin_attack");
 
             orbitTween = Tween.EulerAngles(orbitTransform, Vector3.zero, new Vector3(0, 0, 360),
                                                 spinDuration,

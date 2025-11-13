@@ -203,7 +203,7 @@ TextureImporter:
         height: 1314
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 318, y: 333, z: 334, w: 347}
       customData: 
       outline: []
       physicsShape: []
@@ -264,12 +264,12 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3340
-        y: 3921
+        y: 3933
         width: 290
-        height: 112
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 31, y: 23, z: 33, w: 20}
       customData: 
       outline: []
       physicsShape: []
@@ -291,7 +291,7 @@ TextureImporter:
         height: 120
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 8, y: 10, z: 11, w: 28}
       customData: 
       outline: []
       physicsShape: []
@@ -678,7 +678,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI Atlas 2_22
+      name: chibi_bukan_lu
       rect:
         serializedVersion: 2
         x: 1992
@@ -838,7 +838,6 @@ TextureImporter:
       UI Atlas 2_2: -8698669180560306288
       UI Atlas 2_20: -1567502352506055704
       UI Atlas 2_21: -2515942944830869683
-      UI Atlas 2_22: -10916449547512069
       UI Atlas 2_23: 4187847562494764303
       UI Atlas 2_24: -8527118101989814475
       UI Atlas 2_25: -2717551233416051759
@@ -851,6 +850,7 @@ TextureImporter:
       UI Atlas 2_7: -5683839899780635693
       UI Atlas 2_8: -5774224808461137056
       UI Atlas 2_9: 2875862886672679970
+      chibi_bukan_lu: -10916449547512069
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -5,7 +5,6 @@ namespace Littale {
     /// This is a class that can be subclassed by any other class to make the sprites
     /// of the class automatically sort themselves by the y-axis.
     /// </summary>
-    [RequireComponent(typeof(SpriteRenderer))]
     public abstract class Sortable : MonoBehaviour {
 
         protected SpriteRenderer sorted;
@@ -16,6 +15,11 @@ namespace Littale {
         // Start is called before the first frame update
         protected virtual void Start() {
             sorted = GetComponent<SpriteRenderer>();
+            if (sorted == null) sorted = GetComponentInChildren<SpriteRenderer>();
+            if (sorted == null) {
+                Debug.LogWarning("Sortable component added to an object without a SpriteRenderer.");
+                return;
+            }
         }
 
         // Update is called once per frame

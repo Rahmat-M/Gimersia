@@ -58,7 +58,6 @@ namespace Littale {
             GameObject uiCard = cardSlot.gameObject;
             cardVisuals[card] = uiCard;
 
-            SoundManager.Instance.Play("card_drawn");
             StartCoroutine(AnimateCardAppearance(cardSlot.gameObject, 0.2f));
         }
 
@@ -107,8 +106,6 @@ namespace Littale {
 
             Vector3 startScale = rect.localScale;
             Vector3 endScale = Vector3.one * 0.7f;
-
-            SoundManager.Instance.Play("card_discarded");
 
             float t = 0f;
             while (t < 1f) {

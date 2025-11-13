@@ -51,10 +51,7 @@ namespace Littale {
         }
 
         public void Trigger() {
-            if (onCooldown) {
-                Debug.LogWarning("Card is on cooldown!");
-                return;
-            }
+            if (onCooldown) return;
 
             Apply();
             Applied();
@@ -63,16 +60,16 @@ namespace Littale {
         void CheckReactionType() {
             switch (cardData.ReactionType) {
                 case ReactiveCardSO.ReactiveType.HealthBelow:
-                    characterStats.OnHealthChanged += CheckHealthBelow;
+                    characterStats.OnHealthChanged.AddListener(CheckHealthBelow);
                     break;
                 case ReactiveCardSO.ReactiveType.HealthAbove:
-                    characterStats.OnHealthChanged += CheckHealthAbove;
+                    characterStats.OnHealthChanged.AddListener(CheckHealthAbove);
                     break;
                 case ReactiveCardSO.ReactiveType.OnDamaged:
-                    characterStats.OnHealthChanged += CheckGotDamaged;
+                    characterStats.OnHealthChanged.AddListener(CheckGotDamaged);
                     break;
                 case ReactiveCardSO.ReactiveType.OnKill:
-                    characterStats.OnKilled += CheckGotKilled;
+                    characterStats.OnKilled.AddListener(CheckGotKilled);
                     break;
                 case ReactiveCardSO.ReactiveType.TimeInterval:
                     currentInterval = cardData.TriggerThreshold;
@@ -130,22 +127,8 @@ namespace Littale {
 
         void OnDestroy() {
             // Unsubscribe from events to prevent memory leaks
-            if (characterStats != null) {
-                switch (cardData.ReactionType) {
-                    case ReactiveCardSO.ReactiveType.HealthBelow:
-                        characterStats.OnHealthChanged -= CheckHealthBelow;
-                        break;
-                    case ReactiveCardSO.ReactiveType.HealthAbove:
-                        characterStats.OnHealthChanged -= CheckHealthAbove;
-                        break;
-                    case ReactiveCardSO.ReactiveType.OnDamaged:
-                        characterStats.OnHealthChanged -= CheckGotDamaged;
-                        break;
-                    case ReactiveCardSO.ReactiveType.OnKill:
-                        characterStats.OnKilled -= CheckGotKilled;
-                        break;
-                }
-            }
+            characterStats.OnHealthChanged.RemoveAllListeners();
+            characterStats.OnKilled.RemoveAllListeners();
 
             // Clear delegates
             OnCardPutOnCooldown = null;

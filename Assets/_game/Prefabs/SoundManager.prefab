@@ -46,7 +46,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Littale.AudioManager
   musicMixerGroup: {fileID: -3611999227702210463, guid: 90739abc81ee9af4f8176e9ae33d01ad, type: 2}
   sfxMixerGroup: {fileID: -2237894061872032674, guid: 90739abc81ee9af4f8176e9ae33d01ad, type: 2}
-  musicSounds: []
+  musicSounds:
+  - name: MainMenuTheme
+    clip: {fileID: 8300000, guid: 630f03d34dc5ecd4fb5aef696ecdb1f8, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: GameplayTheme
+    clip: {fileID: 8300000, guid: fd554f084bb808e4d9d2a6976e579f01, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: IntermezzoTheme
+    clip: {fileID: 8300000, guid: 8dd0774303dcfd047a6740f98a0d687a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
   sfxSounds:
   - name: cancel
     clip: {fileID: 8300000, guid: 083cdb3a7db3be74b82031195ce69a63, type: 3}
@@ -78,26 +96,8 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: swipe
-    clip: {fileID: 8300000, guid: 61c6d1cf952f48e4a83b89efdba5adf1, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: card_drawn
-    clip: {fileID: 8300000, guid: 2e375c1064585da4aa0a7fd1abaff178, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
   - name: card_played
     clip: {fileID: 8300000, guid: 10eb0b4f3b8d84a488a067a8e80db70a, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: card_discarded
-    clip: {fileID: 8300000, guid: 91d745f1ff85da04fa7de79b39f484d3, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -116,6 +116,36 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: card_done_cooldown
     clip: {fileID: 8300000, guid: 4c281536c8fcd9943b5b675f8e04462a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: projectile_splash
+    clip: {fileID: 8300000, guid: 15b49edeef5ed7149a368eea0ac8fd9e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: spin_attack
+    clip: {fileID: 8300000, guid: 8c758deb6de3f1044a5b2897d0f42dbd, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: melee_attack
+    clip: {fileID: 8300000, guid: ce528b0f425c4ea4f8bbefab0fbaadc6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: enemy_hit
+    clip: {fileID: 8300000, guid: b90ec8af8ac42294ca68ead434e2ff55, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: enemy_die
+    clip: {fileID: 8300000, guid: 51e487fe6bb97c1429ced594ac60c5ae, type: 3}
     volume: 1
     pitch: 1
     loop: 0

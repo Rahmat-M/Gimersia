@@ -45,7 +45,7 @@ namespace Littale {
             container.gameObject.SetActive(true);
             container.localScale = Vector3.zero;
 
-            activeTween = Tween.Scale(container, Vector3.one, animationDuration, easeIn)
+            activeTween = Tween.Scale(container, Vector3.one, animationDuration, easeIn, useUnscaledTime: true)
                 .OnComplete(() => {
                 });
 
@@ -61,7 +61,7 @@ namespace Littale {
                 SoundManager.Instance.Play(closeSound);
             }
 
-            activeTween = Tween.Scale(container, Vector3.zero, animationDuration, easeOut)
+            activeTween = Tween.Scale(container, Vector3.zero, animationDuration, easeOut, useUnscaledTime: true)
                 .OnComplete(() => {
                     container.gameObject.SetActive(false);
                 });

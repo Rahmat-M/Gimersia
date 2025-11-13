@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Littale {
     [RequireComponent(typeof(Collider2D))]
     public class CharacterCollector : MonoBehaviour {
+
+        public UnityEvent<float> OnCoinCollected;
+
         CharacterStats player;
         CircleCollider2D detector;
         public float pullSpeed = 10;
 
-        public delegate void OnCoinCollected();
-        public OnCoinCollected onCoinCollected;
-
-        float coins;
+        int coins;
 
         void Start() {
             player = GetComponentInParent<CharacterStats>();
@@ -24,16 +26,21 @@ namespace Littale {
             detector.radius = r;
         }
 
-        public float GetCoins() { return coins; }
+        public int GetCoins() { return coins; }
 
         //Updates coins Display and information
-        public float AddCoins(float amount) {
+        public int AddCoins(int amount) {
             coins += amount;
-            onCoinCollected();
+            OnCoinCollected?.Invoke(coins);
             return coins;
         }
 
-        // Saves the collected coins to the save file.
+        public int SpendCoins(int amount) {
+            coins -= amount;
+            OnCoinCollected?.Invoke(coins);
+            return coins;
+        }
+
         public void SaveCoinsToStash() {
             // SaveManager.LastLoadedGameData.coins += coins;
             // SaveManager.Save();
