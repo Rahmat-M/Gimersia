@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fad310dee203c9418acf6b087b7c248, type: 3}
+  m_Name: RapidFire
+  m_EditorClassIdentifier: Assembly-CSharp::Littale.ActiveCardSO
+  prefab: {fileID: 5854246937172581989, guid: f865f5d513774f243aa38ca89fd4ef23, type: 3}
+  behaviourPrefab: {fileID: 0}
+  cardType: 3
+  icon: {fileID: -5493508554759021246, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
+  cardName: Rapid Fire
+  description: Shoot multiple projectile for 10s
+  cooldown: 45
+  isContinuousSkill: 0
+  effectRadius: 0
+  effectAmount: 0
+  effectDuration: 10
+  skillEffectPrefab: {fileID: 0}
+  skillProjectilePrefab: {fileID: 4739637705610113016, guid: a72f96f24431c12468128a2b8edbe1f5, type: 3}
+  multiShotCount: 0
