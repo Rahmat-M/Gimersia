@@ -12,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Terrain
+  - Player
   - Enemy
   - 
   - 
@@ -42,13 +42,13 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
+  - name: Object
     uniqueID: 1997652171
     locked: 0
-  - name: Midground
+  - name: Player
     uniqueID: 1475096745
     locked: 0
-  - name: Foreground
+  - name: fx
     uniqueID: 1688411029
     locked: 0
   m_RenderingLayers:
