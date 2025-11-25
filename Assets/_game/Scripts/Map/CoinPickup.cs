@@ -1,6 +1,6 @@
 namespace Littale {
     public class CoinPickup : Pickup {
-        CharacterCollector collector;
+        PlayerCollector collector;
         public int coins = 1;
 
         protected override void OnDestroy() {
@@ -8,7 +8,7 @@ namespace Littale {
             // Retrieve the CharacterCollector component from the player who picked up this object
             // Add coins to their total.
             if (target != null) {
-                collector = target.GetComponentInChildren<CharacterCollector>();
+                collector = target.GetComponentInChildren<PlayerCollector>();
                 if (collector != null) collector.AddCoins(coins);
 
             }

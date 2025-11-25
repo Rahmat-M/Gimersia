@@ -19,7 +19,7 @@ namespace Littale {
             if (!gameObject.scene.isLoaded) { //Stops the spawning error from appearing when stopping play mode
                 return;
             }
-            float playerluck = FindFirstObjectByType<CharacterStats>().Actual.luck;
+            float playerluck = FindFirstObjectByType<PlayerStats>().Actual.luck;
             float randomNumber = Random.Range(0f, 100f);
             List<Drops> possibleDrops = new List<Drops>();
 

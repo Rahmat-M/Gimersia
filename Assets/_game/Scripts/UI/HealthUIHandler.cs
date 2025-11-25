@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Littale {
     public class HealthUIHandler : MonoBehaviour {
 
-        [SerializeField] CharacterStats characterStats;
+        [SerializeField] PlayerStats characterStats;
         public List<Image> dropVisuals;
 
         private void Start() {

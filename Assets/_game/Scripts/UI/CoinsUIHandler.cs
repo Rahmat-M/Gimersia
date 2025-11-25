@@ -4,7 +4,7 @@ namespace Littale {
     public class CoinsUIHandler : MonoBehaviour {
 
         [SerializeField] TMPro.TMP_Text coinsDisplay;
-        [SerializeField] CharacterCollector characterCollector;
+        [SerializeField] PlayerCollector characterCollector;
 
         void Start() {
             if (characterCollector != null) {

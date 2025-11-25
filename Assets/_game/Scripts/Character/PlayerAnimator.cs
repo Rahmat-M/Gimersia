@@ -3,16 +3,16 @@ using UnityEngine;
 namespace Littale {
     [RequireComponent(typeof(Animator),
     typeof(SpriteRenderer))]
-    public class CharacterAnimator : MonoBehaviour {
+    public class PlayerAnimator : MonoBehaviour {
 
         const string ANIM_PARAM_ISMOVING = "IsMoving";
 
-        CharacterMovement charController;
+        PlayerMovement charController;
         Animator animator;
         SpriteRenderer spriteRenderer;
 
         void Awake() {
-            charController = FindFirstObjectByType<CharacterMovement>(); // for get direction input
+            charController = FindFirstObjectByType<PlayerMovement>(); // for get direction input
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }

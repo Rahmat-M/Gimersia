@@ -56,7 +56,7 @@ namespace Littale {
         bool levelEnded = false; // Has the time limit been reached?
         public GameObject reaperPrefab; // Spawns after time limit has been reached;
 
-        CharacterStats[] players; // Tracks all players.
+        PlayerStats[] players; // Tracks all players.
 
         // Getters for parity with older scripts.
         public bool isGameOver { get { return currentState == GameState.Paused; } }
@@ -70,7 +70,7 @@ namespace Littale {
             if (!Instance) return 1;
 
             float totalCurse = 0;
-            foreach (CharacterStats p in Instance.players) {
+            foreach (PlayerStats p in Instance.players) {
                 // totalCurse += p.Actual.curse; // TODO: Fix when Actual is back
             }
             return Mathf.Max(1, totalCurse);
@@ -81,16 +81,16 @@ namespace Littale {
             if (!Instance) return 1;
 
             int totalLevel = 0;
-            foreach (CharacterStats p in Instance.players) {
+            foreach (PlayerStats p in Instance.players) {
                 totalLevel += p.level;
             }
             return Mathf.Max(1, totalLevel);
         }
 
-        public CharacterCollector characterCollector;
+        public PlayerCollector characterCollector;
 
         void Awake() {
-            players = FindObjectsByType<CharacterStats>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            players = FindObjectsByType<PlayerStats>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
             //Set the level's Time Limit
             // timeLimit = TimeLimit; // TODO: Fix when UILevelSelector is back
@@ -243,12 +243,12 @@ namespace Littale {
             DisplayResults();
 
             // Save all the coins of all the players to the save file.
-            foreach (CharacterStats p in players) {
-                p.GetComponentInChildren<CharacterCollector>().SaveCoinsToStash();
+            foreach (PlayerStats p in players) {
+                p.GetComponentInChildren<PlayerCollector>().SaveCoinsToStash();
             }
             // Add all players' coins to their save file, since the game has ended.
-            foreach (CharacterStats p in players) {
-                if (p.TryGetComponent(out CharacterCollector c)) {
+            foreach (PlayerStats p in players) {
+                if (p.TryGetComponent(out PlayerCollector c)) {
                     c.SaveCoinsToStash();
                 }
             }

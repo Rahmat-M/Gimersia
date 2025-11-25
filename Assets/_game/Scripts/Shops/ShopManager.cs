@@ -17,7 +17,7 @@ namespace Littale {
         public int removeCardCost = 75;
 
         [Header("Systems References")]
-        private CharacterCollector characterCollector;
+        private PlayerCollector characterCollector;
         private CardInventory cardInventory;
         private ShopUI shopUI;
         private int currentWave = 0;
@@ -33,7 +33,7 @@ namespace Littale {
 
         public void Initialize(ShopUI ui) {
             shopUI = ui;
-            characterCollector = FindFirstObjectByType<CharacterCollector>();
+            characterCollector = FindFirstObjectByType<PlayerCollector>();
             cardInventory = FindFirstObjectByType<CardInventory>();
 
             OnCurrencyChanged?.Invoke(characterCollector.GetCoins());

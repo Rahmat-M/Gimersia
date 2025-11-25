@@ -2,7 +2,7 @@
 using UnityEngine.InputSystem;
 
 namespace Littale {
-    public class CharacterMovement : MonoBehaviour {
+    public class PlayerMovement : MonoBehaviour {
 
         // References
         [SerializeField] InputActionReference moveActions;
@@ -14,7 +14,7 @@ namespace Littale {
 
         bool isMouseAiming = false;
         Camera mainCamera;
-        CharacterStats characterStats;
+        PlayerStats characterStats;
 
         // Movement
         Vector2 movementInput;
@@ -34,7 +34,7 @@ namespace Littale {
         }
 
         void Awake() {
-            characterStats = GetComponent<CharacterStats>();
+            characterStats = GetComponent<PlayerStats>();
             mainCamera = Camera.main;
             if (TriggerActions != null) TriggerActions.action.Enable();
         }

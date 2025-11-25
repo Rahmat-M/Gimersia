@@ -8,7 +8,7 @@ namespace Littale {
     public class DeckUIHandler : MonoBehaviour {
 
         DeckManager deckManager;
-        CharacterStats characterStats;
+        PlayerStats characterStats;
 
         [Header("Card References")]
         [SerializeField] GameObject cardUIPrefab;
@@ -19,11 +19,11 @@ namespace Littale {
 
         void Start() {
             deckManager = FindFirstObjectByType<DeckManager>();
-            characterStats = FindFirstObjectByType<CharacterStats>();
+            characterStats = FindFirstObjectByType<PlayerStats>();
 
             InitializeCardVisuals();
-            deckManager.OnCardDrawn += HandleCardDrawn;
-            deckManager.OnCardPlayed += HandleCardPlayed;
+            // deckManager.OnCardDrawn += HandleCardDrawn;
+            // deckManager.OnCardPlayed += HandleCardPlayed;
         }
 
         void InitializeCardVisuals() {
@@ -141,12 +141,12 @@ namespace Littale {
             if (img != null) img.color = Color.white;
         }
 
-        void OnDestroy() {
-            if (deckManager != null) {
-                deckManager.OnCardDrawn -= HandleCardDrawn;
-                deckManager.OnCardPlayed -= HandleCardPlayed;
-            }
-        }
+        // void OnDestroy() {
+        //     if (deckManager != null) {
+        //         deckManager.OnCardDrawn -= HandleCardDrawn;
+        //         deckManager.OnCardPlayed -= HandleCardPlayed;
+        //     }
+        // }
 
     }
 }

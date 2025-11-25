@@ -102,7 +102,7 @@ namespace Littale {
 
         public static int count; // Track the number of enemies on the screen.
 
-        CharacterStats characterStats;
+        PlayerStats characterStats;
 
         void Awake() {
             count++;
@@ -276,13 +276,13 @@ namespace Littale {
         }
 
         private void OnCollisionEnter2D(Collision2D collision) {
-            if (collision.collider.TryGetComponent(out CharacterStats p)) {
+            if (collision.collider.TryGetComponent(out PlayerStats p)) {
                 characterStats = p;
             }
         }
 
         private void OnCollisionExit2D(Collision2D collision) {
-            if (collision.collider.TryGetComponent(out CharacterStats p)) {
+            if (collision.collider.TryGetComponent(out PlayerStats p)) {
                 characterStats = null;
             }
         }

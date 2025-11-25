@@ -1,13 +1,6 @@
 using UnityEngine;
 
 namespace Littale {
-    public enum CardType {
-        MainDeck,
-        Passive,
-        Reactive,
-        Active
-    }
-
     public abstract class BaseCardSO : ScriptableObject {
 
         [Header("Basic Info")]
@@ -24,14 +17,14 @@ namespace Littale {
 
         public string GetCardTypeString() {
             switch (cardType) {
-                case CardType.MainDeck:
-                    return "Main Deck";
-                case CardType.Passive:
-                    return "Passive";
-                case CardType.Reactive:
-                    return "Reactive";
-                case CardType.Active:
-                    return "Active";
+                // case CardType.Main:
+                //     return "Main Deck";
+                // case CardType.Passive:
+                //     return "Passive";
+                // case CardType.Reactive:
+                //     return "Reactive";
+                // case CardType.Active:
+                //     return "Active";
                 default:
                     return "Unknown";
             }

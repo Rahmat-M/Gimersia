@@ -10,7 +10,7 @@ namespace Littale {
         public float hpPerLevel;
     }
 
-    public class CharacterStats : EntityStats {
+    public class PlayerStats : EntityStats {
 
         public UnityEvent<float> OnHealthChanged;
         public UnityEvent<float> OnExperienceChanged;
@@ -83,7 +83,7 @@ namespace Littale {
 
         CardInventory inventory;
         public CardInventory Inventory { get { return inventory; } }
-        CharacterCollector collector;
+        PlayerCollector collector;
 
         #endregion
 
@@ -91,7 +91,7 @@ namespace Littale {
 
         void Awake() {
             inventory = GetComponent<CardInventory>();
-            collector = GetComponentInChildren<CharacterCollector>();
+            collector = GetComponentInChildren<PlayerCollector>();
 
             //Assign the variables
             baseStats = actualStats = characterData.stats;

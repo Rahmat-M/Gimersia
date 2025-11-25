@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Littale {
     public class ExperienceUIHandler : MonoBehaviour {
 
-        public CharacterStats characterStats;
+        public PlayerStats characterStats;
 
         public Image xpBarFill;
         public TMP_Text levelText;

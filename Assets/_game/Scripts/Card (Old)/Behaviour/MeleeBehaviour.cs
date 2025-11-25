@@ -24,7 +24,7 @@ namespace Littale {
         }
 
         public float GetCurrentDamage() {
-            return currentDamage *= FindFirstObjectByType<CharacterStats>().Actual.might;
+            return currentDamage *= FindFirstObjectByType<PlayerStats>().Actual.might;
         }
 
         protected virtual void Start() {

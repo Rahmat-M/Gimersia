@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Littale {
     public class Pickup : Sortable {
         public float lifespan = 0.5f;
-        protected CharacterStats target; // If the pickup has a target, then fly towards the target.
+        protected PlayerStats target; // If the pickup has a target, then fly towards the target.
         protected float speed; // The speed at which the pickup travels.
         Vector2 initialPosition;
         float initialOffset;
@@ -44,7 +44,7 @@ namespace Littale {
             }
         }
 
-        public virtual bool Collect(CharacterStats target, float speed, float lifespan = 0f) {
+        public virtual bool Collect(PlayerStats target, float speed, float lifespan = 0f) {
             if (!this.target) {
                 this.target = target;
                 this.speed = speed;

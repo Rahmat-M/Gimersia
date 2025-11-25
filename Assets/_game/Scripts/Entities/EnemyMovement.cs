@@ -29,7 +29,7 @@ namespace Littale {
             stats = GetComponent<EnemyStats>();
 
             // Picks a random player on the screen, instead of always picking the 1st player.
-            CharacterMovement[] allPlayers = FindObjectsByType<CharacterMovement>(FindObjectsSortMode.None);
+            PlayerMovement[] allPlayers = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None);
             player = allPlayers[Random.Range(0, allPlayers.Length)].transform;
         }
 

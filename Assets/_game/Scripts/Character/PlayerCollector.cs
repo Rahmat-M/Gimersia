@@ -6,18 +6,18 @@ using UnityEngine.Events;
 
 namespace Littale {
     [RequireComponent(typeof(Collider2D))]
-    public class CharacterCollector : MonoBehaviour {
+    public class PlayerCollector : MonoBehaviour {
 
         public UnityEvent<float> OnCoinCollected;
 
-        CharacterStats player;
+        PlayerStats player;
         CircleCollider2D detector;
         public float pullSpeed = 10;
 
         int coins;
 
         void Start() {
-            player = GetComponentInParent<CharacterStats>();
+            player = GetComponentInParent<PlayerStats>();
             coins = 0;
         }
 

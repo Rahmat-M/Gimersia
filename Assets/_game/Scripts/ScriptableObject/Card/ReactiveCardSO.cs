@@ -35,5 +35,8 @@ namespace Littale {
         [SerializeField] float effectDuration;
         public float EffectDuration { get { return effectDuration; } }
 
+        [Header("Actions")]
+        public System.Collections.Generic.List<CardActionSO> Actions = new System.Collections.Generic.List<CardActionSO>();
+
     }
 }
