@@ -189,9 +189,8 @@ namespace Littale {
             actualStats *= multiplier;
         }
 
-        public override void TakeDamage(float dmg) {
+        public override bool TakeDamage(float dmg) {
             health -= dmg;
-
 
             // If damage is exactly equal to maximum health, we assume it is an insta-kill and 
             // check for the kill resistance to see if we can dodge this damage.
@@ -201,7 +200,7 @@ namespace Littale {
                 // below the kill resistance, then we avoid getting killed.
                 if (Random.value < actualStats.resistances.kill) {
                     health = 1; // Set health to 1 instead of 0.
-                    return;
+                    return false;
                 }
             }
 
@@ -216,6 +215,8 @@ namespace Littale {
             if (health <= 0) {
                 Kill();
             }
+
+            return health <= 0;
         }
 
         // This function always needs at least 2 values, the amount of damage dealt <dmg>, as well as where the damage is
@@ -224,11 +225,19 @@ namespace Littale {
         public void TakeDamage(float dmg, Vector2 sourcePosition, float knockbackForce = 5f, float knockbackDuration = 0.2f) {
             TakeDamage(dmg);
 
-            // Apply knockback if it is not zero.
-            if (knockbackForce > 0) {
+            // FORCE vs WEIGHT Logic
+            // Calculate effective knockback: Force - Weight
+            // We assume 'knockbackMultiplier' in stats acts as 'Weight' (Lower multiplier = Heavier)
+            // Or we can add a specific 'weight' field. For now, let's use knockbackMultiplier as resistance.
+            // If knockbackMultiplier is 0, it's immovable.
+            
+            float effectiveForce = knockbackForce * actualStats.knockbackMultiplier;
+
+            // Apply knockback if it is positive.
+            if (effectiveForce > 0) {
                 // Gets the direction of knockback.
                 Vector2 dir = (Vector2)transform.position - sourcePosition;
-                movement.Knockback(dir.normalized * knockbackForce, knockbackDuration);
+                movement.Knockback(dir.normalized * effectiveForce, knockbackDuration);
             }
         }
 

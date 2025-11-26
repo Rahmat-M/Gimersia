@@ -9,14 +9,14 @@ namespace Littale {
         [SerializeField] TextMeshProUGUI descriptionText;
         [SerializeField] TextMeshProUGUI typeText;
 
-        public void Initialize(BaseCardSO data) {
-            if (data != null) {
-                iconImage.sprite = data.icon;
-                nameText.text = data.name;
-                descriptionText.text = data.description;
-                typeText.text = data.GetCardTypeString();
-            }
-        }
+        // public void Initialize(BaseCardSO data) {
+        //     if (data != null) {
+        //         iconImage.sprite = data.icon;
+        //         nameText.text = data.name;
+        //         descriptionText.text = data.description;
+        //         typeText.text = data.GetCardTypeString();
+        //     }
+        // }
 
         public void SetupEmpty(string label) {
             nameText.text = label;

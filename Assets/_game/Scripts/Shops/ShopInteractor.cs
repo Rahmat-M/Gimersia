@@ -9,17 +9,17 @@ namespace Littale {
         private bool canInteract = false;
         private int currentWave = 1;
 
-        void Start() {
-            interactionPrompt.SetActive(false);
-            interactAction.action.Enable();
-            interactAction.action.performed += ctx => OnInteract();
-        }
+        // void Start() {
+        //     interactionPrompt.SetActive(false);
+        //     interactAction.action.Enable();
+        //     interactAction.action.performed += ctx => OnInteract();
+        // }
 
-        private void OnInteract() {
-            if (canInteract && Time.timeScale > 0) {
-                ShopManager.Instance.OpenShop();
-            }
-        }
+        // private void OnInteract() {
+        //     if (canInteract && Time.timeScale > 0) {
+        //         ShopManager.Instance.OpenShop();
+        //     }
+        // }
 
         void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Player")) {

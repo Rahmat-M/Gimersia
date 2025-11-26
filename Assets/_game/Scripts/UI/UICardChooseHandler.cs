@@ -17,36 +17,36 @@ namespace Littale {
             }
         }
 
-        public void ShowChoices(List<BaseCardSO> cardChoices, LevelUpManager manager) {
-            levelUpManager = manager;
-            gameObject.SetActive(true);
+        // public void ShowChoices(List<BaseCardSO> cardChoices, LevelUpManager manager) {
+        //     levelUpManager = manager;
+        //     gameObject.SetActive(true);
 
-            foreach (var oldOption in spawnedOptions) {
-                Destroy(oldOption);
-            }
-            spawnedOptions.Clear();
+        //     foreach (var oldOption in spawnedOptions) {
+        //         Destroy(oldOption);
+        //     }
+        //     spawnedOptions.Clear();
 
-            foreach (var cardData in cardChoices) {
-                GameObject optionGO = Instantiate(optionTemplate, optionsContainer);
-                optionGO.SetActive(true);
-                spawnedOptions.Add(optionGO);
+        //     foreach (var cardData in cardChoices) {
+        //         GameObject optionGO = Instantiate(optionTemplate, optionsContainer);
+        //         optionGO.SetActive(true);
+        //         spawnedOptions.Add(optionGO);
 
-                Image icon = optionGO.GetComponent<Image>();
-                icon.sprite = cardData.icon;
+        //         Image icon = optionGO.GetComponent<Image>();
+        //         icon.sprite = cardData.icon;
 
-                Button button = optionGO.GetComponent<Button>();
-                if (button) {
-                    button.transition = Selectable.Transition.ColorTint;
-                    button.onClick.RemoveAllListeners();
-                    button.onClick.AddListener(() => OnChoiceMade(cardData));
-                }
-            }
-        }
+        //         Button button = optionGO.GetComponent<Button>();
+        //         if (button) {
+        //             button.transition = Selectable.Transition.ColorTint;
+        //             button.onClick.RemoveAllListeners();
+        //             button.onClick.AddListener(() => OnChoiceMade(cardData));
+        //         }
+        //     }
+        // }
 
-        private void OnChoiceMade(BaseCardSO chosenCard) {
-            if (levelUpManager != null) {
-                levelUpManager.OnCardChosen(chosenCard);
-            }
-        }
+        // private void OnChoiceMade(BaseCardSO chosenCard) {
+        //     if (levelUpManager != null) {
+        //         levelUpManager.OnCardChosen(chosenCard);
+        //     }
+        // }
     }
 }

@@ -7,20 +7,20 @@ namespace Littale {
         [SerializeField] private Image cardIcon;
         [SerializeField] private Button removeButton;
 
-        private CardController cardInstance;
+        // private CardController cardInstance;
         private ShopManager manager;
 
-        public void Initialize(CardController card, ShopManager shopManager) {
-            cardInstance = card;
-            manager = shopManager;
+        // public void Initialize(CardController card, ShopManager shopManager) {
+        //     cardInstance = card;
+        //     manager = shopManager;
 
-            cardIcon.sprite = card.cardData.icon;
+        //     cardIcon.sprite = card.cardData.icon;
 
-            removeButton.onClick.AddListener(OnRemoveClicked);
-        }
+        //     removeButton.onClick.AddListener(OnRemoveClicked);
+        // }
 
-        void OnRemoveClicked() {
-            manager.TryRemoveCard(cardInstance);
-        }
+        // void OnRemoveClicked() {
+        //     manager.TryRemoveCard(cardInstance);
+        // }
     }
 }

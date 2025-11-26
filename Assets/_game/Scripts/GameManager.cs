@@ -308,7 +308,7 @@ namespace Littale {
             // If the level up screen is already active, record it.
             if (levelUpManager.choiceWindow.gameObject.activeSelf) stackedLevelUps++;
             else {
-                levelUpManager.ShowLevelUpOptions();
+                // levelUpManager.ShowLevelUpOptions();
                 Time.timeScale = 0f;    //Pause the game
             }
         }

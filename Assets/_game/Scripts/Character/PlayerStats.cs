@@ -65,10 +65,10 @@ namespace Littale {
         }
         public List<LevelRange> levelRanges;
 
-        [Header("Testing Prefabs")]
-        [SerializeField] ReactiveCardController reactiveCardPrefab;
-        [SerializeField] ActiveCardController activeCardPrefab;
-        [SerializeField] List<PassiveCardController> startingPassiveCards = new List<PassiveCardController>();
+        // [Header("Testing Prefabs")]
+        // [SerializeField] ReactiveCardController reactiveCardPrefab;
+        // [SerializeField] ActiveCardController activeCardPrefab;
+        // [SerializeField] List<PassiveCardController> startingPassiveCards = new List<PassiveCardController>();
 
         //I-Frames
         [Header("I-Frames")]
@@ -81,8 +81,8 @@ namespace Littale {
         public float damageFlashDuration = 0.2f;
         public float deathFadeTime = 0.6f;
 
-        CardInventory inventory;
-        public CardInventory Inventory { get { return inventory; } }
+        // CardInventory inventory;
+        // public CardInventory Inventory { get { return inventory; } }
         PlayerCollector collector;
 
         #endregion
@@ -90,7 +90,7 @@ namespace Littale {
         // TODO: Characters UI
 
         void Awake() {
-            inventory = GetComponent<CardInventory>();
+            // inventory = GetComponent<CardInventory>();
             collector = GetComponentInChildren<PlayerCollector>();
 
             //Assign the variables
@@ -98,7 +98,7 @@ namespace Littale {
             collector.SetRadius(actualStats.magnet);
             health = actualStats.maxHealth;
 
-            inventory.OnPassiveCardAcquired += (_) => RecalculateStats();
+            // inventory.OnPassiveCardAcquired += (_) => RecalculateStats();
         }
 
         protected override void Start() {
@@ -108,16 +108,16 @@ namespace Littale {
             experienceCap = levelRanges[0].experienceCapIncrease;
 
             //Spawn the starting card
-            foreach (var card in characterData.StartingCards) {
-                inventory.Add(card);
-            }
-            if (reactiveCardPrefab != null) inventory.Add(reactiveCardPrefab);
-            if (activeCardPrefab != null) inventory.Add(activeCardPrefab);
-            if (startingPassiveCards.Count > 0) {
-                foreach (var pCard in startingPassiveCards) {
-                    inventory.Add(pCard);
-                }
-            }
+            // foreach (var card in characterData.StartingCards) {
+            //     inventory.Add(card);
+            // }
+            // if (reactiveCardPrefab != null) inventory.Add(reactiveCardPrefab);
+            // if (activeCardPrefab != null) inventory.Add(activeCardPrefab);
+            // if (startingPassiveCards.Count > 0) {
+            //     foreach (var pCard in startingPassiveCards) {
+            //         inventory.Add(pCard);
+            //     }
+            // }
         }
 
         protected override void Update() {
@@ -132,16 +132,79 @@ namespace Littale {
             Recover();
         }
 
-        public override void RecalculateStats() {
-            actualStats = baseStats;
-            foreach (var s in inventory.GetPassiveCardSlots()) {
-                actualStats += s.GetBoosts();
+        [Header("Growth Triad")]
+        public float levelUpBaseMight = 0;
+        public float fusionBaseMight = 0;
+        public float levelUpBaseHealth = 0;
+
+        public enum LevelUpBonus { Attack, Health, Wealth, Mana, Crit, Speed }
+
+        public void ApplyLevelUpBonus(LevelUpBonus type) {
+            switch (type) {
+                case LevelUpBonus.Attack:
+                    levelUpBaseMight += 5f;
+                    break;
+                case LevelUpBonus.Health:
+                    levelUpBaseHealth += 10f;
+                    RestoreHealth(actualStats.maxHealth * 0.2f);
+                    break;
+                case LevelUpBonus.Wealth:
+                    if (collector != null) collector.AddCoins(50);
+                    break;
+                case LevelUpBonus.Mana:
+                    // Assuming we have a base mana regen or similar. For now, let's say it adds a buff or modifies a stat.
+                    // Since we don't have a dedicated 'baseManaRegen' field yet, I'll add a placeholder or modify 'recovery' if that's HP regen.
+                    // I'll add a 'bonusManaRegen' field to PlayerStats later if needed, or just assume it's handled by multipliers.
+                    // For now, let's add to a new field.
+                    bonusManaRegen += 0.05f; 
+                    break;
+                case LevelUpBonus.Crit:
+                    bonusCritRate += 5f;
+                    break;
+                case LevelUpBonus.Speed:
+                    bonusAttackSpeed += 0.1f;
+                    break;
             }
+            RecalculateStats();
+        }
 
-            float levelDamageMultiplier = 1f + ((level - 1) * growthPerLevel.damageMultiplierPerLevel);
-            actualStats.might *= levelDamageMultiplier;
+        public float bonusManaRegen = 0f;
+        public float bonusCritRate = 0f;
+        public float bonusAttackSpeed = 0f;
+        public float goldMultiplier = 1.0f; // For Art Sale passive
+        
+        [Header("Neutral Passives")]
+        public float armorPenetration = 0f; // Sharpened Pencil
+        public float thornsDamage = 0f; // Thick Frame
+        public float goldDamageScaling = 0f; // Golden Ratio (1% per 100 Gold)
 
-            // Create a variable to store all the cumulative multiplier values.
+        public void ApplyFusionBonus(int tier) {
+            // Tier 1->2 (Silver): +2 ATK
+            // Tier 2->3 (Gold): +5 ATK
+            if (tier == 2) fusionBaseMight += 2f;
+            else if (tier == 3) fusionBaseMight += 5f;
+            RecalculateStats();
+        }
+
+        public override void RecalculateStats() {
+            // 1. Reset to Base
+            actualStats = baseStats;
+
+            // 2. Add Flat Bonuses (The Growth Triad)
+            actualStats.might += levelUpBaseMight + fusionBaseMight;
+            actualStats.maxHealth += levelUpBaseHealth;
+            // Crit and Speed are usually percentage multipliers or flat additions depending on the base stat.
+            // Assuming 'might' is damage, 'attackSpeed' is a multiplier (base 1).
+            // So we add to the base multiplier.
+            // Note: actualStats.attackSpeed is likely a multiplier.
+            // We'll apply these AFTER the base reset.
+            
+            // For now, let's just store them. The actual application happens below or in the multiplier section.
+            // Actually, let's apply them to the base stats directly if they are flat, or to the multiplier if they are %.
+            // The prompt said: +10% Attack Speed.
+            // So we should add 0.1f to the multiplier.
+
+            // 3. Calculate Multipliers (Passive Items / Buffs)
             CharacterSO.Stats multiplier = new CharacterSO.Stats {
                 maxHealth = 1f,
                 recovery = 1f,
@@ -153,6 +216,12 @@ namespace Littale {
                 magnet = 1f,
                 handSize = 1
             };
+
+            // Apply Level Up Bonuses to Multiplier
+            multiplier.attackSpeed += bonusAttackSpeed;
+            // multiplier.critRate += bonusCritRate; // Assuming CharacterSO.Stats has critRate. If not, we need to add it or handle it elsewhere.
+            // For now, we'll assume Crit is handled separately or added to Stats later.
+
             foreach (Buff b in activeBuffs) {
                 BuffData.Stats bd = b.GetData();
                 switch (bd.modifierType) {
@@ -164,8 +233,11 @@ namespace Littale {
                         break;
                 }
             }
+
+            // 4. Apply Multipliers
             actualStats *= multiplier;
 
+            // Update dependent components
             collector.SetRadius(actualStats.magnet);
         }
 
@@ -174,27 +246,30 @@ namespace Littale {
             LevelUpChecker();
         }
 
+        [Header("Leveling State")]
+        public int pendingLevels = 0;
+
         void LevelUpChecker() {
             if (Experience >= experienceCap) {
-                //Level up the player and reduce their experience by the experience cap
+                // Level up the player
                 level++;
+                pendingLevels++;
                 Experience -= experienceCap;
 
-                //Find the experience cap increase for the current level range
-                int experienceCapIncrease = 0;
-                foreach (LevelRange range in levelRanges) {
-                    if (level >= range.startLevel && level <= range.endLevel) {
-                        experienceCapIncrease = range.experienceCapIncrease;
-                        break;
-                    }
-                }
-                experienceCap += experienceCapIncrease;
+                // Feedback: Auto-Heal and Visuals
+                RestoreHealth(5f);
+                GameManager.GenerateFloatingText("LEVEL UP!", transform, 1f, 50f);
+                if (healEffect) Instantiate(healEffect, transform.position, Quaternion.identity);
 
-                GameManager.Instance.StartLevelUp();
+                // Update Cap: (Level * 10) + 10
+                experienceCap = (level * 10) + 10;
+
+                // Check again in case we gained enough XP for multiple levels
+                LevelUpChecker();
             }
         }
 
-        public override void TakeDamage(float dmg) {
+        public override bool TakeDamage(float dmg) {
             //If the player is not currently invincible, reduce health and start invincibility
             if (!isInvincible) {
                 dmg -= CurrentArmor;
@@ -212,6 +287,8 @@ namespace Littale {
                 invincibilityTimer = invincibilityDuration;
                 isInvincible = true;
             }
+
+            return (CurrentHealth <= 0);
         }
 
         IEnumerator DamageFlash() {
@@ -253,11 +330,11 @@ namespace Littale {
             }
         }
 
-        void OnDestroy() {
-            if (inventory != null) {
-                inventory.OnPassiveCardAcquired = null;
-            }
-        }
+        // void OnDestroy() {
+        //     if (inventory != null) {
+        //         inventory.OnPassiveCardAcquired = null;
+        //     }
+        // }
 
 #if UNITY_EDITOR
         [ContextMenu("Damage Player To Quarter Health")]

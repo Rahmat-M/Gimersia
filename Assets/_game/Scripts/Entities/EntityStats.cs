@@ -208,7 +208,7 @@ namespace Littale {
         }
 
         // Generic take damage function for dealing damage.
-        public abstract void TakeDamage(float dmg);
+        public abstract bool TakeDamage(float dmg);
 
         // Generic restore health function.
         public abstract void RestoreHealth(float amount);

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a63e196f12c3ff84babb800f41a0a71c, type: 3}
+  m_Name: BindingTrap
+  m_EditorClassIdentifier: Assembly-CSharp::Littale.CardData
+  cardName: Binding Trap
+  icon: {fileID: -2684691621588603283, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
+  type: 1
+  tier: 0
+  nextTierCard: {fileID: 0}
+  description: Binding!
+  cooldown: 0
+  manaCost: 2
+  damageMultiplier: 1
+  knockbackForce: 1
+  projectilePrefab: {fileID: 5292483990349339733, guid: 9e186a2d04b7c43478d6bac02b4ebf24, type: 3}
+  secondaryPrefab: {fileID: 0}
+  effects: []

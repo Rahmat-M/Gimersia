@@ -11,27 +11,27 @@ namespace Littale {
         [SerializeField] TextMeshProUGUI cardTypeText;
         [SerializeField] Button buyButton;
 
-        BaseCardSO card;
+        // BaseCardSO card;
         int price;
         ShopManager manager;
 
-        public void Initialize(BaseCardSO cardData, int itemPrice, ShopManager shopManager) {
-            card = cardData;
-            price = itemPrice;
-            manager = shopManager;
+        // public void Initialize(BaseCardSO cardData, int itemPrice, ShopManager shopManager) {
+        //     card = cardData;
+        //     price = itemPrice;
+        //     manager = shopManager;
 
-            cardIcon.sprite = cardData.icon;
-            cardNameText.text = cardData.name;
-            cardDescriptionText.text = cardData.description;
-            cardTypeText.text = cardData.GetCardTypeString();
-            cardPriceText.text = price.ToString();
+        //     cardIcon.sprite = cardData.icon;
+        //     cardNameText.text = cardData.name;
+        //     cardDescriptionText.text = cardData.description;
+        //     cardTypeText.text = cardData.GetCardTypeString();
+        //     cardPriceText.text = price.ToString();
 
-            buyButton.onClick.AddListener(OnBuyClicked);
-        }
+        //     buyButton.onClick.AddListener(OnBuyClicked);
+        // }
 
-        void OnBuyClicked() {
-            manager.TryBuyCard(card, price);
-        }
+        // void OnBuyClicked() {
+        //     manager.TryBuyCard(card, price);
+        // }
 
         public void SetAsSold() {
             buyButton.interactable = false;

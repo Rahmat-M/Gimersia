@@ -18,9 +18,9 @@ namespace Littale {
         [SerializeField, TextArea] string characterDescription;
         public string CharacterDescription { get => characterDescription; private set => characterDescription = value; }
 
-        [Header("Stats")]
-        [SerializeField] List<CardController> startingCards;
-        public List<CardController> StartingCards { get => startingCards; }
+        // [Header("Stats")]
+        // [SerializeField] List<CardController> startingCards;
+        // public List<CardController> StartingCards { get => startingCards; }
 
         [System.Serializable]
         public struct Stats {

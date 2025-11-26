@@ -4,7 +4,7 @@ namespace Littale {
     public class CardLibraryManager : MonoBehaviour {
 
         [Header("References")]
-        [SerializeField] CardInventory inventory;
+        // [SerializeField] CardInventory inventory;
         [SerializeField] GameObject libraryPanel;
 
         [Header("UI Prefab")]
@@ -21,61 +21,61 @@ namespace Littale {
         [SerializeField] Transform passiveDeckContainer;
 
         void Start() {
-            if (inventory == null) inventory = FindFirstObjectByType<CardInventory>();
+            // if (inventory == null) inventory = FindFirstObjectByType<CardInventory>();
 
             libraryPanel.SetActive(false);
         }
 
-        public void OpenLibrary() {
-            libraryPanel.SetActive(true);
-            RefreshUI();
-        }
+        // public void OpenLibrary() {
+        //     libraryPanel.SetActive(true);
+        //     RefreshUI();
+        // }
 
         public void CloseLibrary() {
             libraryPanel.SetActive(false);
         }
 
-        public void RefreshUI() {
-            ClearContainer(mainDeckContainer);
-            ClearContainer(abilityDeckContainer);
-            ClearContainer(passiveDeckContainer);
+        // public void RefreshUI() {
+        //     ClearContainer(mainDeckContainer);
+        //     ClearContainer(abilityDeckContainer);
+        //     ClearContainer(passiveDeckContainer);
 
-            if (inventory.GetCardSlots().Count > 0) {
-                foreach (var card in inventory.GetCardSlots()) {
-                    SpawnCard(card.cardData, mainDeckContainer);
-                }
-            } else {
-                SpawnEmptyPlaceholder("No Card", mainDeckContainer);
-            }
+        //     if (inventory.GetCardSlots().Count > 0) {
+        //         foreach (var card in inventory.GetCardSlots()) {
+        //             SpawnCard(card.cardData, mainDeckContainer);
+        //         }
+        //     } else {
+        //         SpawnEmptyPlaceholder("No Card", mainDeckContainer);
+        //     }
 
-            if (inventory.HasReactiveCard()) {
-                SpawnCard(inventory.GetReactiveCard().cardData, abilityDeckContainer);
-            } else {
-                SpawnEmptyPlaceholder("No Card", abilityDeckContainer);
-            }
+        //     if (inventory.HasReactiveCard()) {
+        //         SpawnCard(inventory.GetReactiveCard().cardData, abilityDeckContainer);
+        //     } else {
+        //         SpawnEmptyPlaceholder("No Card", abilityDeckContainer);
+        //     }
 
-            if (inventory.HasActiveCard()) {
-                SpawnCard(inventory.GetActiveCard().cardData, abilityDeckContainer);
-            } else {
-                SpawnEmptyPlaceholder("No Card", abilityDeckContainer);
-            }
+        //     if (inventory.HasActiveCard()) {
+        //         SpawnCard(inventory.GetActiveCard().cardData, abilityDeckContainer);
+        //     } else {
+        //         SpawnEmptyPlaceholder("No Card", abilityDeckContainer);
+        //     }
 
-            if (inventory.GetPassiveCardSlots().Count > 0) {
-                foreach (var card in inventory.GetPassiveCardSlots()) {
-                    SpawnCard(card.cardData, passiveDeckContainer);
-                }
-            } else {
-                SpawnEmptyPlaceholder("No Card", passiveDeckContainer);
-            }
-        }
+        //     if (inventory.GetPassiveCardSlots().Count > 0) {
+        //         foreach (var card in inventory.GetPassiveCardSlots()) {
+        //             SpawnCard(card.cardData, passiveDeckContainer);
+        //         }
+        //     } else {
+        //         SpawnEmptyPlaceholder("No Card", passiveDeckContainer);
+        //     }
+        // }
 
-        void SpawnCard(BaseCardSO cardController, Transform container) {
-            GameObject obj = Instantiate(cardUIPrefab, container);
-            LibraryCardUI ui = obj.GetComponent<LibraryCardUI>();
-            if (ui != null) {
-                ui.Initialize(cardController);
-            }
-        }
+        // void SpawnCard(BaseCardSO cardController, Transform container) {
+        //     GameObject obj = Instantiate(cardUIPrefab, container);
+        //     LibraryCardUI ui = obj.GetComponent<LibraryCardUI>();
+        //     if (ui != null) {
+        //         ui.Initialize(cardController);
+        //     }
+        // }
 
         void SpawnEmptyPlaceholder(string label, Transform container) {
             GameObject obj = Instantiate(cardUIPrefab, container);

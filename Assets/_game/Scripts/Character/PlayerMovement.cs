@@ -23,7 +23,6 @@ namespace Littale {
 
         public Vector2 LastMovementInput {
             get {
-                // LOGIKA BARU:
                 // Jika mode Aim aktif, kembalikan arah ke Mouse.
                 // Jika tidak, kembalikan arah gerakan terakhir (WASD).
                 if (isMouseAiming) {

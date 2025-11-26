@@ -15,7 +15,7 @@ namespace Littale {
         [SerializeField] Transform mainDeck;
 
         List<Transform> mainDeckSlots = new List<Transform>();
-        Dictionary<CardController, GameObject> cardVisuals = new Dictionary<CardController, GameObject>();
+        // Dictionary<CardController, GameObject> cardVisuals = new Dictionary<CardController, GameObject>();
 
         void Start() {
             deckManager = FindFirstObjectByType<DeckManager>();
@@ -44,31 +44,31 @@ namespace Littale {
             }
         }
 
-        void HandleCardDrawn(CardController card, int handIndex) {
-            if (handIndex < 0 || handIndex >= mainDeckSlots.Count) {
-                Debug.LogError($"[DeckUIHandler] Invalid handIndex: {handIndex}");
-                return;
-            }
+        // void HandleCardDrawn(CardController card, int handIndex) {
+        //     if (handIndex < 0 || handIndex >= mainDeckSlots.Count) {
+        //         Debug.LogError($"[DeckUIHandler] Invalid handIndex: {handIndex}");
+        //         return;
+        //     }
 
-            Transform cardSlot = mainDeckSlots[handIndex];
-            Image img = cardSlot.GetComponent<Image>();
-            img.sprite = card.cardData.icon;
-            img.color = Color.white; // Ensure to reset color in case it was changed
+        //     Transform cardSlot = mainDeckSlots[handIndex];
+        //     Image img = cardSlot.GetComponent<Image>();
+        //     img.sprite = card.cardData.icon;
+        //     img.color = Color.white; // Ensure to reset color in case it was changed
 
-            GameObject uiCard = cardSlot.gameObject;
-            cardVisuals[card] = uiCard;
+        //     GameObject uiCard = cardSlot.gameObject;
+        //     cardVisuals[card] = uiCard;
 
-            StartCoroutine(AnimateCardAppearance(cardSlot.gameObject, 0.2f));
-        }
+        //     StartCoroutine(AnimateCardAppearance(cardSlot.gameObject, 0.2f));
+        // }
 
-        void HandleCardPlayed(CardController card, float duration) {
-            if (cardVisuals.TryGetValue(card, out GameObject uiCard)) {
-                SoundManager.Instance.Play("card_played");
-                StartCoroutine(PlayAndDiscardAnimation(uiCard, duration));
+        // void HandleCardPlayed(CardController card, float duration) {
+        //     if (cardVisuals.TryGetValue(card, out GameObject uiCard)) {
+        //         SoundManager.Instance.Play("card_played");
+        //         StartCoroutine(PlayAndDiscardAnimation(uiCard, duration));
 
-                cardVisuals.Remove(card);
-            }
-        }
+        //         cardVisuals.Remove(card);
+        //     }
+        // }
 
         IEnumerator AnimateCardAppearance(GameObject cardObj, float duration = 0.2f) {
             if (cardObj == null) yield break;

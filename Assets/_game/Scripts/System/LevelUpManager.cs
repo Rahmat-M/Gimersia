@@ -1,96 +1,112 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using TMPro;
+using UnityEngine.UI;
 
 namespace Littale {
     public class LevelUpManager : MonoBehaviour {
 
-        public List<BaseCardSO> allCardsInGame;
-        public int optionsToShow = 3;
+        [Header("UI References")]
+        public GameObject choiceWindow;
+        public Button option1Button;
+        public Button option2Button;
+        public Button option3Button;
+        public TMP_Text pendingLevelsText;
 
         PlayerStats characterStats;
-        CardInventory cardInventory;
-        DeckManager deckManager;
-        public UICardChoiceWindow choiceWindow;
+        List<PlayerStats.LevelUpBonus> currentOptions = new List<PlayerStats.LevelUpBonus>();
 
         void Awake() {
             characterStats = FindFirstObjectByType<PlayerStats>();
-            cardInventory = FindFirstObjectByType<CardInventory>();
-            deckManager = FindFirstObjectByType<DeckManager>();
+            
+            // Setup Listeners
+            if (option1Button) option1Button.onClick.AddListener(() => OnOptionChosen(0));
+            if (option2Button) option2Button.onClick.AddListener(() => OnOptionChosen(1));
+            if (option3Button) option3Button.onClick.AddListener(() => OnOptionChosen(2));
         }
 
-        public void ShowLevelUpOptions() {
-            List<BaseCardSO> availableOptions = GetAvailableCardOptions();
+        public void StartReflectionPhase() {
+            if (characterStats == null) return;
 
-            List<BaseCardSO> choices = availableOptions
-                                        .OrderBy(x => Random.value)
-                                        .Take(optionsToShow)
-                                        .ToList();
-
-            if (choices.Count > 0) {
-                choiceWindow.ShowChoices(choices, this);
+            if (characterStats.pendingLevels > 0) {
+                ShowLevelUpOptions();
             } else {
-                Debug.LogWarning("There are no available cards to choose from!");
+                // No levels left, proceed to Draft
                 CloseLevelUpWindow();
+                DraftManager draft = FindFirstObjectByType<DraftManager>();
+                if (draft) draft.ShowDraft();
             }
         }
 
-        public void OnCardChosen(BaseCardSO chosenCardData) {
-            if (chosenCardData.Prefab == null) {
-                Debug.LogError($"BaseCardSO '{chosenCardData.cardName}' does not have a valid prefab assigned.");
-                CloseLevelUpWindow();
-                return;
+        void ShowLevelUpOptions() {
+            if (choiceWindow) choiceWindow.SetActive(true);
+            Time.timeScale = 0f; // Pause Game
+            
+            if (pendingLevelsText) pendingLevelsText.text = $"LEVEL UP! ({characterStats.pendingLevels} Remaining)";
+
+            GenerateOptions();
+            UpdateUI();
+        }
+
+        void GenerateOptions() {
+            currentOptions.Clear();
+            
+            // Determine Pool: Rare every 5 levels?
+            bool isRare = (characterStats.level % 5 == 0);
+            
+            // Common Pool: Attack, Health, Wealth, Mana
+            List<PlayerStats.LevelUpBonus> pool = new List<PlayerStats.LevelUpBonus> {
+                PlayerStats.LevelUpBonus.Attack,
+                PlayerStats.LevelUpBonus.Health,
+                PlayerStats.LevelUpBonus.Wealth,
+                PlayerStats.LevelUpBonus.Mana
+            };
+
+            // Rare Pool: Crit, Speed
+            if (isRare) {
+                pool.Add(PlayerStats.LevelUpBonus.Crit);
+                pool.Add(PlayerStats.LevelUpBonus.Speed);
             }
 
-            GameObject cardObject = Instantiate(chosenCardData.Prefab, characterStats.transform.position, Quaternion.identity);
-            cardObject.transform.parent = characterStats.transform;
+            // Pick 3 Random
+            for (int i = 0; i < 3; i++) {
+                PlayerStats.LevelUpBonus pick = pool[Random.Range(0, pool.Count)];
+                currentOptions.Add(pick);
+            }
+        }
 
-            // switch (chosenCardData.cardType) {
-            //     case CardType.Main:
-            //         if (cardObject.TryGetComponent(out CardController mainCard)) {
-            //             cardInventory.Add(mainCard);
-            //             // deckManager.AddCardToPile(mainCard);
-            //         }
-            //         break;
-            //     case CardType.Passive:
-            //         if (cardObject.TryGetComponent(out PassiveCardController passiveCard))
-            //             cardInventory.Add(passiveCard);
-            //         break;
-            //     case CardType.Reactive:
-            //         if (cardObject.TryGetComponent(out ReactiveCardController reactiveCard))
-            //             cardInventory.Add(reactiveCard);
-            //         break;
-            //     case CardType.Active:
-            //         if (cardObject.TryGetComponent(out ActiveCardController activeCard))
-            //             cardInventory.Add(activeCard);
-            //         break;
-            // }
+        void UpdateUI() {
+            SetButton(option1Button, currentOptions[0]);
+            SetButton(option2Button, currentOptions[1]);
+            SetButton(option3Button, currentOptions[2]);
+        }
 
-            CloseLevelUpWindow();
+        void SetButton(Button btn, PlayerStats.LevelUpBonus type) {
+            if (!btn) return;
+            TMP_Text txt = btn.GetComponentInChildren<TMP_Text>();
+            if (txt) {
+                switch (type) {
+                    case PlayerStats.LevelUpBonus.Attack: txt.text = "Bold Stroke\n+5 ATK"; break;
+                    case PlayerStats.LevelUpBonus.Health: txt.text = "Thick Paper\n+10 HP"; break;
+                    case PlayerStats.LevelUpBonus.Wealth: txt.text = "Inspiration\n+50 Gold"; break;
+                    case PlayerStats.LevelUpBonus.Mana: txt.text = "Vibrant Color\n+5% Mana Regen"; break;
+                    case PlayerStats.LevelUpBonus.Crit: txt.text = "Critical Eye\n+5% Crit"; break;
+                    case PlayerStats.LevelUpBonus.Speed: txt.text = "Swift Hand\n+10% Speed"; break;
+                }
+            }
+        }
+
+        public void OnOptionChosen(int index) {
+            if (characterStats != null && index < currentOptions.Count) {
+                characterStats.ApplyLevelUpBonus(currentOptions[index]);
+                characterStats.pendingLevels--;
+                StartReflectionPhase(); // Loop
+            }
         }
 
         public void CloseLevelUpWindow() {
-            choiceWindow.gameObject.SetActive(false);
-            GameManager.Instance.EndLevelUp();
+            if (choiceWindow) choiceWindow.SetActive(false);
+            Time.timeScale = 1f; // Resume Game
         }
-
-        private List<BaseCardSO> GetAvailableCardOptions() {
-            HashSet<BaseCardSO> cardsToExclude = new HashSet<BaseCardSO>();
-
-            // if (cardInventory.HasReactiveCard()) {
-            //     foreach (var card in allCardsInGame) {
-            //         if (card.cardType == CardType.Reactive) cardsToExclude.Add(card);
-            //     }
-            // }
-
-            // if (cardInventory.HasActiveCard()) {
-            //     foreach (var card in allCardsInGame) {
-            //         if (card.cardType == CardType.Active) cardsToExclude.Add(card);
-            //     }
-            // }
-
-            return allCardsInGame.Except(cardsToExclude).ToList();
-        }
-
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Littale {
     public class ReactionDeckHandler : MonoBehaviour {
 
-        CardInventory cardInventory;
+        // CardInventory cardInventory;
 
         [Header("Card References")]
         [SerializeField] GameObject cardUIPrefab;
@@ -13,39 +13,39 @@ namespace Littale {
 
         CardUIRefs uiCardRefs;
 
-        void Awake() {
-            cardInventory = FindFirstObjectByType<CardInventory>();
+        // void Awake() {
+        //     cardInventory = FindFirstObjectByType<CardInventory>();
 
-            foreach (Transform child in reactionDeck) Destroy(child.gameObject); // Clear existing cards
-            cardInventory.OnReactiveCardAcquired += HandleCardAcquired;
-        }
+        //     foreach (Transform child in reactionDeck) Destroy(child.gameObject); // Clear existing cards
+        //     cardInventory.OnReactiveCardAcquired += HandleCardAcquired;
+        // }
 
-        void SubscribeToCardEvents(ReactiveCardController card) {
-            card.OnCardPutOnCooldown += HandleCardCooldownStart;
-            card.OnCooldownTick += HandleCooldownTick;
-            card.OnCardReady += HandleCardReady;
-        }
+        // void SubscribeToCardEvents(ReactiveCardController card) {
+        //     card.OnCardPutOnCooldown += HandleCardCooldownStart;
+        //     card.OnCooldownTick += HandleCooldownTick;
+        //     card.OnCardReady += HandleCardReady;
+        // }
 
-        void HandleCardAcquired(ReactiveCardController card) {
-            if (reactionDeck == null || cardUIPrefab == null) {
-                Debug.LogWarning("[ReactionDeckHandler] reactionDeck or cardUIPrefab is not assigned.");
-                return;
-            }
+        // void HandleCardAcquired(ReactiveCardController card) {
+        //     if (reactionDeck == null || cardUIPrefab == null) {
+        //         Debug.LogWarning("[ReactionDeckHandler] reactionDeck or cardUIPrefab is not assigned.");
+        //         return;
+        //     }
 
-            GameObject uiCardObj = Instantiate(cardUIPrefab, reactionDeck);
-            uiCardObj.name = $"ReactionCard_{card.cardData.name}";
+        //     GameObject uiCardObj = Instantiate(cardUIPrefab, reactionDeck);
+        //     uiCardObj.name = $"ReactionCard_{card.cardData.name}";
 
-            uiCardRefs = new CardUIRefs(uiCardObj);
+        //     uiCardRefs = new CardUIRefs(uiCardObj);
 
-            uiCardRefs.mainImage.sprite = card.cardData.icon;
-            uiCardRefs.mainImage.color = Color.white; // Ensure in ready state
+        //     uiCardRefs.mainImage.sprite = card.cardData.icon;
+        //     uiCardRefs.mainImage.color = Color.white; // Ensure in ready state
 
-            if (uiCardRefs.cooldownOverlay) uiCardRefs.cooldownOverlay.gameObject.SetActive(false);
-            if (uiCardRefs.cooldownText) uiCardRefs.cooldownText.gameObject.SetActive(false);
+        //     if (uiCardRefs.cooldownOverlay) uiCardRefs.cooldownOverlay.gameObject.SetActive(false);
+        //     if (uiCardRefs.cooldownText) uiCardRefs.cooldownText.gameObject.SetActive(false);
 
-            SubscribeToCardEvents(card); // Subscribe to card events
-            StartCoroutine(AnimateCardAppearance(uiCardObj));
-        }
+        //     SubscribeToCardEvents(card); // Subscribe to card events
+        //     StartCoroutine(AnimateCardAppearance(uiCardObj));
+        // }
 
         void HandleCardCooldownStart(int duration) {
             SoundManager.Instance.Play("card_go_cooldown");

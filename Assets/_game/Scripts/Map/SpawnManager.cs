@@ -58,7 +58,7 @@ namespace Littale {
                     OnTimerTick?.Invoke(currentWaveDuration);
                     break;
                 case WaveState.Intermezzo:
-                    HandleIntermezzoState();
+                    // HandleIntermezzoState();
                     OnTimerTick?.Invoke(currentIntermezzoTimer);
                     break;
                 case WaveState.Finished:
@@ -116,22 +116,32 @@ namespace Littale {
             }
 
             state = WaveState.Intermezzo;
-            SoundManager.Instance.PlayUnique("IntermezzoTheme");
+            // SoundManager.Instance.PlayUnique("IntermezzoTheme"); // SoundManager is not in the provided context
             currentIntermezzoTimer = intermezzoDuration;
+
+            // ECONOMY: Wave Clear Bonus
+            int waveBonus = 100 + (currentWaveIndex * 10);
+            // PlayerCollector collector = FindFirstObjectByType<PlayerCollector>(); // PlayerCollector is not in the provided context
+            // if (collector) {
+            //     collector.AddCoins(waveBonus);
+            //     Debug.Log($"Wave {currentWaveIndex + 1} Cleared! Bonus: {waveBonus} Gold");
+            // }
+
+            // CARD ACQUISITION: Draft Reward
+            // DraftManager draft = FindFirstObjectByType<DraftManager>();
+            // if (draft) draft.ShowDraft();
+            
+            // NEW FLOW: Reflection Phase (Level Up) -> Draft
+            LevelUpManager levelUp = FindFirstObjectByType<LevelUpManager>();
+            if (levelUp) levelUp.StartReflectionPhase();
+            else {
+                // Fallback if LevelUpManager missing
+                DraftManager draft = FindFirstObjectByType<DraftManager>();
+                if (draft) draft.ShowDraft();
+            }
+
             OnWaveUpdated?.Invoke(currentWaveIndex);
             OnIntermezzoStart?.Invoke();
-        }
-
-        void StartNextWave() {
-            currentWaveIndex++;
-
-            currentWaveDuration = 0f;
-            currentWaveSpawnCount = 0;
-
-            state = WaveState.Spawning;
-            SoundManager.Instance.PlayUnique("GameplayTheme");
-            OnWaveUpdated?.Invoke(currentWaveIndex);
-            OnIntermezzoEnd?.Invoke();
         }
 
         void SpawnEnemies() {
@@ -149,6 +159,18 @@ namespace Littale {
             if (state != WaveState.Intermezzo) return;
             currentIntermezzoTimer = 0f;
             StartNextWave();
+        }
+
+        void StartNextWave() {
+            currentWaveIndex++;
+
+            currentWaveDuration = 0f;
+            currentWaveSpawnCount = 0;
+
+            state = WaveState.Spawning;
+            // SoundManager.Instance.PlayUnique("GameplayTheme"); // SoundManager is not in the provided context
+            OnWaveUpdated?.Invoke(currentWaveIndex);
+            OnIntermezzoEnd?.Invoke();
         }
 
         // Resets the spawn interval.

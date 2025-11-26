@@ -2681,53 +2681,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &351285112
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 351285114}
-  - component: {fileID: 351285113}
-  m_Layer: 0
-  m_Name: DeckManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &351285113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351285112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 721fc2dcce951ac49b5687d54aca5bc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Littale.DeckManager
-  autoStart: 1
-  minCardDelay: 0.2
-  isPlaying: 0
---- !u!4 &351285114
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351285112}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &363891495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2932,7 +2885,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 351285113}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Littale.DeckManager, Assembly-CSharp
         m_MethodName: StopAutoPlay
         m_Mode: 1
@@ -2971,7 +2924,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 351285113}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Littale.DeckManager, Assembly-CSharp
         m_MethodName: StartAutoPlay
         m_Mode: 1
@@ -6991,6 +6944,37 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 3
+--- !u!1 &915968615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 915968616}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &915968616
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915968615}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1936756458}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &921587079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11655,7 +11639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -24.999939}
+  m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: -400, y: -150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1444708580
@@ -14135,7 +14119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72f65386aa0bbf4f9486f8cebe2148d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Littale.CardLibraryManager
-  inventory: {fileID: 1936756463}
   libraryPanel: {fileID: 1401278192}
   cardUIPrefab: {fileID: 2851581087423043260, guid: 7447a19b48447fe448bc94956fb06181, type: 3}
   mainDeckContainer: {fileID: 122209562}
@@ -16206,11 +16189,13 @@ GameObject:
   - component: {fileID: 1936756458}
   - component: {fileID: 1936756460}
   - component: {fileID: 1936756459}
+  - component: {fileID: 1936756465}
   - component: {fileID: 1936756462}
   - component: {fileID: 1936756461}
-  - component: {fileID: 1936756463}
+  - component: {fileID: 1936756464}
+  - component: {fileID: 1936756466}
   m_Layer: 0
-  m_Name: Characters
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16231,6 +16216,7 @@ Transform:
   m_Children:
   - {fileID: 941767854}
   - {fileID: 1115367366}
+  - {fileID: 915968616}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1936756459
@@ -16367,13 +16353,21 @@ MonoBehaviour:
   - startLevel: 16
     endLevel: 100
     experienceCapIncrease: 150
-  reactiveCardPrefab: {fileID: -6330912533246798300, guid: 71b8db85f2cccf74cb536e5c5d335150, type: 3}
-  activeCardPrefab: {fileID: 6469777697519705571, guid: f865f5d513774f243aa38ca89fd4ef23, type: 3}
-  startingPassiveCards: []
   invincibilityDuration: 1
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   damageFlashDuration: 0.2
   deathFadeTime: 0.6
+  levelUpBaseMight: 0
+  fusionBaseMight: 0
+  levelUpBaseHealth: 0
+  bonusManaRegen: 0
+  bonusCritRate: 0
+  bonusAttackSpeed: 0
+  goldMultiplier: 1
+  armorPenetration: 0
+  thornsDamage: 0
+  goldDamageScaling: 0
+  pendingLevels: 0
 --- !u!114 &1936756462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16390,7 +16384,7 @@ MonoBehaviour:
   TriggerActions: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   aimCursorTexture: {fileID: 2800000, guid: cabb012d7bbcbf941acee28e51475a55, type: 3}
   cursorHotspot: {x: 146, y: 178}
---- !u!114 &1936756463
+--- !u!114 &1936756464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16399,13 +16393,170 @@ MonoBehaviour:
   m_GameObject: {fileID: 1936756457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52afea1a8ea8240488228e81482e2c54, type: 3}
+  m_Script: {fileID: 11500000, guid: cba646dd1f23634419c985e85b771f6a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Littale.CardInventory
-  cardSlots: []
-  passiveCardSlots: []
-  reactionCardSlot: {fileID: 0}
-  activeCardSlot: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::Littale.PlayerCardManager
+  firePoint: {fileID: 915968616}
+  maxMana: 100
+  manaRegenRate: 5
+  mainAttackLevel: 1
+  anchorCard: {fileID: 11400000, guid: d7eb7a33da2a87b4f95c854f572b33c3, type: 2}
+  ultimateCard: {fileID: 11400000, guid: e31d3759cf916bc418b845124dd0339b, type: 2}
+  passiveArtifacts: []
+--- !u!114 &1936756465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936756457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
+    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/Twin
+      USB Joystick1/stick,/Twin USB Joystick/stick]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
+    m_ActionName: 'Player/Look[/Mouse/delta,/Pen/delta]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1936756464}
+        m_TargetAssemblyTypeName: Littale.PlayerCardManager, Assembly-CSharp
+        m_MethodName: OnSkillQ
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
+    m_ActionName: 'Player/SkillQ[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1936756464}
+        m_TargetAssemblyTypeName: Littale.PlayerCardManager, Assembly-CSharp
+        m_MethodName: OnSkillE
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9d2c97b7-c328-4479-b8b0-353ee1f025bb
+    m_ActionName: 'Player/SkillE[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1936756464}
+        m_TargetAssemblyTypeName: Littale.PlayerCardManager, Assembly-CSharp
+        m_MethodName: OnUltimate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ad90fb72-801d-44ce-9afa-f075c80ee8ff
+    m_ActionName: 'Player/Ultimate[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
+    m_ActionName: 'UI/Navigate[/Twin USB Joystick1/stick/up,/Twin USB Joystick/stick/up,/Twin
+      USB Joystick1/stick/down,/Twin USB Joystick/stick/down,/Twin USB Joystick1/stick/left,/Twin
+      USB Joystick/stick/left,/Twin USB Joystick1/stick/right,/Twin USB Joystick/stick/right,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
+    m_ActionName: 'UI/Submit[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 15cef263-9014-4fd5-94d9-4e4a6234a6ef
+    m_ActionName: 'UI/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 32b35790-4ed0-4e9a-aa41-69ac6d629449
+    m_ActionName: 'UI/Point[/Mouse/position,/Pen/position]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3c7022bf-7922-4f7c-a998-c437916075ad
+    m_ActionName: 'UI/Click[/Mouse/leftButton,/Pen/tip]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 44b200b1-1557-4083-816c-b22cbdf77ddf
+    m_ActionName: 'UI/RightClick[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dad70c86-b58c-4b17-88ad-f5e53adf419e
+    m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0489e84a-4833-4c40-bfae-cea84b696689
+    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 24908448-c609-4bc3-a128-ea258674378a
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
+    m_ActionName: UI/TrackedDeviceOrientation
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1936756466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936756457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721fc2dcce951ac49b5687d54aca5bc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Littale.DeckManager
+  slot1: {fileID: 0}
+  slot2: {fileID: 0}
+  skillDeckQueue:
+  - {fileID: 11400000, guid: 0f39a8466f341c64798a389e76a5d6f2, type: 2}
+  - {fileID: 11400000, guid: 3624ed772177e9a4cb2ec19d988c7569, type: 2}
+  - {fileID: 11400000, guid: dd243c45c340ffc4b82acdc4bbf06a44, type: 2}
+  skillDiscard: []
+  OnSlot1Changed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSlot2Changed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!224 &1943491899 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3839335201656430588, guid: 674368cc51c8cf54fbc84f6dd62859c6, type: 3}
@@ -17196,15 +17347,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa37cd04719a88c4dac1a12f471bc18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Littale.LevelUpManager
-  allCardsInGame:
-  - {fileID: 11400000, guid: 0d17b0c22eb743f4c9184ad0c949895f, type: 2}
-  - {fileID: 11400000, guid: 8e135eae206b1b64fa41d8f4ad037f07, type: 2}
-  - {fileID: 11400000, guid: 64ab2e84b4cc07047b4806d542d24f18, type: 2}
-  - {fileID: 11400000, guid: c8c22a3fad796f94487cc4a3f13571d7, type: 2}
-  - {fileID: 11400000, guid: d11655f2905063146aba69e0f1548ed5, type: 2}
-  - {fileID: 11400000, guid: 424c6bd40d8589e42807a5559f7876b7, type: 2}
-  optionsToShow: 3
-  choiceWindow: {fileID: 385018972}
+  choiceWindow: {fileID: 0}
+  option1Button: {fileID: 0}
+  option2Button: {fileID: 0}
+  option3Button: {fileID: 0}
+  pendingLevelsText: {fileID: 0}
 --- !u!4 &2062461325
 Transform:
   m_ObjectHideFlags: 0
@@ -17433,21 +17580,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1130b2351b8dc48488eba72cdf8dd317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Littale.ShopManager
-  mainDeckCardPool:
-  - {fileID: 11400000, guid: 0d17b0c22eb743f4c9184ad0c949895f, type: 2}
-  - {fileID: 11400000, guid: 8e135eae206b1b64fa41d8f4ad037f07, type: 2}
-  - {fileID: 11400000, guid: 64ab2e84b4cc07047b4806d542d24f18, type: 2}
-  - {fileID: 11400000, guid: c8c22a3fad796f94487cc4a3f13571d7, type: 2}
-  - {fileID: 11400000, guid: d11655f2905063146aba69e0f1548ed5, type: 2}
-  - {fileID: 11400000, guid: 424c6bd40d8589e42807a5559f7876b7, type: 2}
-  rareCardPool:
-  - {fileID: 11400000, guid: cc7e934d27254f3468bdade908f8a5c1, type: 2}
-  - {fileID: 11400000, guid: f8c1a67c5ccc5654182597ee3b478aa2, type: 2}
-  - {fileID: 11400000, guid: de745d1640a4b0f4a8d5ed4c562f8a1a, type: 2}
   baseCardPrice: 50
   rareCardPrice: 200
   refreshCost: 10
   removeCardCost: 75
+  characterCollector: {fileID: 0}
+  shopUI: {fileID: 0}
+  currentWave: 0
 --- !u!4 &2076699568
 Transform:
   m_ObjectHideFlags: 0
@@ -18295,7 +18434,6 @@ SceneRoots:
   - {fileID: 998858308}
   - {fileID: 2013604619}
   - {fileID: 143747978}
-  - {fileID: 351285114}
   - {fileID: 964251195}
   - {fileID: 402317786}
   - {fileID: 2062461325}

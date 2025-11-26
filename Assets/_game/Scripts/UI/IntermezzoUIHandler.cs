@@ -52,7 +52,7 @@ namespace Littale {
 
         void OnSkipClicked() {
             if (SpawnManager.instance) {
-                SpawnManager.instance.SkipIntermezzo();
+                // SpawnManager.instance.SkipIntermezzo();
             }
             HideIntermezzoUI();
         }
