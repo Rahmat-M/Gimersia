@@ -74,10 +74,10 @@ namespace Littale {
 
         private void PlaySliderSfx() {
             if (Time.unscaledTime - lastSfxPlayTime > sfxCooldown) {
-                if (!string.IsNullOrEmpty(sliderMoveSfx) && SoundManager.Instance != null) {
-                    SoundManager.Instance.Play(sliderMoveSfx);
-                    lastSfxPlayTime = Time.unscaledTime;
-                }
+                // if (!string.IsNullOrEmpty(sliderMoveSfx) && SoundManager.Instance != null) {
+                //     SoundManager.Instance.Play(sliderMoveSfx);
+                //     lastSfxPlayTime = Time.unscaledTime;
+                // }
             }
         }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace Littale {
     public class DeckManager : MonoBehaviour {
@@ -17,12 +18,24 @@ namespace Littale {
         // Events untuk Update UI
         public UnityEvent<CardData> OnSlot1Changed;
         public UnityEvent<CardData> OnSlot2Changed;
+        public System.Action<List<CardData>> OnQueueChanged;
+        public UnityEvent<float> OnReloadStart;
 
         private PlayerCardManager playerCardManager;
+
+        [Header("Settings")]
+        public float reloadCooldown = 1.0f;
+        private bool isReloading = false;
 
         void Start() {
             playerCardManager = GetComponent<PlayerCardManager>();
             InitializeDeck();
+        }
+
+        public void OnReload(InputAction.CallbackContext context) {
+            if (context.performed) {
+                ManualReload();
+            }
         }
 
         void InitializeDeck() {
@@ -36,6 +49,8 @@ namespace Littale {
         }
 
         public void TryUseCard(int slotIndex, bool isHold = false) {
+            if (isReloading) return;
+
             CardData cardToUse = (slotIndex == 1) ? slot1 : slot2;
 
             if (cardToUse == null) return;
@@ -49,11 +64,25 @@ namespace Littale {
                 skillDiscard.Add(cardToUse);
 
                 // 3. Kosongkan Slot
-                if (slotIndex == 1) slot1 = null;
-                else slot2 = null;
+                if (slotIndex == 1) {
+                    slot1 = null;
+                    OnSlot1Changed?.Invoke(null);
+                } else {
+                    slot2 = null;
+                    OnSlot2Changed?.Invoke(null);
+                }
 
-                // 4. Isi ulang slot dari Queue (Revolver reload)
-                StartCoroutine(ReloadSlotDelay(slotIndex, 0.5f));
+                // 4. Cek Reload Logic
+                if (skillDeckQueue.Count > 0) {
+                    // Masih ada kartu di queue, isi slot seperti biasa
+                    StartCoroutine(ReloadSlotDelay(slotIndex, 0.5f));
+                } else {
+                    // Queue kosong, cek apakah kedua slot kosong
+                    if (slot1 == null && slot2 == null) {
+                        StartCoroutine(ReloadDeckRoutine());
+                    }
+                }
+
             } else {
                 Debug.Log("Not Enough Mana!");
                 // UI Feedback: Flash Mana Bar Merah
@@ -65,14 +94,53 @@ namespace Littale {
             FillSlot(slotIndex);
         }
 
-        void FillSlot(int slotIndex) {
-            if (skillDeckQueue.Count == 0) {
-                ReshuffleDiscardToQueue();
+        IEnumerator ReloadDeckRoutine() {
+            isReloading = true;
+            Debug.Log("Reloading Deck...");
+
+            OnReloadStart?.Invoke(reloadCooldown);
+
+            yield return new WaitForSeconds(reloadCooldown);
+
+            ReshuffleDiscardToQueue();
+
+            FillSlot(1);
+            FillSlot(2);
+
+            isReloading = false;
+            Debug.Log("Reload Complete!");
+        }
+
+        public void ManualReload() {
+            if (isReloading) return;
+
+            // Discard current cards
+            if (slot1 != null) {
+                skillDiscard.Add(slot1);
+                slot1 = null;
+                OnSlot1Changed?.Invoke(null);
             }
+            if (slot2 != null) {
+                skillDiscard.Add(slot2);
+                slot2 = null;
+                OnSlot2Changed?.Invoke(null);
+            }
+
+            skillDiscard.AddRange(skillDeckQueue);
+            skillDeckQueue.Clear();
+            OnQueueChanged?.Invoke(skillDeckQueue);
+
+            StartCoroutine(ReloadDeckRoutine());
+        }
+
+        void FillSlot(int slotIndex) {
+            // Removed automatic ReshuffleDiscardToQueue here.
+            // Only fill if there are cards in Queue.
 
             if (skillDeckQueue.Count > 0) {
                 CardData newCard = skillDeckQueue[0];
                 skillDeckQueue.RemoveAt(0);
+                OnQueueChanged?.Invoke(skillDeckQueue);
 
                 if (slotIndex == 1) {
                     slot1 = newCard;
@@ -85,10 +153,18 @@ namespace Littale {
         }
 
         void ReshuffleDiscardToQueue() {
-            if (skillDiscard.Count == 0) return;
+            if (skillDiscard.Count == 0 && skillDeckQueue.Count == 0) return; // Nothing to shuffle
+
+            // If we want to reshuffle everything (including what was in queue if we did a manual reload with cards left in queue)
+            // But usually Reshuffle is Discard -> Queue.
+            // If Manual Reload was called, we might have cards in Queue?
+            // If so, we should probably keep them or shuffle them too?
+            // Let's just append Discard to Queue and Shuffle Queue.
+
             skillDeckQueue.AddRange(skillDiscard);
             skillDiscard.Clear();
             Shuffle(skillDeckQueue);
+            OnQueueChanged?.Invoke(skillDeckQueue);
         }
 
         public void ResetCooldown(int slotIndex) {
@@ -96,11 +172,11 @@ namespace Littale {
             // Since the current system uses a queue and immediate use, 
             // "Reset Cooldown" might mean "Instantly refill the slot" if it's empty 
             // or "Allow immediate use again" if there's a timer.
-            
+
             // For this specific implementation where slots are refilled from a queue:
             // If the slot is empty (waiting for reload), we can force fill it immediately.
             // Or if there is a cooldown timer on the UI (which we saw in ActiveDeckHandler), we reset that.
-            
+
             // Assuming the "Cooldown" is the reload delay:
             StopAllCoroutines(); // Stop any reload delay
             FillSlot(slotIndex); // Fill immediately
@@ -145,14 +221,15 @@ namespace Littale {
             // No fusion, just add
             skillDeckQueue.Add(newCard);
             Shuffle(skillDeckQueue);
+            OnQueueChanged?.Invoke(skillDeckQueue);
         }
 
         void FuseCards(CardData existingCard, CardData newCard) {
             if (existingCard != null) skillDeckQueue.Remove(existingCard);
-            
+
             CardData upgradedCard = newCard.nextTierCard;
             Debug.Log($"FUSION! {newCard.cardName} ({newCard.tier}) -> {upgradedCard.cardName} ({upgradedCard.tier})");
-            
+
             // Apply Player Stats Bonus
             PlayerStats stats = FindFirstObjectByType<PlayerStats>();
             if (stats) stats.ApplyFusionBonus((int)upgradedCard.tier); // 1=Silver, 2=Gold (Enum index might vary, check CardTier)
@@ -166,6 +243,7 @@ namespace Littale {
             CardData match = skillDeckQueue.Find(x => x.cardName == card.cardName && x.tier == card.tier);
             if (match != null) {
                 skillDeckQueue.Remove(match);
+                OnQueueChanged?.Invoke(skillDeckQueue);
                 return true;
             }
 

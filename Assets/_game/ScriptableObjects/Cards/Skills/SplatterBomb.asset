@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SplatterBomb
   m_EditorClassIdentifier: Assembly-CSharp::Littale.CardData
   cardName: Splatter Bomb
-  icon: {fileID: -5493508554759021246, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
+  icon: {fileID: -5522463162955293071, guid: 7fc06705a29370d4a99428bc2ca503b6, type: 3}
   type: 1
   tier: 0
   nextTierCard: {fileID: 0}

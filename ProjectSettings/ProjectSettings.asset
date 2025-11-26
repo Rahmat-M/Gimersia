@@ -764,7 +764,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -786,11 +792,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 5c934196-4cb9-42b6-b71d-5950d395a5d6
+  cloudProjectId: 568c749e-5f98-4fba-9b13-b718fd3f0c3a
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Gimersia 2025-11-08_11-58-51
-  organizationId: unity_227006029
+  projectName: Littale
+  organizationId: unity_227006010
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

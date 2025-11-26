@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShadowStep
   m_EditorClassIdentifier: Assembly-CSharp::Littale.CardData
   cardName: Shadow Step
-  icon: {fileID: -5493508554759021246, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
+  icon: {fileID: -8535274840383202940, guid: 303b084f8696ca04c9728e5909be8e12, type: 3}
   type: 1
   tier: 0
   nextTierCard: {fileID: 0}

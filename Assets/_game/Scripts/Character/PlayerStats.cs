@@ -14,6 +14,7 @@ namespace Littale {
 
         public UnityEvent<float> OnHealthChanged;
         public UnityEvent<float> OnExperienceChanged;
+        public UnityEvent<int> OnLevelChanged;
         public UnityEvent OnKilled;
 
         [SerializeField] CharacterSO characterData;
@@ -156,7 +157,7 @@ namespace Littale {
                     // Since we don't have a dedicated 'baseManaRegen' field yet, I'll add a placeholder or modify 'recovery' if that's HP regen.
                     // I'll add a 'bonusManaRegen' field to PlayerStats later if needed, or just assume it's handled by multipliers.
                     // For now, let's add to a new field.
-                    bonusManaRegen += 0.05f; 
+                    bonusManaRegen += 0.05f;
                     break;
                 case LevelUpBonus.Crit:
                     bonusCritRate += 5f;
@@ -172,7 +173,7 @@ namespace Littale {
         public float bonusCritRate = 0f;
         public float bonusAttackSpeed = 0f;
         public float goldMultiplier = 1.0f; // For Art Sale passive
-        
+
         [Header("Neutral Passives")]
         public float armorPenetration = 0f; // Sharpened Pencil
         public float thornsDamage = 0f; // Thick Frame
@@ -198,7 +199,7 @@ namespace Littale {
             // So we add to the base multiplier.
             // Note: actualStats.attackSpeed is likely a multiplier.
             // We'll apply these AFTER the base reset.
-            
+
             // For now, let's just store them. The actual application happens below or in the multiplier section.
             // Actually, let's apply them to the base stats directly if they are flat, or to the multiplier if they are %.
             // The prompt said: +10% Attack Speed.
@@ -253,6 +254,7 @@ namespace Littale {
             if (Experience >= experienceCap) {
                 // Level up the player
                 level++;
+                OnLevelChanged?.Invoke(level);
                 pendingLevels++;
                 Experience -= experienceCap;
 

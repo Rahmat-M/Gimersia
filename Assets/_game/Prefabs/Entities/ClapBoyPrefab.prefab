@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1688411029
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a9d45d6b479af5f40b28e8b8e2711614, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb050b243a6e0a84da614cc7b0d81c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Littale.EnemyStats
+  diePrefab: {fileID: 1157310576600206298, guid: 33f894f673a3a0c4aae673ed5b746dfe, type: 3}
   baseStats:
     maxHealth: 30
     moveSpeed: 1.5
@@ -185,7 +186,8 @@ MonoBehaviour:
   attackEffects: []
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   damageFlashDuration: 0.2
-  deathFadeTime: 0.6
+  deathFadeTime: 0.5
+  CanNotDie: 0
 --- !u!114 &6090101626908327698
 MonoBehaviour:
   m_ObjectHideFlags: 0

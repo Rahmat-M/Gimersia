@@ -38,9 +38,9 @@ namespace Littale {
                 activeTween.Complete();
             }
 
-            if (!string.IsNullOrEmpty(openSound) && SoundManager.Instance != null) {
-                SoundManager.Instance.Play(openSound);
-            }
+            // if (!string.IsNullOrEmpty(openSound) && SoundManager.Instance != null) {
+            //     SoundManager.Instance.Play(openSound);
+            // }
 
             container.gameObject.SetActive(true);
             container.localScale = Vector3.zero;
@@ -57,9 +57,9 @@ namespace Littale {
                 activeTween.Complete();
             }
 
-            if (!string.IsNullOrEmpty(closeSound) && SoundManager.Instance != null) {
-                SoundManager.Instance.Play(closeSound);
-            }
+            // if (!string.IsNullOrEmpty(closeSound) && SoundManager.Instance != null) {
+            //     SoundManager.Instance.Play(closeSound);
+            // }
 
             activeTween = Tween.Scale(container, Vector3.zero, animationDuration, easeOut, useUnscaledTime: true)
                 .OnComplete(() => {

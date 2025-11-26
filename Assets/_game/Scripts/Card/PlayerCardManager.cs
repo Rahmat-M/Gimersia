@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
 namespace Littale {
     public class PlayerCardManager : MonoBehaviour {
-        [Header("Configuration")]
-        public Transform firePoint;
-
         [Header("Stats")]
         public float maxMana = 100;
         public float CurrentMana { get; private set; }
         public float manaRegenRate = 5f; // Regen pasif (opsional)
         public int mainAttackLevel = 1;
+        public bool startingWithUltimateReady = true;
 
         [Header("Active Loadout")]
         public CardData anchorCard; // Kartu Anchor (Auto)
@@ -27,10 +26,12 @@ namespace Littale {
 
         PlayerMovement playerMovement;
         DeckManager deckManager;
+        PlayerStats stats;
 
         void Awake() {
             playerMovement = GetComponent<PlayerMovement>();
             deckManager = GetComponent<DeckManager>();
+            stats = GetComponent<PlayerStats>();
         }
 
         void Start() {
@@ -40,6 +41,16 @@ namespace Littale {
             foreach (var artifact in passiveArtifacts) {
                 ApplyEffectsImmediate(artifact);
             }
+
+            if (startingWithUltimateReady) {
+                isUltimateReady = true;
+                OnUltimateReady?.Invoke();
+            } else if (ultimateCard != null) {
+                isUltimateReady = false;
+                ultimateCooldownTimer = ultimateCard.cooldown;
+                OnUltimateUsed?.Invoke();
+                OnUltimateCooldownStart?.Invoke(ultimateCard.cooldown);
+            }
         }
 
         void Update() {
@@ -48,7 +59,6 @@ namespace Littale {
             HandleCooldowns();
 
             // Sync Main Attack Level with Player Level
-            PlayerStats stats = GetComponent<PlayerStats>();
             if (stats) mainAttackLevel = stats.level;
         }
 
@@ -110,12 +120,12 @@ namespace Littale {
             Vector3 spawnPos = transform.position + (attackDir.normalized * offsetDistance);
 
             // 3. Instantiate Melee Prefab
-            GameObject slash = Instantiate(anchorCard.projectilePrefab, spawnPos, rotation);
+            GameObject slash = Instantiate(anchorCard.projectilePrefab, spawnPos, rotation, transform);
 
             // 4. Initialize Controller
             var meleeCtrl = slash.GetComponent<MeleeAttackController>();
             if (meleeCtrl != null) {
-                meleeCtrl.Initialize(10, isDouble, isSiphon, this);
+                meleeCtrl.Initialize(anchorCard.effects, isSiphon, this);
             }
 
             // Jika Lv 5 (Double Stroke), spawn ayunan kedua dengan delay sedikit dan arah berlawanan
@@ -138,7 +148,7 @@ namespace Littale {
             GameObject slash2 = Instantiate(anchorCard.projectilePrefab, position, reverseRot);
             var meleeCtrl = slash2.GetComponent<MeleeAttackController>();
             if (meleeCtrl != null) {
-                meleeCtrl.Initialize(10, true, siphon, this);
+                meleeCtrl.Initialize(anchorCard.effects, siphon, this);
             }
         }
 
@@ -162,6 +172,8 @@ namespace Littale {
 
                 isUltimateReady = false;
                 ultimateCooldownTimer = ultimateCard.cooldown;
+                OnUltimateUsed?.Invoke();
+                OnUltimateCooldownStart?.Invoke(ultimateCard.cooldown);
                 Debug.Log("ULTIMATE: BLACK DRAGON UNLEASHED!");
             } else {
                 Debug.Log("Ultimate Cooldown!");
@@ -169,8 +181,8 @@ namespace Littale {
         }
 
         void ClearEnemyBullets() {
-            var bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-            foreach (var b in bullets) Destroy(b);
+            // var bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+            // foreach (var b in bullets) Destroy(b);
         }
 
         void DamageAllEnemies(int damagePercent) {
@@ -189,6 +201,7 @@ namespace Littale {
                 ultimateCooldownTimer -= Time.deltaTime;
                 if (ultimateCooldownTimer <= 0) {
                     isUltimateReady = true;
+                    OnUltimateReady?.Invoke();
                     Debug.Log("Ultimate Ready!");
                 }
             }
@@ -240,10 +253,13 @@ namespace Littale {
         public void UseInkLance(CardData card, CardTier tier, int slotIndex) {
             // Target: Musuh terjauh atau Boss
             GameObject target = FindFarthestOrBoss();
-            Vector3 targetDir = (target != null) ? (target.transform.position - transform.position).normalized : firePoint.right;
+            Vector3 targetDir = (target != null) ? (target.transform.position - transform.position).normalized : transform.right;
 
-            GameObject lance = Instantiate(card.projectilePrefab, firePoint.position, Quaternion.FromToRotation(Vector3.right, targetDir));
+            GameObject lance = Instantiate(card.projectilePrefab, transform.position, Quaternion.FromToRotation(Vector3.right, targetDir));
             ProjectileController pc = lance.GetComponent<ProjectileController>();
+
+            // Calculate Damage
+            int damage = Mathf.RoundToInt(card.damageMultiplier * 10f); // Base 10
 
             // Fusion Evolution
             // Bronze: Pierce 3
@@ -265,7 +281,7 @@ namespace Littale {
             // Target: Mouse Pos
             Vector3 targetPos = GetMouseWorldPosition();
 
-            GameObject bomb = Instantiate(card.projectilePrefab, firePoint.position, Quaternion.identity);
+            GameObject bomb = Instantiate(card.projectilePrefab, transform.position, Quaternion.identity);
             ProjectileController pc = bomb.GetComponent<ProjectileController>();
 
             // Fusion Evolution
@@ -294,7 +310,7 @@ namespace Littale {
             // Fusion Evolution
             Vector3 scale = (tier == CardTier.Gold) ? new Vector3(2, 1, 1) : Vector3.one;
 
-            GameObject wave = Instantiate(card.projectilePrefab, firePoint.position, firePoint.rotation);
+            GameObject wave = Instantiate(card.projectilePrefab, transform.position, transform.rotation);
             wave.transform.localScale = scale;
 
             WaveController wc = wave.GetComponent<WaveController>();
@@ -344,7 +360,7 @@ namespace Littale {
                 // Initialize Spin Controller
             } else {
                 // Standard Sweep
-                GameObject sweep = Instantiate(card.projectilePrefab, firePoint.position, firePoint.rotation);
+                GameObject sweep = Instantiate(card.projectilePrefab, transform.position, transform.rotation);
                 // Initialize Sweep Controller
             }
         }
@@ -511,20 +527,28 @@ namespace Littale {
         }
 
         // --- MANA SYSTEM ---
+        public event System.Action<float, float> OnManaChanged;
+        public event System.Action OnUltimateReady;
+        public event System.Action OnUltimateUsed;
+        public UnityEvent<float> OnUltimateCooldownStart;
+
         void HandleManaRegen() {
             if (CurrentMana < maxMana) {
                 CurrentMana += manaRegenRate * Time.deltaTime;
+                OnManaChanged?.Invoke(CurrentMana, maxMana);
             }
         }
 
         public void ConsumeMana(int amount) {
             CurrentMana -= amount;
             if (CurrentMana < 0) CurrentMana = 0;
+            OnManaChanged?.Invoke(CurrentMana, maxMana);
         }
 
         public void RegenMana(int amount) {
             CurrentMana += amount;
             if (CurrentMana > maxMana) CurrentMana = maxMana;
+            OnManaChanged?.Invoke(CurrentMana, maxMana);
         }
     }
 }

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44f44db199bc794dab2971c08e7eb87, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: Assembly-CSharp::Littale.DamageEffect
-  damageAmount: 5
+  damageAmount: 10
+  knockbackForce: 5

@@ -8,17 +8,15 @@ namespace Littale {
         public AnimationClip attackClip;
 
         [Header("Settings")]
-        public float activeDuration = 0.2f; // Berapa lama hitbox aktif
+        public float activeDuration = 0.2f;
 
-        private int damage;
-        private bool isDoubleStroke;
         private bool isSiphon;
         private PlayerCardManager playerManager;
         private List<GameObject> hitEnemies = new List<GameObject>();
+        private List<CardEffect> effectsToApply;
 
-        public void Initialize(int damage, bool doubleStroke, bool siphon, PlayerCardManager manager) {
-            this.damage = damage;
-            this.isDoubleStroke = doubleStroke;
+        public void Initialize(List<CardEffect> effects, bool siphon, PlayerCardManager manager) {
+            this.effectsToApply = effects;
             this.isSiphon = siphon;
             this.playerManager = manager;
 
@@ -38,14 +36,26 @@ namespace Littale {
             if (other.CompareTag("Enemy") && !hitEnemies.Contains(other.gameObject)) {
                 hitEnemies.Add(other.gameObject);
 
+                // Apply Effects (Damage, Knockback, etc.)
+                if (effectsToApply != null) {
+                    foreach (var effect in effectsToApply) {
+                        effect.Execute(playerManager.gameObject, other.gameObject);
+                    }
+                }
+
                 var enemyStats = other.GetComponent<EnemyStats>();
                 if (enemyStats != null) {
-                    bool isDead = enemyStats.TakeDamage(damage);
-
+                    bool isDead = enemyStats.Health <= 0; // Check health directly
                     if (isSiphon && isDead) {
                         playerManager.RegenMana(1);
                     }
                 }
+            }
+        }
+
+        void PlayAttackSound() {
+            if (AudioManager.Instance != null) {
+                AudioManager.Instance.PlaySFX(SfxID.MeleeHit);
             }
         }
     }

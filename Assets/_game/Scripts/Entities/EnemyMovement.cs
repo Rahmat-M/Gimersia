@@ -76,22 +76,10 @@ namespace Littale {
 
         // This is meant to be called from other scripts to create knockback.
         public virtual void Knockback(Vector2 velocity, float duration) {
-            // Ignore the knockback if the duration is greater than 0.
-            if (knockbackDuration > 0) return;
-
-            // Ignore knockback if the knockback type is set to none.
-            if (knockbackVariance == 0) return;
-
-            // Only change the factor if the multiplier is not 0 or 1.
-            float pow = 1;
-            bool reducesVelocity = (knockbackVariance & KnockbackVariance.velocity) > 0,
-                 reducesDuration = (knockbackVariance & KnockbackVariance.duration) > 0;
-
-            if (reducesVelocity && reducesDuration) pow = 0.5f;
-
-            // Check which knockback values to affect.
-            knockbackVelocity = velocity * (reducesVelocity ? Mathf.Pow(stats.Actual.knockbackMultiplier, pow) : 1);
-            knockbackDuration = duration * (reducesDuration ? Mathf.Pow(stats.Actual.knockbackMultiplier, pow) : 1);
+            // Simply apply the knockback.
+            // EnemyStats.cs already handles the "Force vs Weight" calculation.
+            knockbackVelocity = velocity;
+            knockbackDuration = duration;
         }
 
         public virtual void Move() {

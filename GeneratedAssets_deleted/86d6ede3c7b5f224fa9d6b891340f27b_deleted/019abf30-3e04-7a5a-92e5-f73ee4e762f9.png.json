@@ -1,0 +1,20 @@
+{
+    "asset": "86d6ede3c7b5f224fa9d6b891340f27b",
+    "fileName": "019abf30-3e04-7a5a-92e5-f73ee4e762f9.png",
+    "prompt": "Create a painterly-style UI element resembling a floating palette for a game interface. The palette should be positioned at the center-bottom of the screen and have a minimalistic design. Include two main slots shaped like blobs of wet paint or rough sketch paper for displaying skill icons.",
+    "negativePrompt": "",
+    "model": "5b5b2af1-6ea4-4266-b087-cc9f3bf4f450",
+    "modelName": "Flux.1 Dev",
+    "customSeed": -1,
+    "w3CTraceId": "45ce57a1714c024820110780115cb6c2",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

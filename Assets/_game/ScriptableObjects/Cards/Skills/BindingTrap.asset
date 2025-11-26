@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BindingTrap
   m_EditorClassIdentifier: Assembly-CSharp::Littale.CardData
   cardName: Binding Trap
-  icon: {fileID: -2684691621588603283, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
+  icon: {fileID: -1858620598373128731, guid: 6625e7f132447d647a13b84cc8038707, type: 3}
   type: 1
   tier: 0
   nextTierCard: {fileID: 0}

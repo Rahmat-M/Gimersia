@@ -6,9 +6,7 @@ using TMPro;
 using UnityEngine.InputSystem;
 
 namespace Littale {
-    public class GameManager : MonoBehaviour {
-        public static GameManager Instance;
-
+    public class GameManager : Singleton<GameManager> {
         // Define the different states of the game
         public enum GameState {
             Gameplay,
@@ -89,27 +87,20 @@ namespace Littale {
 
         public PlayerCollector characterCollector;
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             players = FindObjectsByType<PlayerStats>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
             //Set the level's Time Limit
             // timeLimit = TimeLimit; // TODO: Fix when UILevelSelector is back
 
-            //Warning check to see if there is another singleton of this kind already in the game
-            if (Instance == null) {
-                Instance = this;
-            } else {
-                Debug.LogWarning("EXTRA " + this + " DELETED");
-                Destroy(gameObject);
-            }
-
             DisableScreens();
         }
 
         void Start() {
-            if (SoundManager.Instance != null) {
-                SoundManager.Instance.Play("GameplayTheme");
-            }
+            // if (SoundManager.Instance != null) {
+            //     SoundManager.Instance.Play("GameplayTheme");
+            // }
         }
 
         void Update() {

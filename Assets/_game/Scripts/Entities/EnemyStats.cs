@@ -1,8 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using PrimeTween;
 
 namespace Littale {
     public class EnemyStats : EntityStats {
+
+        [Header("Settings")]
+        public GameObject diePrefab;
 
         [System.Serializable]
         public struct Resistances {
@@ -97,8 +101,11 @@ namespace Littale {
         [Header("Damage Feedback")]
         public Color damageColor = new Color(1, 0, 0, 1); // What the color of the damage flash should be.
         public float damageFlashDuration = 0.2f; // How long the flash should last.
-        public float deathFadeTime = 0.6f; // How much time it takes for the enemy to fade.
+        public float deathFadeTime = 0.5f; // How much time it takes for the enemy to fade.
         EnemyMovement movement;
+
+        [Header("Debug")]
+        public bool CanNotDie = false; // If true, the enemy will not die.
 
         public static int count; // Track the number of enemies on the screen.
 
@@ -207,12 +214,11 @@ namespace Littale {
             // Create the text popup when enemy takes damage.
             if (dmg > 0) {
                 StartCoroutine(DamageFlash());
-                SoundManager.Instance.Play("enemy_hit");
                 // GameManager.GenerateFloatingText(Mathf.FloorToInt(dmg).ToString(), transform);
             }
 
             // Kills the enemy if the health drops below zero.
-            if (health <= 0) {
+            if (health <= 0 && !CanNotDie) {
                 Kill();
             }
 
@@ -230,7 +236,7 @@ namespace Littale {
             // We assume 'knockbackMultiplier' in stats acts as 'Weight' (Lower multiplier = Heavier)
             // Or we can add a specific 'weight' field. For now, let's use knockbackMultiplier as resistance.
             // If knockbackMultiplier is 0, it's immovable.
-            
+
             float effectiveForce = knockbackForce * actualStats.knockbackMultiplier;
 
             // Apply knockback if it is positive.
@@ -256,32 +262,53 @@ namespace Littale {
             yield return new WaitForSeconds(damageFlashDuration);
             RemoveTint(damageColor);
         }
+
         public override void Kill() {
             // Enable drops if the enemy is killed,
             // since drops are disabled by default.
-            SoundManager.Instance.Play("enemy_die");
+            // SoundManager.Instance.Play("enemy_die");
             DropRateManager drops = GetComponent<DropRateManager>();
             if (drops) drops.active = true;
 
-            StartCoroutine(KillFade());
-        }
+            // Disable Collider and Movement to prevent further interaction
+            GetComponent<Collider2D>().enabled = false;
+            if (movement) movement.enabled = false;
 
-        // This is a Coroutine function that fades the enemy away slowly.
-        IEnumerator KillFade() {
-            // Waits for a single frame.
-            WaitForEndOfFrame w = new WaitForEndOfFrame();
-            float t = 0, origAlpha = sprite.color.a;
-
-            // This is a loop that fires every frame.
-            while (t < deathFadeTime) {
-                yield return w;
-                t += Time.deltaTime;
-
-                // Set the colour for this frame.
-                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, (1 - t / deathFadeTime) * origAlpha);
+            // 1. Ghost Logic (Vertical Float + Fade)
+            if (diePrefab) {
+                GameObject ghost = Instantiate(diePrefab, transform.position, Quaternion.identity);
+                
+                // Move Up
+                Tween.Position(ghost.transform, ghost.transform.position + Vector3.up * 2f, 1f, Ease.OutQuad);
+                
+                // Fade Out (Try to find SpriteRenderer)
+                SpriteRenderer ghostSr = ghost.GetComponent<SpriteRenderer>();
+                if (ghostSr) {
+                    Tween.Alpha(ghostSr, 0f, 1f, Ease.InQuad)
+                        .OnComplete(() => Destroy(ghost));
+                } else {
+                    Destroy(ghost, 1f); // Fallback if no renderer
+                }
             }
 
-            Destroy(gameObject);
+            // 2. Enemy Logic (Horizontal Knockback + Fade)
+            // Ensure we have a player reference for direction
+            if (characterStats == null) characterStats = FindFirstObjectByType<PlayerStats>();
+
+            Vector3 knockbackDir = Vector3.right; // Default
+            if (characterStats != null) {
+                // Strictly Horizontal Direction (Opposite to Player)
+                float dirX = (transform.position.x > characterStats.transform.position.x) ? 1f : -1f;
+                knockbackDir = new Vector3(dirX, 0, 0);
+            }
+
+            // PrimeTween Sequence: Knockback -> Fade -> Destroy
+            // Move Horizontal
+            Tween.Position(transform, transform.position + knockbackDir * 2f, deathFadeTime, Ease.OutQuad);
+
+            // Fade Out
+            Tween.Alpha(sprite, 0f, deathFadeTime, Ease.InQuad)
+                .OnComplete(() => Destroy(gameObject));
         }
 
         private void OnCollisionEnter2D(Collision2D collision) {

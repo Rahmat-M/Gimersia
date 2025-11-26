@@ -8,7 +8,7 @@ namespace Littale {
     [RequireComponent(typeof(Collider2D))]
     public class PlayerCollector : MonoBehaviour {
 
-        public UnityEvent<float> OnCoinCollected;
+        public UnityEvent<int> OnCoinCollected;
 
         PlayerStats player;
         CircleCollider2D detector;

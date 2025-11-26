@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TidingWave
   m_EditorClassIdentifier: Assembly-CSharp::Littale.CardData
   cardName: Tiding Wave
-  icon: {fileID: -2684691621588603283, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
+  icon: {fileID: -6749974918623438020, guid: bdb23b4abd2acdc428589d3e58fb8529, type: 3}
   type: 1
   tier: 0
   nextTierCard: {fileID: 0}

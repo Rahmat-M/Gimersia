@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InkLance
   m_EditorClassIdentifier: Assembly-CSharp::Littale.CardData
   cardName: Ink Lance
-  icon: {fileID: -7852745884413213623, guid: 2031ed2084de9c146a619e49d24ca236, type: 3}
+  icon: {fileID: 5797890500352759842, guid: 2193a04eea8177448a9c237539da4a7f, type: 3}
   type: 1
   tier: 0
   nextTierCard: {fileID: 0}

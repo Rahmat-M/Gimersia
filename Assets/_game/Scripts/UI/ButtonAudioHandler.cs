@@ -6,9 +6,9 @@ namespace Littale {
     [RequireComponent(typeof(Button))]
     public class ButtonAudioHandler : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler {
 
-        [Header("Audio Name (from AudioManager)")]
-        public string hoverSoundName = "cursor";
-        public string pressSoundName = "select";
+        [Header("Audio Settings")]
+        public SfxID hoverSound;
+        public SfxID clickSound;
 
         private Button button;
 
@@ -17,14 +17,16 @@ namespace Littale {
         }
 
         public void OnPointerEnter(PointerEventData eventData) {
-            if (button != null && button.interactable && !string.IsNullOrEmpty(hoverSoundName)) {
-                SoundManager.Instance.Play(hoverSoundName);
+            if (button != null && button.interactable && hoverSound != SfxID.None) {
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.PlaySFX(hoverSound);
             }
         }
 
         public void OnPointerDown(PointerEventData eventData) {
-            if (button != null && button.interactable && !string.IsNullOrEmpty(pressSoundName)) {
-                SoundManager.Instance.Play(pressSoundName);
+            if (button != null && button.interactable && clickSound != SfxID.None) {
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.PlaySFX(clickSound);
             }
         }
 

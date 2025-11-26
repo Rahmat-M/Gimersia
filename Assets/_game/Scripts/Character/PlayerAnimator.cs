@@ -19,12 +19,12 @@ namespace Littale {
 
         void Update() {
             // Update animator parameters
-            float horizontal = charController.MovementInput.x;
+            float horizontal = charController.LastMovementInput.x;
             bool isMoving = charController.MovementInput.magnitude > 0.1f;
 
             animator.SetBool(ANIM_PARAM_ISMOVING, isMoving);
 
-            if (isMoving) spriteRenderer.flipX = horizontal > 0;
+            if (isMoving || charController.IsAiming) spriteRenderer.flipX = horizontal > 0;
         }
 
     }

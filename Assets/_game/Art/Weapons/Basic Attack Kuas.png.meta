@@ -1,0 +1,680 @@
+fileFormatVersion: 2
+guid: d00e2330f43752141b3a4e85779630bf
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6485514523524674232
+    second: Basic Attack Kuas_0
+  - first:
+      213: -2418277026449932690
+    second: Basic Attack Kuas_1
+  - first:
+      213: -1270044099451212237
+    second: Basic Attack Kuas_2
+  - first:
+      213: 6976351263424711124
+    second: Basic Attack Kuas_3
+  - first:
+      213: -7373769130020263235
+    second: Basic Attack Kuas_4
+  - first:
+      213: -2259511562156433016
+    second: Basic Attack Kuas_5
+  - first:
+      213: 6646042584989379463
+    second: Basic Attack Kuas_6
+  - first:
+      213: 369883268767469192
+    second: Basic Attack Kuas_7
+  - first:
+      213: 3746344541267701840
+    second: Basic Attack Kuas_8
+  - first:
+      213: -763278211064414337
+    second: Basic Attack Kuas_9
+  - first:
+      213: -7612934470716854622
+    second: Basic Attack Kuas_10
+  - first:
+      213: -3821472261309807501
+    second: Basic Attack Kuas_11
+  - first:
+      213: 5639825504374472610
+    second: Basic Attack Kuas_12
+  - first:
+      213: -1490665476862085351
+    second: Basic Attack Kuas_13
+  - first:
+      213: 2856264666554317430
+    second: Basic Attack Kuas_14
+  - first:
+      213: 6719231750133084975
+    second: Basic Attack Kuas_15
+  - first:
+      213: -7987202309057841495
+    second: Basic Attack Kuas_16
+  - first:
+      213: -5495273638166844059
+    second: Basic Attack Kuas_17
+  - first:
+      213: -8469924432122590546
+    second: Basic Attack Kuas_18
+  - first:
+      213: -385911391611887599
+    second: Basic Attack Kuas_19
+  - first:
+      213: -5346695191831456774
+    second: Basic Attack Kuas_20
+  - first:
+      213: 8059774984032636901
+    second: Basic Attack Kuas_21
+  - first:
+      213: -3828342752807031283
+    second: Basic Attack Kuas_22
+  - first:
+      213: -3445141640445076286
+    second: Basic Attack Kuas_23
+  - first:
+      213: -3809418498634903452
+    second: Basic Attack Kuas_24
+  - first:
+      213: 2610206257262983963
+    second: Basic Attack Kuas_25
+  - first:
+      213: 3812933662984098782
+    second: Basic Attack Kuas_26
+  - first:
+      213: -4102898738608047674
+    second: Basic Attack Kuas_27
+  - first:
+      213: -832711991648759921
+    second: Basic Attack Kuas_28
+  - first:
+      213: -6926324838160733821
+    second: Basic Attack Kuas_29
+  - first:
+      213: -2493806560043215116
+    second: Basic Attack Kuas_30
+  - first:
+      213: 2473325776484329060
+    second: Basic Attack Kuas_31
+  - first:
+      213: -2425543352047535597
+    second: Basic Attack Kuas_32
+  - first:
+      213: 5102070620214182845
+    second: Basic Attack Kuas_33
+  - first:
+      213: 6013287848654663767
+    second: Basic Attack Kuas_34
+  - first:
+      213: -5232598029512719784
+    second: Basic Attack Kuas_35
+  - first:
+      213: 4191362852727566791
+    second: Basic Attack Kuas_36
+  - first:
+      213: 8415265085233836680
+    second: Basic Attack Kuas_37
+  - first:
+      213: 2867991699668754120
+    second: Basic Attack Kuas_38
+  - first:
+      213: 6155731039277048947
+    second: Basic Attack Kuas_39
+  - first:
+      213: 8722768095704674064
+    second: Basic Attack Kuas_40
+  - first:
+      213: -3950683051376052926
+    second: Basic Attack Kuas_41
+  - first:
+      213: -3109464281152785838
+    second: Basic Attack Kuas_42
+  - first:
+      213: 7805017960260228912
+    second: Basic Attack Kuas_43
+  - first:
+      213: -5299758292701232848
+    second: Basic Attack Kuas_44
+  - first:
+      213: 8965620913960418735
+    second: Basic Attack Kuas_45
+  - first:
+      213: 3884103019306290680
+    second: Basic Attack Kuas_46
+  - first:
+      213: -84539364574591183
+    second: Basic Attack Kuas_47
+  - first:
+      213: 846045020895185853
+    second: Basic Attack Kuas_48
+  - first:
+      213: 1104886149039024589
+    second: Basic Attack Kuas_49
+  - first:
+      213: 5023744802533360521
+    second: Basic Attack Kuas_50
+  - first:
+      213: -4169676293838099371
+    second: Basic Attack Kuas_51
+  - first:
+      213: -5378679015205608555
+    second: Basic Attack Kuas_52
+  - first:
+      213: -4610629686997447190
+    second: Basic Attack Kuas_53
+  - first:
+      213: -5737845893605998608
+    second: Basic Attack Kuas_54
+  - first:
+      213: -1891958953142542436
+    second: Basic Attack Kuas_55
+  - first:
+      213: 6992223075971642065
+    second: Basic Attack Kuas_56
+  - first:
+      213: -7287029108140777991
+    second: Basic Attack Kuas_57
+  - first:
+      213: 1443123551468529652
+    second: Basic Attack Kuas_58
+  - first:
+      213: 6531955762987388901
+    second: Basic Attack Kuas_59
+  - first:
+      213: 3080730959443005392
+    second: Basic Attack Kuas_60
+  - first:
+      213: -8119173195069925189
+    second: Basic Attack Kuas_61
+  - first:
+      213: -1395452238694433108
+    second: Basic Attack Kuas_62
+  - first:
+      213: -5514034073830434705
+    second: Basic Attack Kuas_63
+  - first:
+      213: 6392923928065581592
+    second: Basic Attack Kuas_64
+  - first:
+      213: 1203136725082590773
+    second: Basic Attack Kuas_65
+  - first:
+      213: -2263359335914893714
+    second: Basic Attack Kuas_66
+  - first:
+      213: -6381215160348716998
+    second: Basic Attack Kuas_67
+  - first:
+      213: -8412743182183650566
+    second: Basic Attack Kuas_68
+  - first:
+      213: -2024874701639006140
+    second: Basic Attack Kuas_69
+  - first:
+      213: 1447285092312597893
+    second: Basic Attack Kuas_70
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1024
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Basic Attack Kuas_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b23350f81d210a50800000000000000
+      internalID: 6485514523524674232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_1
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6eb6f56bdd807ed0800000000000000
+      internalID: -2418277026449932690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_2
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33e212bde95ef5ee0800000000000000
+      internalID: -1270044099451212237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_3
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d907c4038af0d060800000000000000
+      internalID: 6976351263424711124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbaa66d4b0c1ba990800000000000000
+      internalID: -7373769130020263235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_5
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88127c3a43a94a0e0800000000000000
+      internalID: -2259511562156433016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_6
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78b2960d48c7b3c50800000000000000
+      internalID: 6646042584989379463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_7
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88ece3b8fd6122500800000000000000
+      internalID: 369883268767469192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0503c74e280bdf330800000000000000
+      internalID: 3746344541267701840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_9
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7fb5b4d28a4865f0800000000000000
+      internalID: -763278211064414337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_10
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ae68961f6c695690800000000000000
+      internalID: -7612934470716854622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_11
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 374ce91b93767fac0800000000000000
+      internalID: -3821472261309807501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2afbd674a6fa44e40800000000000000
+      internalID: 5639825504374472610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic Attack Kuas_13
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 9
+      pivot: {x: 0.82, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91772bc85a7105be0800000000000000
+      internalID: -1490665476862085351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 61978454b3061fc469c2e7512e670dab
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":4.0},"gridSpriteSize":{"x":2048.0,"y":2048.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.8199999928474426,"y":0.47999998927116396},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Basic Attack Kuas_0: 6485514523524674232
+      Basic Attack Kuas_1: -2418277026449932690
+      Basic Attack Kuas_10: -7612934470716854622
+      Basic Attack Kuas_11: -3821472261309807501
+      Basic Attack Kuas_12: 5639825504374472610
+      Basic Attack Kuas_13: -1490665476862085351
+      Basic Attack Kuas_2: -1270044099451212237
+      Basic Attack Kuas_3: 6976351263424711124
+      Basic Attack Kuas_4: -7373769130020263235
+      Basic Attack Kuas_5: -2259511562156433016
+      Basic Attack Kuas_6: 6646042584989379463
+      Basic Attack Kuas_7: 369883268767469192
+      Basic Attack Kuas_8: 3746344541267701840
+      Basic Attack Kuas_9: -763278211064414337
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
