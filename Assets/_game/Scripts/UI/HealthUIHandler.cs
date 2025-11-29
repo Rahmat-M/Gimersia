@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,19 +7,14 @@ namespace Littale {
     public class HealthUIHandler : MonoBehaviour {
 
         [SerializeField] CharacterStats characterStats;
-        public List<Image> dropVisuals;
+        [SerializeField] TMP_Text healthText;
 
         private void Start() {
             characterStats.OnHealthChanged.AddListener(UpdateHealthUI);
         }
 
         public void UpdateHealthUI(float currentHealth) {
-            float healthPercentage = Mathf.Clamp01(currentHealth / characterStats.Stats.maxHealth);
-            float totalDropsFill = healthPercentage * dropVisuals.Count;
-
-            for (int i = 0; i < dropVisuals.Count; i++) {
-                dropVisuals[i].fillAmount = Mathf.Clamp01(totalDropsFill - i);
-            }
+            healthText.text = $"{(int)currentHealth}/{characterStats.Actual.maxHealth}";
         }
 
     }

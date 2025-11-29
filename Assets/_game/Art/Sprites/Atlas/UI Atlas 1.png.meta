@@ -190,6 +190,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -436,7 +449,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI Atlas 2_11
+      name: panel_bright
       rect:
         serializedVersion: 2
         x: 299
@@ -445,7 +458,7 @@ TextureImporter:
         height: 1298
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 150, y: 150, z: 150, w: 150}
       customData: 
       outline: []
       physicsShape: []
@@ -826,7 +839,6 @@ TextureImporter:
       UI Atlas 2_0: -3386283673838486404
       UI Atlas 2_1: 6645493665562915092
       UI Atlas 2_10: -5939672590489014074
-      UI Atlas 2_11: 5301641227496579844
       UI Atlas 2_12: -2345654442060335763
       UI Atlas 2_13: 6747269497419248962
       UI Atlas 2_14: -2769369009189163820
@@ -851,6 +863,7 @@ TextureImporter:
       UI Atlas 2_8: -5774224808461137056
       UI Atlas 2_9: 2875862886672679970
       chibi_bukan_lu: -10916449547512069
+      panel_bright: 5301641227496579844
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

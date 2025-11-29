@@ -32,7 +32,7 @@ namespace Littale {
 
         [Header("Screens")]
         public GameObject pauseScreen;
-        public GameObject resultsScreen;
+        public PopupPanel resultsScreen;
         public LevelUpManager levelUpManager;
         int stackedLevelUps = 0; // If we try to StartLevelUp() multiple times.
 
@@ -41,6 +41,10 @@ namespace Littale {
         public TMP_Text chosenCharacterName;
         public TMP_Text levelReachedDisplay;
         public TMP_Text timeSurvivedDisplay;
+
+        [Header("Result Screen Variables")]
+        public TMP_Text wavesSurvivedDisplay;
+        public TMP_Text moneyCollectedDisplay;
 
         private const float DEFAULT_TIME_LIMIT = 1800f;
         private const float DEFAULT_CLOCK_SPEED = 1f;
@@ -88,9 +92,17 @@ namespace Littale {
         }
 
         public CharacterCollector characterCollector;
+        public SpawnManager spawnManager;
 
         void Awake() {
             players = FindObjectsByType<CharacterStats>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            foreach (CharacterStats p in players) {
+                p.OnKilled.AddListener(HandlePlayerKilled);
+            }
+
+            if (spawnManager == null) {
+                spawnManager = FindFirstObjectByType<SpawnManager>();
+            }
 
             //Set the level's Time Limit
             // timeLimit = TimeLimit; // TODO: Fix when UILevelSelector is back
@@ -104,6 +116,12 @@ namespace Littale {
             }
 
             DisableScreens();
+        }
+
+        void HandlePlayerKilled() {
+            if (!isGameOver) {
+                GameOver();
+            }
         }
 
         void Start() {
@@ -126,7 +144,6 @@ namespace Littale {
                     break;
                 case GameState.GameOver:
                 case GameState.TreasureChest:
-                    Time.timeScale = 0;
                     break;
                 case GameState.LevelUp:
                     break;
@@ -230,15 +247,18 @@ namespace Littale {
 
         void DisableScreens() {
             pauseScreen.SetActive(false);
-            resultsScreen.SetActive(false);
+            resultsScreen.Close();
             levelUpManager.choiceWindow.gameObject.SetActive(false);
         }
 
         public void GameOver() {
-            timeSurvivedDisplay.text = stopwatchDisplay.text;
+            // timeSurvivedDisplay.text = stopwatchDisplay.text;
+            wavesSurvivedDisplay.text = "Wave Survived : " + spawnManager.currentWaveIndex.ToString();
+            moneyCollectedDisplay.text = "Coins Gained : " + characterCollector.GetCoins().ToString();
 
             // Set the Game Over variables here.
             ChangeState(GameState.GameOver);
+            SoundManager.Instance.PlayUnique("IntermezzoTheme");
             Time.timeScale = 0f; //Stop the game entirely
             DisplayResults();
 
@@ -255,7 +275,7 @@ namespace Littale {
         }
 
         void DisplayResults() {
-            resultsScreen.SetActive(true);
+            resultsScreen.Open();
         }
 
         public void AssignChosenCharacterUI(CharacterSO chosenCharacterData) {

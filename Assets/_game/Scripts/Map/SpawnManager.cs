@@ -111,6 +111,7 @@ namespace Littale {
             // Check if we have gone through all the waves.
             if (currentWaveIndex >= data.Length - 1) {
                 state = WaveState.Finished;
+                GameManager.Instance.GameOver();
                 enabled = false;
                 return;
             }
@@ -164,7 +165,7 @@ namespace Littale {
             if (HasExceededMaxEnemies()) return false;
 
             // Don't spawn if we exceeded the max spawns for the wave.
-            if (instance.currentWaveSpawnCount > instance.data[instance.currentWaveIndex].totalSpawns) return false;
+            if (instance.currentWaveSpawnCount >= instance.data[instance.currentWaveIndex].totalSpawns) return false;
 
             // Don't spawn if we exceeded the wave's duration.
             if (instance.currentWaveDuration > instance.data[instance.currentWaveIndex].duration) return false;

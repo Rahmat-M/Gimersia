@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Littale.WaveData
   possibleSpawnPrefabs:
   - {fileID: 4361609688999816806, guid: 68091603889689b4eb0f7ba6949a17d5, type: 3}
-  spawnInterval: {x: 99, y: 99}
+  spawnInterval: {x: 0, y: 0}
   spawnsPerTick: {x: 1, y: 2}
   duration: 999
-  startingCount: 1
+  startingCount: 0
   totalSpawns: 1
   exitConditions: 2
   mustKillAll: 1
